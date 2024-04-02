@@ -28,12 +28,17 @@ export default function App() {
         variant={'search'}
       />
       <Input disabled placeholder={'placeholder'} variant={'search'} />
-      <Input error={'Error!'} placeholder={'placeholder'} variant={'search'} />
+      <Input errorMessage={'Error!'} placeholder={'placeholder'} variant={'search'} />
       <Input placeholder={'placeholder'} type={'password'} />
-      <Input error={'Error!'} label={'Error'} placeholder={'placeholder'} type={'password'} />
+      <Input
+        errorMessage={'Error!'}
+        label={'Error'}
+        placeholder={'placeholder'}
+        type={'password'}
+      />
       <Input
         disabled
-        error={'Error!'}
+        errorMessage={'Error!'}
         label={'disabled'}
         placeholder={'placeholder'}
         type={'password'}

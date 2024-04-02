@@ -1,14 +1,18 @@
 .inputContainer {
   position: relative;
+
   display: flex;
   flex-direction: column;
+
   width: fit-content;
+
+  color: var(--color-dark-100);
 
   &:active {
     color: var(--color-light-100);
 
     .inputIcon {
-      fill: var(--color-light-100) !important;
+      fill: var(--color-light-100);
     }
   }
 }
@@ -60,21 +64,13 @@
   }
 }
 
-.inputIcon {
-  width: 20px;
-  height: 20px;
-  fill: var(--color-dark-100);
-}
-
 .inputButton {
   cursor: pointer;
 
   position: absolute;
   right: 12px;
-  bottom: 7px;
+  bottom: 0;
 
-  width: 20px;
-  height: 20px;
   padding: 0;
 
   font: inherit;
@@ -100,7 +96,7 @@
 
 .searchContainer {
   position: absolute;
-  bottom: 8px;
+  bottom: 10px;
   left: 6px;
 
   width: 20px;
@@ -121,9 +117,8 @@
 }
 
 .error {
-  color: var(--color-danger-300);
+  color: var(--color-danger-300) !important;
   border-color: var(--color-danger-300);
-  fill: var(--color-danger-300) !important;
 }
 
 .errorContainer {

@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { Logout } from '@/assets/icons/components/Logout'
 import { Button } from '@/components'
-
-import icon from '../../../assets/icons/log-out.svg'
 
 const meta = {
   argTypes: {
@@ -76,9 +75,7 @@ export const WithIconPrimary: Story = {
     as: 'button',
     children: (
       <>
-        <svg height={'16px'} viewBox={'0 0 24 24'} width={'16px'}>
-          <use href={`${icon}#log-out`} xlinkHref={`${icon}#log-out`} />
-        </svg>
+        <Logout size={16} />
         Button With Icon
       </>
     ),
@@ -92,9 +89,7 @@ export const WithIconSecondary: Story = {
     as: 'button',
     children: (
       <>
-        <svg height={'16px'} viewBox={'0 0 24 24'} width={'16px'}>
-          <use href={`${icon}#log-out`} xlinkHref={`${icon}#log-out`} />
-        </svg>
+        <Logout size={16} />
         Button With Icon
       </>
     ),
@@ -108,9 +103,7 @@ export const WithIconDisabled: Story = {
     as: 'button',
     children: (
       <>
-        <svg height={'16px'} viewBox={'0 0 24 24'} width={'16px'}>
-          <use href={`${icon}#log-out`} xlinkHref={`${icon}#log-out`} />
-        </svg>
+        <Logout size={16} />
         Button With Icon
       </>
     ),
@@ -124,9 +117,7 @@ export const WithIconActive: Story = {
     as: 'button',
     children: (
       <>
-        <svg height={'16px'} viewBox={'0 0 24 24'} width={'16px'}>
-          <use href={`${icon}#log-out`} xlinkHref={`${icon}#log-out`} />
-        </svg>
+        <Logout size={16} />
         Button With Icon
       </>
     ),
@@ -142,9 +133,7 @@ export const WithIconFullWidth: Story = {
     as: 'button',
     children: (
       <>
-        <svg height={'16px'} viewBox={'0 0 24 24'} width={'16px'}>
-          <use href={`${icon}#log-out`} xlinkHref={`${icon}#log-out`} />
-        </svg>
+        <Logout size={16} />
         Button With Icon
       </>
     ),

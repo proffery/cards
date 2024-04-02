@@ -1,16 +1,13 @@
 import { ComponentPropsWithoutRef, useState } from 'react'
 
-import s from './input.module.scss'
+import { Close, EyeOffOutline, EyeOutline, Search } from '@/assets/icons'
 
-import closeImage from '../../../assets/icons/close.svg'
-import hidePasswordImage from '../../../assets/icons/eye-off-outline.svg'
-import showPasswordImage from '../../../assets/icons/eye-outline.svg'
-import searchImage from '../../../assets/icons/search.svg'
+import s from './input.module.scss'
 
 export type InputProps = {
   className?: string
   cleanSearch?: () => void
-  error?: string
+  errorMessage?: string
   fullWidth?: boolean
   label?: string
   type?: 'password' | 'text'
@@ -22,7 +19,7 @@ export const Input = ({
   className,
   cleanSearch,
   disabled,
-  error,
+  errorMessage,
   fullWidth,
   label,
   type = 'text',
@@ -46,7 +43,7 @@ export const Input = ({
         </label>
       )}
       <input
-        className={`${s.input} ${variant ? s[variant] : ''} ${error ? s.error : ''} ${
+        className={`${s.input} ${variant ? s[variant] : ''} ${errorMessage ? s.error : ''} ${
           className || ''
         }`}
         disabled={disabled}
@@ -55,7 +52,7 @@ export const Input = ({
         {...rest}
         type={type === 'password' && !showPassword ? 'password' : 'text'}
       />
-      {error && <div className={s.errorContainer}>{error}</div>}
+      {errorMessage && <div className={s.errorContainer}>{errorMessage}</div>}
       {type === 'password' && (
         <button
           className={s.inputButton}
@@ -64,49 +61,21 @@ export const Input = ({
           onMouseUp={hidePasswordHandler}
           title={'Show password'}
         >
-          <svg
-            className={`${s.inputIcon} ${error ? s.error : ''}`}
-            height={'24px'}
-            viewBox={'0 0 24 24'}
-            width={'24px'}
-          >
-            <use
-              href={
-                showPassword
-                  ? `${showPasswordImage}#eye-outline`
-                  : `${hidePasswordImage}#eye-off-outline`
-              }
-              xlinkHref={
-                showPassword
-                  ? `${showPasswordImage}#eye-outline`
-                  : `${hidePasswordImage}#eye-off-outline`
-              }
-            />
-          </svg>
+          {showPassword ? (
+            <EyeOutline className={`${s.inputIcon} ${errorMessage ? s.error : ''}`} size={20} />
+          ) : (
+            <EyeOffOutline className={`${s.inputIcon} ${errorMessage ? s.error : ''}`} size={20} />
+          )}
         </button>
       )}
       {variant === 'search' && (
         <div className={`${s.searchContainer} ${disabled ? s.disabled : ''}`}>
-          <svg
-            className={`${s.inputIcon} ${error ? s.error : ''}`}
-            height={'20px'}
-            viewBox={'0 0 24 24'}
-            width={'20px'}
-          >
-            <use href={`${searchImage}#search`} xlinkHref={`${searchImage}#search`} />
-          </svg>
+          <Search className={`${s.inputIcon} ${errorMessage ? s.error : ''}`} size={20} />
         </div>
       )}
       {variant === 'search' && value && (
         <button className={s.inputButton} disabled={disabled} onClick={cleanSearch}>
-          <svg
-            className={`${s.inputIcon} ${error ? s.error : ''}`}
-            height={'20px'}
-            viewBox={'0 0 24 24'}
-            width={'20px'}
-          >
-            <use href={`${closeImage}#close`} xlinkHref={`${closeImage}#close`} />
-          </svg>
+          <Close className={`${s.inputIcon} ${errorMessage ? s.error : ''}`} size={20} />
         </button>
       )}
     </div>
