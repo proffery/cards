@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
+import { Logout } from '@/assets/icons/components/Logout'
 import { Button, Input } from '@/components'
-
-import icon from './assets/icons/log-out.svg'
 
 export default function App() {
   const [value, setValue] = useState('test')
@@ -10,9 +9,7 @@ export default function App() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <Button>
-        <svg height={'16px'} viewBox={'0 0 24 24'} width={'16px'}>
-          <use href={`${icon}#log-out`} xlinkHref={`${icon}#log-out`} />
-        </svg>
+        <Logout size={16} />
         Hello
       </Button>
       <Button disabled variant={'primary'}>

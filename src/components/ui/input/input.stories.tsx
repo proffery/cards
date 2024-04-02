@@ -50,7 +50,7 @@ export const DefaultError: Story = {
   args: {
     defaultValue: 'Input',
     disabled: false,
-    error: 'Error!',
+    errorMessage: 'Error!',
     label: 'Input',
     variant: 'default',
   },
@@ -78,7 +78,7 @@ export const PasswordError: Story = {
   args: {
     defaultValue: 'password',
     disabled: false,
-    error: 'Error!',
+    errorMessage: 'Error!',
     label: 'Password',
     type: 'password',
     variant: 'default',
@@ -102,7 +102,7 @@ export const SearchError: Story = {
   args: {
     defaultValue: 'search',
     disabled: false,
-    error: 'Error!',
+    errorMessage: 'Error!',
     variant: 'search',
   },
 }
