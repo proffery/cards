@@ -4,6 +4,14 @@ import { Input } from '@/components'
 
 const meta = {
   argTypes: {
+    cleanSearch: {
+      action: 'cleaned',
+      description: 'Changeble value',
+    },
+    onChange: {
+      action: 'changed',
+      description: 'Changeble value',
+    },
     type: {
       control: { type: 'radio' },
       options: ['password', 'text'],
@@ -95,6 +103,14 @@ export const SearchError: Story = {
     defaultValue: 'search',
     disabled: false,
     error: 'Error!',
+    variant: 'search',
+  },
+}
+
+export const SearchValue: Story = {
+  args: {
+    disabled: false,
+    value: 'text',
     variant: 'search',
   },
 }

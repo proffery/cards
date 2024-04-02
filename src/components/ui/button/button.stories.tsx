@@ -10,6 +10,10 @@ const meta = {
       control: { type: 'radio' },
       options: ['button', 'a'],
     },
+    onClick: {
+      action: 'clicked',
+      description: 'Button clicked',
+    },
     variant: {
       control: { type: 'radio' },
       options: ['primary', 'secondary'],
