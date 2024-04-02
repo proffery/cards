@@ -58,17 +58,68 @@ export const FullWidth: Story = {
     variant: 'primary',
   },
 }
-export const WithIcon: Story = {
+export const WithIconPrimary: Story = {
   args: {
     as: 'button',
     children: (
       <>
-        <img alt={'icon'} src={icon} />
+        <svg height={'16px'} viewBox={'0 0 24 24'} width={'16px'}>
+          <use href={`${icon}#log-out`} xlinkHref={`${icon}#log-out`} />
+        </svg>
         Button With Icon
       </>
     ),
     disabled: false,
     fullWidth: false,
     variant: 'primary',
+  },
+}
+export const WithIconSecondary: Story = {
+  args: {
+    as: 'button',
+    children: (
+      <>
+        <svg height={'16px'} viewBox={'0 0 24 24'} width={'16px'}>
+          <use href={`${icon}#log-out`} xlinkHref={`${icon}#log-out`} />
+        </svg>
+        Button With Icon
+      </>
+    ),
+    disabled: false,
+    fullWidth: false,
+    variant: 'secondary',
+  },
+}
+export const WithIconDisabled: Story = {
+  args: {
+    as: 'button',
+    children: (
+      <>
+        <svg height={'16px'} viewBox={'0 0 24 24'} width={'16px'}>
+          <use href={`${icon}#log-out`} xlinkHref={`${icon}#log-out`} />
+        </svg>
+        Button With Icon
+      </>
+    ),
+    disabled: true,
+    fullWidth: false,
+    variant: 'secondary',
+  },
+}
+
+export const WithIconFullWidth: Story = {
+  args: {
+    as: 'button',
+    children: (
+      <>
+        <svg height={'16px'} viewBox={'0 0 24 24'} width={'16px'}>
+          <use href={`${icon}#log-out`} xlinkHref={`${icon}#log-out`} />
+        </svg>
+        Button With Icon
+      </>
+    ),
+    disabled: false,
+    fullWidth: true,
+    variant: 'secondary',
   },
 }

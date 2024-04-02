@@ -21,12 +21,14 @@
   border-radius: 4px;
 
   &:disabled {
+    cursor: initial;
     color: var(--color-light-900);
   }
 
-  img {
+  svg {
     width: 16px;
     height: 16px;
+    fill: currentcolor;
   }
 }
 
@@ -45,10 +47,10 @@
   &:hover {
     background-color: var(--color-accent-300);
   }
+}
 
-  &:disabled {
-    background-color: var(--color-accent-900);
-  }
+.primary.disabled {
+  background-color: var(--color-accent-900);
 }
 
 .secondary {
@@ -66,12 +68,17 @@
   &:hover {
     background-color: var(--color-dark-100);
   }
+}
 
-  &:disabled {
-    background-color: var(--color-dark-300);
-  }
+.secondary.disabled {
+  background-color: var(--color-dark-300);
 }
 
 .fullWidth {
   width: 100%;
+}
+
+.disabled {
+  cursor: initial;
+  color: var(--color-light-900);
 }

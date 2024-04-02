@@ -6,16 +6,28 @@ export default function App() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <Button>
-        <img alt={'icon'} src={icon} />
+        <svg height={'16px'} viewBox={'0 0 24 24'} width={'16px'}>
+          <use href={`${icon}#log-out`} xlinkHref={`${icon}#log-out`} />
+        </svg>
         Hello
       </Button>
-      <Input label={'label'} placeholder={'1112'} />
-      <Input label={'label2'} placeholder={'1112'} type={'password'} variant={'default'} />
-      <Input placeholder={'1112'} type={'password'} variant={'search'} />
-      <Input error={'dfsdg'} placeholder={'1112'} variant={'search'} />
-      <Input placeholder={'1112'} type={'password'} variant={'default'} />
-      <Input error={'123'} label={'321'} placeholder={'1112'} type={'password'} />
-      <Input disabled error={'123'} label={'disabled'} placeholder={'1112'} type={'password'} />
+      <Button disabled variant={'primary'}>
+        Hello
+      </Button>
+      <Input label={'default'} placeholder={'placeholder'} />
+      <Input label={'password'} placeholder={'placeholder'} type={'password'} />
+      <Input placeholder={'placeholder'} variant={'search'} />
+      <Input disabled placeholder={'placeholder'} variant={'search'} />
+      <Input error={'Error!'} placeholder={'placeholder'} variant={'search'} />
+      <Input placeholder={'placeholder'} type={'password'} />
+      <Input error={'Error!'} label={'Error'} placeholder={'placeholder'} type={'password'} />
+      <Input
+        disabled
+        error={'Error!'}
+        label={'disabled'}
+        placeholder={'placeholder'}
+        type={'password'}
+      />
     </div>
   )
 }

@@ -13,13 +13,16 @@ export type ButtonProps<T extends ElementType = 'button'> = {
 export const Button = ({
   as: Component = 'button',
   className,
+  disabled,
   fullWidth,
   variant = 'primary',
   ...rest
 }: ButtonProps) => {
   return (
     <Component
-      className={`${s.button} ${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className || ''}`}
+      className={`${s.button} ${s[variant]} ${fullWidth ? s.fullWidth : ''} ${
+        disabled ? s.disabled : ''
+      } ${className || ''}`}
       {...rest}
     />
   )
