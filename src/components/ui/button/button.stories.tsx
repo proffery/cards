@@ -48,6 +48,15 @@ export const Disabled: Story = {
     variant: 'primary',
   },
 }
+export const Active: Story = {
+  args: {
+    as: 'button',
+    children: 'Disabled Button',
+    disabled: false,
+    isActive: true,
+    variant: 'primary',
+  },
+}
 
 export const FullWidth: Story = {
   args: {
@@ -103,6 +112,23 @@ export const WithIconDisabled: Story = {
     ),
     disabled: true,
     fullWidth: false,
+    variant: 'secondary',
+  },
+}
+export const WithIconActive: Story = {
+  args: {
+    as: 'button',
+    children: (
+      <>
+        <svg height={'16px'} viewBox={'0 0 24 24'} width={'16px'}>
+          <use href={`${icon}#log-out`} xlinkHref={`${icon}#log-out`} />
+        </svg>
+        Button With Icon
+      </>
+    ),
+    disabled: false,
+    fullWidth: false,
+    isActive: true,
     variant: 'secondary',
   },
 }
