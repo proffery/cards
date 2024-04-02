@@ -10,7 +10,7 @@ const meta = {
     },
     variant: {
       control: { type: 'radio' },
-      options: ['password', 'search', 'default'],
+      options: ['search', 'default'],
     },
   },
   component: Input,
@@ -30,7 +30,7 @@ export const Default: Story = {
   },
 }
 
-export const Disabled: Story = {
+export const DefaultDisabled: Story = {
   args: {
     defaultValue: 'Input',
     disabled: true,
@@ -38,7 +38,7 @@ export const Disabled: Story = {
     variant: 'default',
   },
 }
-export const Error: Story = {
+export const DefaultError: Story = {
   args: {
     defaultValue: 'Input',
     disabled: false,
@@ -53,6 +53,48 @@ export const Password: Story = {
     defaultValue: 'password',
     disabled: false,
     label: 'Password',
-    variant: 'password',
+    type: 'password',
+    variant: 'default',
+  },
+}
+export const PasswordDisabled: Story = {
+  args: {
+    defaultValue: 'password',
+    disabled: true,
+    label: 'Password',
+    type: 'password',
+    variant: 'default',
+  },
+}
+export const PasswordError: Story = {
+  args: {
+    defaultValue: 'password',
+    disabled: false,
+    error: 'Error!',
+    label: 'Password',
+    type: 'password',
+    variant: 'default',
+  },
+}
+export const Search: Story = {
+  args: {
+    defaultValue: 'search',
+    disabled: false,
+    variant: 'search',
+  },
+}
+export const SearchDisabled: Story = {
+  args: {
+    defaultValue: 'search',
+    disabled: true,
+    variant: 'search',
+  },
+}
+export const SearchError: Story = {
+  args: {
+    defaultValue: 'search',
+    disabled: false,
+    error: 'Error!',
+    variant: 'search',
   },
 }
