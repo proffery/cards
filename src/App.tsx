@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { Logout } from '@/assets/icons/components/Logout'
-import { Button, Input } from '@/components'
+import { Button, Input, TabSwitcher } from '@/components'
 
 export default function App() {
   const [value, setValue] = useState('test')
@@ -40,6 +40,7 @@ export default function App() {
         placeholder={'placeholder'}
         type={'password'}
       />
+      <TabSwitcher />
     </div>
   )
 }
