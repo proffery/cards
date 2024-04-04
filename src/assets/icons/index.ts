@@ -1,5 +1,8 @@
 export { Close } from '@/assets/icons/components/Close'
+export { Edit } from '@/assets/icons/components/Edit'
 export { EyeOffOutline } from '@/assets/icons/components/EyeOffOutline'
 export { EyeOutline } from '@/assets/icons/components/EyeOutline'
 export { Logout } from '@/assets/icons/components/Logout'
+export { Play } from '@/assets/icons/components/Play'
 export { Search } from '@/assets/icons/components/Search'
+export { Trash } from '@/assets/icons/components/Trash'

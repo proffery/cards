@@ -1,0 +1,49 @@
+.table {
+  width: 100%;
+
+  th,
+  td {
+    padding: 6px 24px;
+  }
+}
+
+.table th {
+  text-align: left;
+  background-color: var(--color-dark-500);
+  outline: 1px solid var(--color-dark-500);
+}
+
+.row {
+  outline: 1px solid var(--color-dark-500);
+}
+
+.withButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.buttonsContainer button {
+  all: unset;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 16px;
+  height: 16px;
+  padding: 0;
+
+  span svg {
+    width: 16px;
+    height: 16px;
+  }
+}
