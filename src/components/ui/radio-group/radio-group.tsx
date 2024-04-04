@@ -11,23 +11,23 @@ type Item = {
 }
 
 type RadioGroupProps = {
-  ariaLabel?: string
   defaultValue?: string
+  disabled?: boolean
   radioItems: Item[]
 } & React.ComponentProps<typeof RadioGroupRadix.Root>
 
 export const RadioGroup: React.FC<RadioGroupProps> = props => {
-  const { ariaLabel, defaultValue, radioItems } = props
+  const { defaultValue, disabled, radioItems } = props
 
   return (
     <form>
-      <RadioGroupRadix.Root aria-label={ariaLabel} className={s.root} defaultValue={defaultValue}>
-        {radioItems.map(item => (
+      <RadioGroupRadix.Root className={s.root} defaultValue={defaultValue} disabled={disabled}>
+        {radioItems?.map(item => (
           <div className={s.item} key={item.id}>
             <RadioGroupRadix.Item className={s.radio} id={item.id} value={item.value}>
               <RadioGroupRadix.Indicator className={s.indicator} />
             </RadioGroupRadix.Item>
-            <label className={s.label} htmlFor={item.id}>
+            <label className={`${s.label} ${disabled ? s.labelDisabled : ''}`} htmlFor={item.id}>
               {item.label}
             </label>
           </div>
