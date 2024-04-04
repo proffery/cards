@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { Select as SelectComponent } from './'
 
-import { Select } from './'
-
-const meta = {
-  component: Select,
+const meta: Meta<typeof SelectComponent> = {
+  component: SelectComponent,
   tags: ['autodocs'],
-  title: 'Components/SelectComponent',
-} satisfies Meta<typeof Select>
+  title: 'Components/Select',
+}
 
 export default meta
-type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
+type Story = StoryObj<Meta<typeof SelectComponent>>
+
+export const Select: Story = {
   args: {
     options: [
       { label: 'Option 1', value: 'option1' },
@@ -19,5 +19,6 @@ export const Default: Story = {
       { label: 'Option 3', value: 'option3' },
     ],
     placeholder: 'Select box',
+    selectLabel: 'Select box',
   },
 }

@@ -1,4 +1,4 @@
-import { IconProps, IconWrapper } from '../IconWrapper'
+import { IconProps, IconWrapper } from '@/assets/IconWrapper'
 
 export const ArrowDropDown = (allProps: IconProps) => {
   const { svgProps: props, ...restProps } = allProps
