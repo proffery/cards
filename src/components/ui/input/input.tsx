@@ -39,9 +39,9 @@ export const Input = ({
   return (
     <div className={`${s.inputContainer} ${fullWidth ? s.fullWidth : ''}`}>
       {label && (
-        <label className={s.label} htmlFor={label}>
+        <Typography.Body2 as={'label'} className={s.label} htmlFor={label}>
           {label}
-        </label>
+        </Typography.Body2>
       )}
       <input
         className={`${s.input} ${variant ? s[variant] : ''} ${errorMessage ? s.error : ''} ${

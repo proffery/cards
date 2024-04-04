@@ -22,7 +22,6 @@
 }
 
 .label {
-  font-size: var(--font-size-s);
   color: var(--color-dark-100);
 }
 
@@ -123,7 +122,7 @@
 
 .errorContainer {
   position: absolute;
-  top: 100%;
+  top: 110%;
   font-size: var(--font-size-xs);
   color: var(--color-danger-300);
 }
