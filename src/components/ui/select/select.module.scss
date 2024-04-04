@@ -1,0 +1,76 @@
+$border-width: 1px;
+$width: 210px;
+
+@mixin common {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+  width: $width;
+  height: 36px;
+  padding: 6px 12px;
+
+  font-family: inherit;
+  color: inherit;
+
+  background-color: transparent;
+  outline: none;
+
+  &[data-state='open'] {
+    border: $border-width solid var(--color-dark-100);
+  }
+}
+
+button {
+  all: unset;
+}
+
+.trigger {
+  @include common;
+
+  border: $border-width solid var(--color-dark-300);
+
+  &:hover {
+    background-color: var(--color-dark-500);
+    border: $border-width solid var(--color-dark-100);
+  }
+
+  &:focus-visible {
+    border: calc($border-width * 2) solid var(--color-info-500);
+    outline: none;
+  }
+
+  &[data-disabled] {
+    pointer-events: none;
+    cursor: default;
+    color: var(--color-dark-300);
+  }
+}
+
+.content {
+  transform: translate(0, -$border-width);
+
+  display: flex;
+  flex-direction: row;
+
+  width: $width;
+
+  border: $border-width solid var(--color-dark-300);
+
+  &[data-state='open'] {
+    border: $border-width solid var(--color-dark-100);
+  }
+}
+
+.item {
+  @include common;
+
+  &:hover,
+  &:focus {
+    color: var(--color-accent-300);
+    background-color: var(--color-accent-900);
+  }
+}
