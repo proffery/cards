@@ -16,7 +16,7 @@ export const IconWrapper: FC<{ icon: ReactNode } & IconProps> = ({
   ...restProps
 }) => {
   const color = colorProp ? colorProp : 'currentColor'
-  const size = sizeProp ? `${sizeProp}px` : '24px'
+  const size = sizeProp ? `${sizeProp}px` : '16px'
 
   return (
     <span
