@@ -64,11 +64,16 @@ export const Input = ({
           onMouseUp={hidePasswordHandler}
           title={'Show password'}
         >
-          {showPassword ? (
-            <EyeOutline className={`${s.inputIcon} ${errorMessage ? s.error : ''}`} size={20} />
-          ) : (
-            <EyeOffOutline className={`${s.inputIcon} ${errorMessage ? s.error : ''}`} size={20} />
-          )}
+          {showPassword
+            ? value && (
+                <EyeOutline className={`${s.inputIcon} ${errorMessage ? s.error : ''}`} size={20} />
+              )
+            : value && (
+                <EyeOffOutline
+                  className={`${s.inputIcon} ${errorMessage ? s.error : ''}`}
+                  size={20}
+                />
+              )}
         </button>
       )}
       {variant === 'search' && (
