@@ -1,7 +1,6 @@
 import { ComponentPropsWithoutRef, useState } from 'react'
 
 import { Close, EyeOffOutline, EyeOutline, Search } from '@/assets/icons'
-import { Typography } from '@/components'
 
 import s from './input.module.scss'
 
@@ -39,9 +38,9 @@ export const Input = ({
   return (
     <div className={`${s.inputContainer} ${fullWidth ? s.fullWidth : ''}`}>
       {label && (
-        <Typography.Body2 as={'label'} className={s.label} htmlFor={label}>
+        <label className={s.label} htmlFor={label}>
           {label}
-        </Typography.Body2>
+        </label>
       )}
       <input
         className={`${s.input} ${variant ? s[variant] : ''} ${errorMessage ? s.error : ''} ${
@@ -53,9 +52,7 @@ export const Input = ({
         {...rest}
         type={type === 'password' && !showPassword ? 'password' : 'text'}
       />
-      {errorMessage && (
-        <Typography.Caption className={s.errorContainer}>{errorMessage}</Typography.Caption>
-      )}
+      {errorMessage && <div className={s.errorMessage}>{errorMessage}</div>}
       {type === 'password' && (
         <button
           className={s.inputButton}
