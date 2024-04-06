@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Deck, OrderDirection, OrderField, TableDecks } from '@/components'
+import cover from '@/assets/images/cover.png'
+import { Deck, DecksTableSortField, SortDirection, TableDecks } from '@/components'
 const myDecksExample: Deck[] = [
   {
     author: {
@@ -8,7 +9,7 @@ const myDecksExample: Deck[] = [
       name: 'John Doe',
     },
     cardsCount: 10,
-    cover: 'https://example.com/cover1.jpg',
+    cover: '',
     created: '2021-01-01',
     id: '1',
     isPrivate: true,
@@ -22,7 +23,7 @@ const myDecksExample: Deck[] = [
       name: 'Mr. Anderson',
     },
     cardsCount: 0,
-    cover: 'https://example.com/cover2.jpg',
+    cover: cover,
     created: '2022-01-01',
     id: '2',
     isPrivate: true,
@@ -39,7 +40,7 @@ const allDecksExemple = [
       name: 'Bob Johnson',
     },
     cardsCount: 18,
-    cover: 'https://example.com/cover3.jpg',
+    cover: '',
     created: '2022-01-01',
     id: '3',
     isPrivate: false,
@@ -53,7 +54,7 @@ const allDecksExemple = [
       name: 'Alice Williams',
     },
     cardsCount: 0,
-    cover: 'https://example.com/cover4.jpg',
+    cover: cover,
     created: '2022-01-01',
     id: '4',
     isPrivate: false,
@@ -84,7 +85,7 @@ export const TableWithMyDecks: Story = {
     onPlay: itemId => {
       alert(`Delete button with id:${itemId} is pushed!`)
     },
-    onSort: (orderDirection: OrderDirection, orderField: OrderField) => {
+    onSort: (orderDirection: SortDirection, orderField: DecksTableSortField) => {
       alert(`Table must be sorted: Field name: ${orderField}, Direction: ${orderDirection}`)
     },
     orderDirection: 'asc',
@@ -103,7 +104,7 @@ export const TableWithAllDecks: Story = {
     onPlay: itemId => {
       alert(`Delete button with id:${itemId} is pushed!`)
     },
-    onSort: (orderDirection: OrderDirection, orderField: OrderField) => {
+    onSort: (orderDirection: SortDirection, orderField: DecksTableSortField) => {
       alert(`Table must be sorted: Field name: ${orderField}, Direction: ${orderDirection}`)
     },
     orderDirection: 'asc',

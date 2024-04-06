@@ -1,0 +1,30 @@
+.table {
+  width: 100%;
+}
+
+.row {
+  outline: var(--color-dark-500) solid 1px;
+}
+
+.headCell,
+.bodyCell {
+  align-content: center;
+  padding: 6px 24px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.headCell {
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+
+  background-color: var(--color-dark-500);
+  outline: 1px solid var(--color-dark-500);
+}
+
+.bodyCell {
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+}

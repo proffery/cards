@@ -1,5 +1,5 @@
 import { ArrowDropDown, ArrowDropUp, Edit, Play, Trash } from '@/assets/icons'
-import { Typography } from '@/components'
+import { Table, TableBody, TableBodyCell, TableHead, TableHeadCell, TableRow } from '@/components'
 
 import s from './tableDecks.module.scss'
 
@@ -8,12 +8,12 @@ type DecksTableProps = {
   onDelete: (itemId: string) => void
   onEdit: (itemId: string) => void
   onPlay: (itemId: string) => void
-  onSort: (orderDirection: OrderDirection, orderField: OrderField) => void
-  orderDirection?: OrderDirection
-  orderField?: OrderField
+  onSort: (orderDirection: SortDirection, orderField: DecksTableSortField) => void
+  orderDirection?: SortDirection
+  orderField?: DecksTableSortField
 }
-export type OrderDirection = 'asc' | 'desc'
-export type OrderField = 'author.name' | 'cardsCount' | 'name' | 'updated'
+export type SortDirection = 'asc' | 'desc'
+export type DecksTableSortField = 'author.name' | 'cardsCount' | 'name' | 'updated'
 
 export type Author = {
   id: string
@@ -39,69 +39,67 @@ export const TableDecks = ({
   orderDirection = 'asc',
   orderField = 'name',
 }: DecksTableProps) => {
-  const sortIconsSwitcher = (fieldName: OrderField) => {
+  const sortIconsSwitcher = (fieldName: DecksTableSortField) => {
     if (fieldName === orderField) {
-      return orderDirection === 'asc' ? <ArrowDropDown /> : <ArrowDropUp />
+      return orderDirection === 'asc' ? (
+        <button className={s.actionButton}>
+          <ArrowDropDown />
+        </button>
+      ) : (
+        <button className={s.actionButton}>
+          <ArrowDropUp />
+        </button>
+      )
+    } else {
+      return <button className={s.actionButton} />
     }
   }
-  const playButtonHandler = (itemId: string) => {
-    onPlay(itemId)
-  }
-  const editButtonHandler = (itemId: string) => {
-    onEdit(itemId)
-  }
-  const deleteButtonHandler = (itemId: string) => {
-    onDelete(itemId)
-  }
-  const sortButtonHandler = (orderField: OrderField) => {
+
+  const sortButtonHandler = (orderField: DecksTableSortField) => {
     onSort(orderDirection === 'asc' ? 'desc' : 'asc', orderField)
   }
 
   return (
-    <table className={s.table}>
-      <thead>
-        <tr className={s.row}>
-          <Typography.Subtitle2 as={'th'} className={s.headCell}>
-            <button className={s.columnButton} onClick={() => sortButtonHandler('name')}>
-              Name{sortIconsSwitcher('name')}
-            </button>
-          </Typography.Subtitle2>
-          <Typography.Subtitle2 as={'th'} className={s.headCell}>
-            <button className={s.columnButton} onClick={() => sortButtonHandler('cardsCount')}>
-              Cards{sortIconsSwitcher('cardsCount')}
-            </button>
-          </Typography.Subtitle2>
-          <Typography.Subtitle2 as={'th'} className={s.headCell}>
-            <button className={s.columnButton} onClick={() => sortButtonHandler('updated')}>
-              Last Updated{sortIconsSwitcher('updated')}
-            </button>
-          </Typography.Subtitle2>
-          <Typography.Subtitle2 as={'th'} className={s.headCell}>
-            <button className={s.columnButton} onClick={() => sortButtonHandler('author.name')}>
-              Created by{sortIconsSwitcher('author.name')}
-            </button>
-          </Typography.Subtitle2>
-        </tr>
-      </thead>
-      <tbody>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableHeadCell className={s.columnButton} onClick={() => sortButtonHandler('name')}>
+            Name{sortIconsSwitcher('name')}
+          </TableHeadCell>
+          <TableHeadCell className={s.columnButton} onClick={() => sortButtonHandler('cardsCount')}>
+            Cards{sortIconsSwitcher('cardsCount')}
+          </TableHeadCell>
+          <TableHeadCell className={s.columnButton} onClick={() => sortButtonHandler('updated')}>
+            Last Updated{sortIconsSwitcher('updated')}
+          </TableHeadCell>
+          <TableHeadCell
+            className={s.columnButton}
+            onClick={() => sortButtonHandler('author.name')}
+          >
+            Created by{sortIconsSwitcher('author.name')}
+          </TableHeadCell>
+          <TableHeadCell
+            className={s.columnButton}
+            onClick={() => sortButtonHandler('author.name')}
+          />
+        </TableRow>
+      </TableHead>
+      <TableBody>
         {items?.map(item => (
-          <tr className={s.row} key={item.id}>
-            <Typography.Body2 as={'td'} className={s.bodyCell}>
+          <TableRow key={item.id}>
+            <TableBodyCell className={s.cellWithImage}>
+              {item.cover && <img className={s.cover} src={item.cover} />}
               {item.name}
-            </Typography.Body2>
-            <Typography.Body2 as={'td'} className={s.bodyCell}>
-              {item.cardsCount}
-            </Typography.Body2>
-            <Typography.Body2 as={'td'} className={s.bodyCell}>
-              {item.updated}
-            </Typography.Body2>
-            <Typography.Body2 as={'td'} className={`${s.bodyCell} ${s.cellWithButtons}`}>
-              <Typography.Body2 as={'span'}>{item.author.name}</Typography.Body2>
+            </TableBodyCell>
+            <TableBodyCell>{item.cardsCount}</TableBodyCell>
+            <TableBodyCell>{item.updated}</TableBodyCell>
+            <TableBodyCell>{item.author.name}</TableBodyCell>
+            <TableBodyCell>
               <div className={s.buttonsContainer}>
                 <button
                   className={s.actionButton}
                   disabled={item.cardsCount === 0}
-                  onClick={() => playButtonHandler(item.id)}
+                  onClick={() => onPlay(item.id)}
                 >
                   <Play size={16} />
                 </button>
@@ -109,7 +107,7 @@ export const TableDecks = ({
                   <button
                     className={s.actionButton}
                     disabled={item.cardsCount === 0}
-                    onClick={() => editButtonHandler(item.id)}
+                    onClick={() => onEdit(item.id)}
                   >
                     <Edit size={16} />
                   </button>
@@ -118,16 +116,16 @@ export const TableDecks = ({
                   <button
                     className={s.actionButton}
                     disabled={item.cardsCount === 0}
-                    onClick={() => deleteButtonHandler(item.id)}
+                    onClick={() => onDelete(item.id)}
                   >
                     <Trash size={16} />
                   </button>
                 )}
               </div>
-            </Typography.Body2>
-          </tr>
+            </TableBodyCell>
+          </TableRow>
         ))}
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
   )
 }
