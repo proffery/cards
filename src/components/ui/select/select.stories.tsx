@@ -19,7 +19,7 @@ const options = [
   { label: 'Option 3', value: 'option3' },
 ]
 
-export const DefaultSelect: SelectStory = {
+export const Defaul: SelectStory = {
   args: {
     label: 'Select box',
     placeholder: 'Choose option...',
@@ -35,7 +35,7 @@ export const DefaultSelect: SelectStory = {
   ),
 }
 
-export const DisabledSelect: SelectStory = {
+export const Disabled: SelectStory = {
   args: {
     disabled: true,
     label: 'Select box',

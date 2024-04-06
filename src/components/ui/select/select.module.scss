@@ -49,6 +49,12 @@ button {
     cursor: default;
     color: var(--color-dark-300);
   }
+
+  &[data-state='open'] {
+    .icon {
+      transform: rotate(180deg);
+    }
+  }
 }
 
 .content {
@@ -75,6 +81,10 @@ button {
     color: var(--color-accent-300);
     background-color: var(--color-accent-900);
   }
+}
+
+.icon {
+  transition: transform 0.2s ease-in-out;
 }
 
 .label {

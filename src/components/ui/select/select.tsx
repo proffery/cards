@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useId } from 'react'
 
-import { ArrowDropDown, ArrowDropUp } from '@/assets/icons'
+import { ArrowDropDown } from '@/assets/icons'
 import { Label } from '@radix-ui/react-label'
 import * as SelectRadix from '@radix-ui/react-select'
 
@@ -19,26 +19,20 @@ type SelectItemProps = {
 
 export const Select: React.FC<SelectProps> = props => {
   const { children, disabled, label, placeholder, ...rest } = props
-
-  const [isOpen, setIsOpen] = useState(false)
+  const id = useId()
 
   return (
     <>
       {label && (
-        <Label className={s.label} htmlFor={label}>
+        <Label className={s.label} htmlFor={id}>
           {label}
         </Label>
       )}
 
-      <SelectRadix.Root {...rest} onOpenChange={setIsOpen} open={isOpen}>
-        <SelectRadix.Trigger
-          aria-label={label}
-          className={s.trigger}
-          disabled={disabled}
-          id={label}
-        >
+      <SelectRadix.Root {...rest}>
+        <SelectRadix.Trigger aria-label={label} className={s.trigger} disabled={disabled} id={id}>
           <SelectRadix.Value placeholder={placeholder} />
-          {isOpen ? <ArrowDropUp /> : <ArrowDropDown />}
+          <ArrowDropDown className={s.icon} />
         </SelectRadix.Trigger>
         <SelectRadix.Portal>
           <SelectRadix.Content avoidCollisions={false} className={s.content} position={'popper'}>
