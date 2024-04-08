@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import cover from '@/assets/images/cover.png'
-import { Deck, DecksTableSortField, SortDirection, TableDecks } from '@/components'
+import { DecksTableSortField, SortDirection, TableDecks } from '@/components'
+import { Deck } from '@/components/ui/table'
 const myDecksExample: Deck[] = [
   {
     author: {
@@ -76,16 +77,16 @@ type Story = StoryObj<typeof meta>
 export const TableWithMyDecks: Story = {
   args: {
     items: myDecksExample,
-    onDelete: itemId => {
+    onDeckDelete: itemId => {
       alert(`Delete button with id:${itemId} is pushed!`)
     },
-    onEdit: itemId => {
-      alert(`Delete button with id:${itemId} is pushed!`)
+    onDeckEdit: itemId => {
+      alert(`Edit button with id:${itemId} is pushed!`)
     },
-    onPlay: itemId => {
-      alert(`Delete button with id:${itemId} is pushed!`)
+    onDeckPlay: itemId => {
+      alert(`Play button with id:${itemId} is pushed!`)
     },
-    onSort: (orderDirection: SortDirection, orderField: DecksTableSortField) => {
+    onDecksSort: (orderDirection: SortDirection, orderField: DecksTableSortField) => {
       alert(`Table must be sorted: Field name: ${orderField}, Direction: ${orderDirection}`)
     },
     orderDirection: 'asc',
@@ -95,16 +96,16 @@ export const TableWithMyDecks: Story = {
 export const TableWithAllDecks: Story = {
   args: {
     items: allDecksExemple,
-    onDelete: itemId => {
+    onDeckDelete: itemId => {
       alert(`Delete button with id:${itemId} is pushed!`)
     },
-    onEdit: itemId => {
-      alert(`Delete button with id:${itemId} is pushed!`)
+    onDeckEdit: itemId => {
+      alert(`Edit button with id:${itemId} is pushed!`)
     },
-    onPlay: itemId => {
-      alert(`Delete button with id:${itemId} is pushed!`)
+    onDeckPlay: itemId => {
+      alert(`Play button with id:${itemId} is pushed!`)
     },
-    onSort: (orderDirection: SortDirection, orderField: DecksTableSortField) => {
+    onDecksSort: (orderDirection: SortDirection, orderField: DecksTableSortField) => {
       alert(`Table must be sorted: Field name: ${orderField}, Direction: ${orderDirection}`)
     },
     orderDirection: 'asc',

@@ -1,0 +1,1 @@
+export { localDate } from './dateToLocalFormat'
