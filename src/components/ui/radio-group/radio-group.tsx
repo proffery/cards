@@ -25,7 +25,8 @@ export const RadioGroup: React.FC<RadioGroupProps> = props => {
 }
 
 export const RadioGroupItem = React.forwardRef<HTMLButtonElement, RadioGroupItemProps>(
-  ({ children, value, ...rest }, forwardedRef) => {
+  (props, forwardedRef) => {
+    const { children, value, ...rest } = props
     const id = useId()
 
     return (
