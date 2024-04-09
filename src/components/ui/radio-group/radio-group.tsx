@@ -1,18 +1,17 @@
-import React, { useId } from 'react'
+import { ComponentPropsWithoutRef, ReactNode } from 'react'
 
 import * as RadioGroupRadix from '@radix-ui/react-radio-group'
-import { RadioGroupItemProps } from '@radix-ui/react-radio-group'
 
 import s from './radio-group.module.scss'
 
-type RadioGroupProps = {
-  children: React.ReactNode
+type Props = {
+  children: ReactNode
   defaultValue?: string
   disabled?: boolean
-  label: string
-} & React.ComponentProps<typeof RadioGroupRadix.Root>
+  label?: string
+} & ComponentPropsWithoutRef<typeof RadioGroupRadix.Root>
 
-export const RadioGroup: React.FC<RadioGroupProps> = props => {
+export const RadioGroup = (props: Props) => {
   const { children, defaultValue, disabled } = props
 
   return (
@@ -23,27 +22,3 @@ export const RadioGroup: React.FC<RadioGroupProps> = props => {
     </form>
   )
 }
-
-export const RadioGroupItem = React.forwardRef<HTMLButtonElement, RadioGroupItemProps>(
-  (props, forwardedRef) => {
-    const { children, value, ...rest } = props
-    const id = useId()
-
-    return (
-      <div className={s.item}>
-        <RadioGroupRadix.Item
-          {...rest}
-          className={s.radio}
-          id={id}
-          ref={forwardedRef}
-          value={value}
-        >
-          <RadioGroupRadix.Indicator className={s.indicator} />
-        </RadioGroupRadix.Item>
-        <label className={s.label} htmlFor={id}>
-          {children}
-        </label>
-      </div>
-    )
-  }
-)

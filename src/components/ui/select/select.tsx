@@ -1,4 +1,4 @@
-import React, { useId } from 'react'
+import { ComponentPropsWithoutRef, ReactNode, useId } from 'react'
 
 import { ArrowDropDown } from '@/assets/icons'
 import { Label } from '@radix-ui/react-label'
@@ -6,18 +6,14 @@ import * as SelectRadix from '@radix-ui/react-select'
 
 import s from './select.module.scss'
 
-type SelectProps = {
-  children?: React.ReactNode
+type Props = {
+  children?: ReactNode
   disabled?: boolean
-  label: string
+  label?: string
   placeholder: string
-} & React.ComponentProps<typeof SelectRadix.Root>
+} & ComponentPropsWithoutRef<typeof SelectRadix.Root>
 
-type SelectItemProps = {
-  children?: React.ReactNode
-} & React.ComponentPropsWithoutRef<typeof SelectRadix.Item>
-
-export const Select: React.FC<SelectProps> = props => {
+export const Select = (props: Props) => {
   const { children, disabled, label, placeholder, ...rest } = props
   const id = useId()
 
@@ -43,17 +39,3 @@ export const Select: React.FC<SelectProps> = props => {
     </>
   )
 }
-
-export const SelectItem = React.forwardRef<HTMLDivElement, SelectItemProps>(
-  ({ children, ...props }, forwardedRef) => {
-    return (
-      <SelectRadix.Item
-        {...props}
-        className={s.item}
-        ref={forwardedRef as React.ForwardedRef<HTMLDivElement>}
-      >
-        <SelectRadix.ItemText>{children}</SelectRadix.ItemText>
-      </SelectRadix.Item>
-    )
-  }
-)

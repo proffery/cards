@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { RadioGroup, RadioGroupItem } from './radio-group' // Ensure the correct path
+import { RadioGroup } from './radio-group'
+import { RadioGroupItem } from './radio-group-item'
 
 const meta: Meta<typeof RadioGroup> = {
   component: RadioGroup,

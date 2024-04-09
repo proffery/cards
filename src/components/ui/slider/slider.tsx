@@ -1,17 +1,19 @@
-import React from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 
 import * as SliderRadix from '@radix-ui/react-slider'
 
 import s from './slider.module.scss'
 
-export type SliderProps = {
+export type Props = {
   max: number
   min: number
   onValueChange: (value: number[]) => void
   value: number[]
-} & Omit<React.ComponentProps<typeof SliderRadix.Root>, 'max' | 'min' | 'onValueChange' | 'value'>
+} & ComponentPropsWithoutRef<typeof SliderRadix.Root>
 
-export const Slider: React.FC<SliderProps> = ({ max, min, onValueChange, value, ...rest }) => {
+export const Slider = (props: Props) => {
+  const { max, min, onValueChange, value, ...rest } = props
+
   const minValue = value?.[0] ?? min
   const maxValue = value?.[1] ?? max
 
