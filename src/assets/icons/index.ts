@@ -1,5 +1,6 @@
 export { ArrowDropDown } from '@/assets/icons/components/ArrowDropDown'
 export { ArrowDropUp } from '@/assets/icons/components/ArrowDropUp'
+export { CheckboxChecked } from '@/assets/icons/components/CheckboxChecked'
 export { Close } from '@/assets/icons/components/Close'
 export { Edit } from '@/assets/icons/components/Edit'
 export { EyeOffOutline } from '@/assets/icons/components/EyeOffOutline'

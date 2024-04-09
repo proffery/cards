@@ -12,10 +12,6 @@ const meta = {
       action: 'changed',
       description: 'Changeble value',
     },
-    type: {
-      control: { type: 'radio' },
-      options: ['password', 'text'],
-    },
     variant: {
       control: { type: 'radio' },
       options: ['search', 'default'],
@@ -90,7 +86,6 @@ export const PasswordError: Story = {
 export const Search: Story = {
   args: {
     disabled: false,
-    type: 'text',
     value: 'search',
     variant: 'search',
   },
@@ -98,7 +93,6 @@ export const Search: Story = {
 export const SearchDisabled: Story = {
   args: {
     disabled: true,
-    type: 'text',
     value: 'search',
     variant: 'search',
   },
@@ -107,7 +101,6 @@ export const SearchError: Story = {
   args: {
     disabled: false,
     errorMessage: 'Error!',
-    type: 'text',
     value: 'search',
     variant: 'search',
   },
@@ -116,7 +109,6 @@ export const SearchError: Story = {
 export const SearchValue: Story = {
   args: {
     disabled: false,
-    type: 'text',
     value: 'text',
     variant: 'search',
   },
