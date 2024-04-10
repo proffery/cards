@@ -1,7 +1,6 @@
 import { ComponentPropsWithoutRef, useState } from 'react'
 
 import { Close, EyeOffOutline, EyeOutline, Search } from '@/assets/icons'
-import { Typography } from '@/components'
 
 import s from './input.module.scss'
 
@@ -53,9 +52,7 @@ export const Input = ({
         {...rest}
         type={type === 'password' && !showPassword ? 'password' : 'text'}
       />
-      {errorMessage && (
-        <Typography.Caption className={s.errorContainer}>{errorMessage}</Typography.Caption>
-      )}
+      {errorMessage && <div className={s.errorMessage}>{errorMessage}</div>}
       {type === 'password' && (
         <button
           className={s.inputButton}
@@ -64,11 +61,16 @@ export const Input = ({
           onMouseUp={hidePasswordHandler}
           title={'Show password'}
         >
-          {showPassword ? (
-            <EyeOutline className={`${s.inputIcon} ${errorMessage ? s.error : ''}`} size={20} />
-          ) : (
-            <EyeOffOutline className={`${s.inputIcon} ${errorMessage ? s.error : ''}`} size={20} />
-          )}
+          {showPassword
+            ? value && (
+                <EyeOutline className={`${s.inputIcon} ${errorMessage ? s.error : ''}`} size={20} />
+              )
+            : value && (
+                <EyeOffOutline
+                  className={`${s.inputIcon} ${errorMessage ? s.error : ''}`}
+                  size={20}
+                />
+              )}
         </button>
       )}
       {variant === 'search' && (

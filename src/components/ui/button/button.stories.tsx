@@ -51,15 +51,6 @@ export const Disabled: Story = {
     variant: 'primary',
   },
 }
-export const Active: Story = {
-  args: {
-    as: 'button',
-    children: 'Disabled Button',
-    disabled: false,
-    isActive: true,
-    variant: 'primary',
-  },
-}
 
 export const FullWidth: Story = {
   args: {
@@ -109,21 +100,6 @@ export const WithIconDisabled: Story = {
     ),
     disabled: true,
     fullWidth: false,
-    variant: 'secondary',
-  },
-}
-export const WithIconActive: Story = {
-  args: {
-    as: 'button',
-    children: (
-      <>
-        <Logout size={16} />
-        Button With Icon
-      </>
-    ),
-    disabled: false,
-    fullWidth: false,
-    isActive: true,
     variant: 'secondary',
   },
 }

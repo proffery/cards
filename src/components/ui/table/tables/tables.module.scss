@@ -1,0 +1,54 @@
+.columnButton {
+  cursor: pointer;
+  position: relative;
+
+  svg {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.contentContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.cover {
+  width: 118px;
+  height: 48px;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 2px;
+}
+
+.actionButton {
+  all: unset;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:disabled {
+    cursor: initial;
+    color: var(--color-light-900);
+  }
+}
