@@ -1,42 +1,55 @@
-import { Fragment } from 'react'
+import { ComponentPropsWithoutRef, Fragment, ReactNode } from 'react'
 
+import { Typography } from '@/components'
 import { Tab } from '@headlessui/react'
 
 import s from './tabSwitcher.module.scss'
 
-export const TabSwitcher = () => {
+type TabGroupProps = {
+  children?: ReactNode
+  label?: string
+} & ComponentPropsWithoutRef<typeof Tab.Group>
+export const TabGroup = ({ children, label }: TabGroupProps) => {
   return (
-    <Tab.Group>
-      <Tab.List>
-        <Tab as={Fragment}>
-          {({ selected }) => (
-            <button className={`${s.tab} ${selected ? s.selected : s.default}`}>Tab1</button>
-          )}
-        </Tab>
-        <Tab as={Fragment}>
-          {({ selected }) => (
-            <button className={`${s.tab} ${selected ? s.selected : s.default}`}>Tab2</button>
-          )}
-        </Tab>
-        <Tab as={Fragment}>
-          {({ selected }) => (
-            <button className={`${s.tab} ${selected ? s.selected : s.default}`} disabled>
-              Tab3
-            </button>
-          )}
-        </Tab>
-        <Tab as={Fragment}>
-          {({ selected }) => (
-            <button className={`${s.tab} ${selected ? s.selected : s.default}`}>Tab</button>
-          )}
-        </Tab>
-      </Tab.List>
-      <Tab.Panels>
-        <Tab.Panel>Content 1</Tab.Panel>
-        <Tab.Panel>Content 2</Tab.Panel>
-        <Tab.Panel>Content 3</Tab.Panel>
-        <Tab.Panel>Content 4</Tab.Panel>
-      </Tab.Panels>
-    </Tab.Group>
+    <>
+      {label && <Typography.Body2>{label}</Typography.Body2>}
+      <Tab.Group>{children}</Tab.Group>
+    </>
   )
+}
+
+type TabListProps = {
+  children?: ReactNode
+} & ComponentPropsWithoutRef<typeof Tab.List>
+export const TabList = ({ children }: TabListProps) => {
+  return <Tab.List>{children}</Tab.List>
+}
+
+type TabItemProps = {
+  children?: ReactNode
+} & ComponentPropsWithoutRef<'button'>
+export const TabItem = ({ children, disabled }: TabItemProps) => {
+  return (
+    <Tab as={Fragment}>
+      {({ selected }) => (
+        <button className={`${s.tab} ${selected ? s.selected : s.default}`} disabled={disabled}>
+          {children}
+        </button>
+      )}
+    </Tab>
+  )
+}
+
+type TabContentListProps = {
+  children?: ReactNode
+} & ComponentPropsWithoutRef<typeof Tab.Panels>
+export const TabContentList = ({ children }: TabContentListProps) => {
+  return <Tab.Panels>{children}</Tab.Panels>
+}
+
+type TabContentItemProps = {
+  children?: ReactNode
+} & ComponentPropsWithoutRef<typeof Tab.Panel>
+export const TabContentItem = ({ children }: TabContentItemProps) => {
+  return <Tab.Panel>{children}</Tab.Panel>
 }
