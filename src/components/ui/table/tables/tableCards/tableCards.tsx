@@ -21,7 +21,7 @@ export type Cards = {
   answer: string
   answerImg: string
   answerVideo: string
-  created: '2024-04-08T07:00:27.306Z'
+  created: string
   deckId: string
   grade: number
   id: string
@@ -29,7 +29,7 @@ export type Cards = {
   questionImg: string
   questionVideo: string
   shots: number
-  updated: '2024-04-08T07:00:27.306Z'
+  updated: string
   userId: string
 }
 
