@@ -1,4 +1,5 @@
 export { Button } from './ui/button/button'
+export { Checkbox } from './ui/checkbox/checkbox'
 export { Input } from './ui/input/input'
 export { TabSwitcher } from './ui/tabSwitcher/tabSwitcher'
 export * from './ui/table/tablePrimitives/tablePrimitives'

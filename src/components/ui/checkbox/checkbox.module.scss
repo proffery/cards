@@ -4,18 +4,24 @@
   color: var(--color-light-100);
 }
 
-.button {
+.label {
   cursor: pointer;
-
-  position: relative;
-
   display: flex;
+  gap: 10px;
   align-items: center;
-  justify-content: center;
+}
+
+.label.reverse {
+  flex-direction: row-reverse;
+}
+
+.checkbox {
+  position: relative;
 
   width: 18px;
   height: 18px;
 
+  background-color: var(--color-dark-900);
   border-color: var(--color-light-900);
   border-style: solid;
   border-width: 2px;
@@ -25,7 +31,7 @@
     content: '';
 
     position: absolute;
-    z-index: -10;
+    z-index: -1;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -39,35 +45,25 @@
   }
 }
 
-.button.checked {
-  border-color: var(--color-light-100);
-}
-
-.button.disabled {
-  border-color: var(--color-dark-100);
-
-  &:hover::after {
-    all: unset;
-  }
-}
-
-.button.disabled.checked {
+.checkbox.disabled.checked {
   background-color: var(--color-light-100);
 }
 
-.checkbox {
+.indicator {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: 18px;
   height: 18px;
-}
 
-.label {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.indicator {
   svg {
+    position: absolute;
+    top: -17%;
+    left: -45%;
+
     width: 18px;
     height: 18px;
   }
@@ -77,4 +73,8 @@
   cursor: initial;
   color: var(--color-dark-100);
   border-color: var(--color-dark-100);
+
+  &:hover::after {
+    all: unset;
+  }
 }
