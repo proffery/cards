@@ -1,74 +1,38 @@
-import React from 'react'
+import { ComponentPropsWithoutRef, ReactNode, useId } from 'react'
 
-import { ArrowDropDown, ArrowDropUp } from '@/assets/icons'
+import { ArrowDropDown } from '@/assets/icons'
+import { Label } from '@radix-ui/react-label'
 import * as SelectRadix from '@radix-ui/react-select'
 
 import s from './select.module.scss'
 
-type Option = {
-  label: string
-  value: string
-}
-
-type SelectProps = {
+type Props = {
+  children?: ReactNode
   disabled?: boolean
-  onOpenChange?: (open: boolean) => void
-  onValueChange?: (value: string) => void
-  options: Option[]
+  label?: string
   placeholder: string
-  selectLabel: string
-} & Omit<React.ComponentProps<typeof SelectRadix.Root>, 'onOpenChange' | 'onValueChange'>
+} & ComponentPropsWithoutRef<typeof SelectRadix.Root>
 
-export const Select: React.FC<SelectProps> = props => {
-  const {
-    disabled,
-    onOpenChange: externalOnOpenChange,
-    onValueChange: externalOnValueChange,
-    options,
-    placeholder,
-    selectLabel,
-    ...rest
-  } = props
+export const Select = (props: Props) => {
+  const { children, disabled, label, placeholder, ...rest } = props
+  const id = useId()
 
   return (
     <>
-      {selectLabel && (
-        <label className={s.selectLabel} htmlFor={selectLabel}>
-          {selectLabel}
-        </label>
+      {label && (
+        <Label className={s.label} htmlFor={id}>
+          {label}
+        </Label>
       )}
 
-      <SelectRadix.Root
-        onOpenChange={open => {
-          if (externalOnOpenChange) {
-            externalOnOpenChange(open)
-          }
-        }}
-        onValueChange={value => {
-          if (externalOnValueChange) {
-            externalOnValueChange(value)
-          }
-        }}
-        {...rest}
-      >
-        <SelectRadix.Trigger
-          aria-label={selectLabel}
-          className={s.trigger}
-          disabled={disabled}
-          id={selectLabel}
-        >
+      <SelectRadix.Root {...rest}>
+        <SelectRadix.Trigger aria-label={label} className={s.trigger} disabled={disabled} id={id}>
           <SelectRadix.Value placeholder={placeholder} />
-          {rest.open ? <ArrowDropUp /> : <ArrowDropDown />}
+          <ArrowDropDown className={s.icon} />
         </SelectRadix.Trigger>
         <SelectRadix.Portal>
           <SelectRadix.Content avoidCollisions={false} className={s.content} position={'popper'}>
-            <SelectRadix.Viewport>
-              {options?.map(option => (
-                <SelectRadix.Item className={s.item} key={option.value} value={option.value}>
-                  <SelectRadix.ItemText>{option.label}</SelectRadix.ItemText>
-                </SelectRadix.Item>
-              ))}
-            </SelectRadix.Viewport>
+            <SelectRadix.Viewport>{children}</SelectRadix.Viewport>
           </SelectRadix.Content>
         </SelectRadix.Portal>
       </SelectRadix.Root>

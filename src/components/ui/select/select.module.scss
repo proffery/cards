@@ -31,6 +31,7 @@ button {
 .trigger {
   @include common;
 
+  background-color: var(--color-dark-900);
   border: $border-width solid var(--color-dark-300);
 
   &:hover {
@@ -48,6 +49,12 @@ button {
     cursor: default;
     color: var(--color-dark-300);
   }
+
+  &[data-state='open'] {
+    .icon {
+      transform: rotate(180deg);
+    }
+  }
 }
 
 .content {
@@ -58,6 +65,7 @@ button {
 
   width: $width;
 
+  background-color: var(--color-dark-900);
   border: $border-width solid var(--color-dark-300);
 
   &[data-state='open'] {
@@ -75,7 +83,11 @@ button {
   }
 }
 
-.selectLabel {
+.icon {
+  transition: transform 0.2s ease-in-out;
+}
+
+.label {
   font-size: var(--font-size-s);
   color: var(--color-dark-100);
 }
