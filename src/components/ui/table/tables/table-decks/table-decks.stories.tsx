@@ -67,7 +67,7 @@ const allDecksExemple = [
 const meta = {
   component: TableDecks,
   tags: ['autodocs'],
-  title: 'Components/TableDecks',
+  title: 'Components/Table/Tables/DecksTable',
 } satisfies Meta<typeof TableDecks>
 
 export default meta

@@ -3,7 +3,7 @@ import { ComponentPropsWithoutRef, Fragment, ReactNode } from 'react'
 import { Typography } from '@/components'
 import { Tab } from '@headlessui/react'
 
-import s from './tabSwitcher.module.scss'
+import s from './tab-switcher.module.scss'
 
 type TabGroupProps = {
   children?: ReactNode

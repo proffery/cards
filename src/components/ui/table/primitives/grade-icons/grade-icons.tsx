@@ -1,6 +1,6 @@
 import { Star, StarOutline } from '@/assets/icons'
 
-import s from './gradeIcons.module.scss'
+import s from './grade-icons.module.scss'
 type GradeProps = {
   from: number
   grade: number

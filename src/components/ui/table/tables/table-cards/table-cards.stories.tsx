@@ -55,7 +55,7 @@ const cardsExample: CardType[] = [
 const meta = {
   component: TableCards,
   tags: ['autodocs'],
-  title: 'Components/TableCards',
+  title: 'Components/Table/Tables/CardsTable',
 } satisfies Meta<typeof TableCards>
 
 export default meta

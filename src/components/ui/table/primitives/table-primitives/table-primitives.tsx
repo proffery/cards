@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import s from './tablePrimitives.module.scss'
+import s from './table-primitives.module.scss'
 
 export const Table = forwardRef<HTMLTableElement, ComponentPropsWithoutRef<'table'>>(
   ({ className, ...rest }, ref) => {

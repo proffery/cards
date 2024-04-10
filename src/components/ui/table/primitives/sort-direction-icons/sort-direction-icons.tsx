@@ -1,8 +1,8 @@
 import { ArrowDropDown, ArrowDropUp } from '@/assets/icons'
 
-import s from './sortDirectionIcons.module.scss'
+import s from './sort-direction-icons.module.scss'
 
-import { CardsTableSortField, DecksTableSortField, SortDirection } from '../index'
+import { CardsTableSortField, DecksTableSortField, SortDirection } from '../../index'
 
 type SortIconProps<T = CardsTableSortField | DecksTableSortField> = {
   fieldName: T
