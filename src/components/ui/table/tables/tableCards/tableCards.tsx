@@ -7,7 +7,7 @@ import s from '../tables.module.scss'
 
 type CardsTableProps = {
   isPrivate: boolean
-  items: Cards[]
+  items: CardType[]
   onCardDelete: (itemId: string) => void
   onCardEdit: (itemId: string) => void
   onCardsSort: (orderDirection: SortDirection, orderField: CardsTableSortField) => void
@@ -17,7 +17,7 @@ type CardsTableProps = {
 
 export type CardsTableSortField = 'answer' | 'grade' | 'question' | 'updated'
 
-export type Cards = {
+export type CardType = {
   answer: string
   answerImg: string
   answerVideo: string

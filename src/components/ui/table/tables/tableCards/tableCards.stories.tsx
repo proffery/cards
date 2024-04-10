@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import cover from '@/assets/images/cover.png'
 import { SortDirection } from '@/components'
-import { Cards, CardsTableSortField, TableCards } from '@/components/ui/table/index'
+import { CardType, CardsTableSortField, TableCards } from '@/components/ui/table/index'
 
-const cardsExample: Cards[] = [
+const cardsExample: CardType[] = [
   {
     answer: 'First answer',
     answerImg: '',
