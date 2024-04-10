@@ -39,6 +39,22 @@
   }
 }
 
+.button.checked {
+  border-color: var(--color-light-100);
+}
+
+.button.disabled {
+  border-color: var(--color-dark-100);
+
+  &:hover::after {
+    all: unset;
+  }
+}
+
+.button.disabled.checked {
+  background-color: var(--color-light-100);
+}
+
 .checkbox {
   width: 18px;
   height: 18px;
@@ -61,14 +77,4 @@
   cursor: initial;
   color: var(--color-dark-100);
   border-color: var(--color-dark-100);
-}
-
-.button.disabled {
-  &:hover::after {
-    all: unset;
-  }
-}
-
-.button.disabled.checked {
-  background-color: var(--color-light-100);
 }
