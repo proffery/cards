@@ -25,9 +25,13 @@ option {
   color: inherit;
 }
 
-//a:visited {
+*:focus-visible {
+  outline: 2px solid var(--color-info-500);
+}
+
+// a:visited {
 //  color: inherit;
-//}
+// }
 
 body {
   margin: 0;

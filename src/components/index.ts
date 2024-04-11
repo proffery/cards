@@ -6,4 +6,6 @@ export * from '@/components/ui/table/primitives/table-primitives/table-primitive
 export { Typography } from './ui/typography/typography'
 export { Card } from '@/components/ui/card/card'
 export * from '@/components/ui/radio-group'
+export * from '@/components/ui/select'
 export * from '@/components/ui/table/'
+export { Pagination } from '@/components/ui/pagination/pagination'

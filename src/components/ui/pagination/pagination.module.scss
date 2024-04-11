@@ -1,0 +1,100 @@
+.container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.arrow {
+  all: unset;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--color-light-100);
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-500);
+  }
+
+  &:disabled {
+    cursor: default;
+    color: var(--color-dark-100);
+  }
+}
+
+.page {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: fit-content;
+  min-width: 24px;
+  height: 24px;
+
+  background-color: var(--color-dark-900);
+  border-radius: 2px;
+
+  &:hover {
+    background-color: var(--color-dark-500);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-500);
+  }
+}
+
+.active {
+  color: var(--color-dark-900);
+  background-color: var(--color-light-100);
+
+  &:hover {
+    background-color: var(--color-light-100);
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.selectContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  white-space: nowrap;
+
+  button {
+    gap: 4px;
+    align-items: center;
+
+    max-width: fit-content;
+    max-height: 24px;
+    padding: 0 4px;
+
+    text-align: center;
+
+    border-radius: 2px;
+  }
+}
+
+// select items container
+div[dir='ltr'] {
+  width: fit-content;
+  padding: 0;
+  border-radius: 2px;
+
+  // select item
+  div[role='option'] {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+
+    width: 100%;
+    max-height: 24px;
+    padding: 0 4px;
+  }
+}

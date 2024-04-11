@@ -1,5 +1,7 @@
+export { ArrowBack } from '@/assets/icons/components/ArrowBack'
 export { ArrowDropDown } from '@/assets/icons/components/ArrowDropDown'
 export { ArrowDropUp } from '@/assets/icons/components/ArrowDropUp'
+export { ArrowForward } from '@/assets/icons/components/ArrowForward'
 export { CheckboxChecked } from '@/assets/icons/components/CheckboxChecked'
 export { Close } from '@/assets/icons/components/Close'
 export { Edit } from '@/assets/icons/components/Edit'
