@@ -24,7 +24,7 @@ export const DefaultQuestion: Story = {
     children: (
       <>
         <Typography.H1 style={{ textAlign: 'center' }}>Learn &quot;Deck name&quot;</Typography.H1>
-        <Typography.Body1>
+        <Typography.Body1 as={'div'}>
           <Typography.Subtitle1 as={'span'}>Question:</Typography.Subtitle1> How &quot;This&quot;
           works in JavaScript?
           <Typography.Body2 style={{ color: 'var(--color-dark-100)' }}>
@@ -42,7 +42,7 @@ export const WithCoverQuestion: Story = {
     children: (
       <>
         <Typography.H1 style={{ textAlign: 'center' }}>Learn &quot;Deck name&quot;</Typography.H1>
-        <Typography.Body1>
+        <Typography.Body1 as={'div'}>
           <Typography.Subtitle1 as={'span'}>Question:</Typography.Subtitle1> How &quot;This&quot;
           works in JavaScript?
           <Typography.Body2 style={{ color: 'var(--color-dark-100)' }}>
@@ -61,7 +61,7 @@ export const DefaultAnswer: Story = {
     children: (
       <>
         <Typography.H1 style={{ textAlign: 'center' }}>Learn &quot;Deck name&quot;</Typography.H1>
-        <Typography.Body1>
+        <Typography.Body1 as={'div'}>
           <Typography.Subtitle1 as={'span'}>Question:</Typography.Subtitle1> How &quot;This&quot;
           works in JavaScript?
           <Typography.Body2 style={{ color: 'var(--color-dark-100)' }}>
@@ -73,7 +73,7 @@ export const DefaultAnswer: Story = {
           &quot;This&quot; works in JavaScript
         </Typography.Body1>
         <Typography.Subtitle1 as={'span'}>Rate yourself:</Typography.Subtitle1>
-        <Typography.Body2>
+        <Typography.Body2 as={'div'}>
           <RadioGroup>
             {answerOptions.map(option => (
               <RadioGroupItem key={option.value} value={option.value}>
@@ -93,7 +93,7 @@ export const WithCoverAnswer: Story = {
     children: (
       <>
         <Typography.H1 style={{ textAlign: 'center' }}>Learn &quot;Deck name&quot;</Typography.H1>
-        <Typography.Body1>
+        <Typography.Body1 as={'div'}>
           <Typography.Subtitle1 as={'span'}>Question:</Typography.Subtitle1> How &quot;This&quot;
           works in JavaScript?
           <Typography.Body2 style={{ color: 'var(--color-dark-100)' }}>
@@ -106,7 +106,7 @@ export const WithCoverAnswer: Story = {
         </Typography.Body1>
         <Typography.Subtitle1 as={'span'}>Rate yourself:</Typography.Subtitle1>
         <img alt={'Cover'} src={cover} style={{ width: '100%' }} />
-        <Typography.Body2>
+        <Typography.Body2 as={'div'}>
           <RadioGroup>
             {answerOptions.map(option => (
               <RadioGroupItem key={option.value} value={option.value}>
