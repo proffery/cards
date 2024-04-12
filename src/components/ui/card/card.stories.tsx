@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import cover from '@/assets/images/cover.png'
 import { Button, Card, RadioGroup, RadioGroupItem, Typography } from '@/components'
-// Options for the radio group
+
 const answerOptions = [
   { label: 'Did not know', value: '1' },
   { label: 'Forgot', value: '2' },
@@ -23,6 +23,7 @@ export const DefaultQuestion: Story = {
   args: {
     children: (
       <>
+        <Typography.H1 style={{ textAlign: 'center' }}>Learn &quot;Deck name&quot;</Typography.H1>
         <Typography.Body1>
           <Typography.Subtitle1 as={'span'}>Question:</Typography.Subtitle1> How &quot;This&quot;
           works in JavaScript?
@@ -33,7 +34,6 @@ export const DefaultQuestion: Story = {
         <Button fullWidth>Show Answer</Button>
       </>
     ),
-    title: 'Learn "Deck name"',
   },
 }
 
@@ -41,6 +41,7 @@ export const WithCoverQuestion: Story = {
   args: {
     children: (
       <>
+        <Typography.H1 style={{ textAlign: 'center' }}>Learn &quot;Deck name&quot;</Typography.H1>
         <Typography.Body1>
           <Typography.Subtitle1 as={'span'}>Question:</Typography.Subtitle1> How &quot;This&quot;
           works in JavaScript?
@@ -52,7 +53,6 @@ export const WithCoverQuestion: Story = {
         <Button fullWidth>Show Answer</Button>
       </>
     ),
-    title: 'Learn "Deck name"',
   },
 }
 
@@ -60,6 +60,7 @@ export const DefaultAnswer: Story = {
   args: {
     children: (
       <>
+        <Typography.H1 style={{ textAlign: 'center' }}>Learn &quot;Deck name&quot;</Typography.H1>
         <Typography.Body1>
           <Typography.Subtitle1 as={'span'}>Question:</Typography.Subtitle1> How &quot;This&quot;
           works in JavaScript?
@@ -84,7 +85,6 @@ export const DefaultAnswer: Story = {
         <Button fullWidth>Show Answer</Button>
       </>
     ),
-    title: 'Learn "Deck name"',
   },
 }
 
@@ -92,6 +92,7 @@ export const WithCoverAnswer: Story = {
   args: {
     children: (
       <>
+        <Typography.H1 style={{ textAlign: 'center' }}>Learn &quot;Deck name&quot;</Typography.H1>
         <Typography.Body1>
           <Typography.Subtitle1 as={'span'}>Question:</Typography.Subtitle1> How &quot;This&quot;
           works in JavaScript?
@@ -117,6 +118,5 @@ export const WithCoverAnswer: Story = {
         <Button fullWidth>Show Answer</Button>
       </>
     ),
-    title: 'Learn "Deck name"',
   },
 }

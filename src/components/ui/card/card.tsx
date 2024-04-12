@@ -1,18 +1,19 @@
 import { ComponentPropsWithoutRef, forwardRef } from 'react'
 
-import { Typography } from '@/components'
+import clsx from 'clsx'
 
 import s from './card.module.scss'
 
-type CardProps = {
-  title?: string
-} & ComponentPropsWithoutRef<'div'>
+type CardProps = {} & ComponentPropsWithoutRef<'div'>
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ children, className, title, ...rest }: CardProps, ref) => {
+  ({ children, className, ...rest }: CardProps, ref) => {
+    const classNames = {
+      card: clsx(s.card, className),
+    }
+
     return (
-      <div ref={ref} {...rest} className={`${s.card} ${className || ''}`}>
-        {title && <Typography.H1 className={s.title}>{title}</Typography.H1>}
+      <div ref={ref} {...rest} className={classNames.card}>
         {children}
       </div>
     )
