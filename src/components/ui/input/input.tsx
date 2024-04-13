@@ -1,6 +1,7 @@
-import { ComponentPropsWithoutRef, forwardRef, useState } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, useId, useState } from 'react'
 
 import { Close, EyeOffOutline, EyeOutline, Search } from '@/assets/icons'
+import clsx from 'clsx'
 
 import s from './input.module.scss'
 
@@ -22,6 +23,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled,
       errorMessage,
       fullWidth,
+      id,
       label,
       type = 'text',
       value,
@@ -30,7 +32,19 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     }: InputProps,
     ref
   ) => {
+    const classNames = {
+      container: clsx(s.container, fullWidth && s.fullWidth),
+      errorMessage: clsx(s.errorMessage),
+      input: clsx(className, s.input, variant && s[variant], errorMessage && s.error),
+      inputButton: clsx(s.inputButton),
+      inputIcon: clsx(s.inputIcon, errorMessage && s.error),
+      label: clsx(s.label),
+      searchContainer: clsx(s.searchContainer, disabled && s.disabled),
+    }
+
     const [showPassword, setShowPassword] = useState(false)
+    const new_id = useId()
+
     const showPasswordHandler = () => {
       setShowPassword(true)
     }
@@ -39,55 +53,48 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     }
 
     return (
-      <div className={`${s.container} ${fullWidth ? s.fullWidth : ''}`}>
+      <div className={classNames.container}>
         {label && (
-          <label className={s.label} htmlFor={label}>
+          <label className={classNames.label} htmlFor={id ?? new_id}>
             {label}
           </label>
         )}
         <input
-          className={`${s.input} ${variant ? s[variant] : ''} ${errorMessage ? s.error : ''} ${
-            className || ''
-          }`}
+          className={classNames.input}
           disabled={disabled}
-          id={label ? label : ''}
+          id={id ?? new_id}
           ref={ref}
           value={value}
           {...rest}
           type={type === 'password' && !showPassword ? 'password' : 'text'}
         />
-        {errorMessage && <div className={s.errorMessage}>{errorMessage}</div>}
+        {errorMessage && <div className={classNames.errorMessage}>{errorMessage}</div>}
         {type === 'password' && (
           <button
-            className={s.inputButton}
+            className={classNames.inputButton}
             disabled={disabled}
             onMouseDown={showPasswordHandler}
             onMouseUp={hidePasswordHandler}
             title={'Show password'}
           >
-            {showPassword
-              ? value && (
-                  <EyeOutline
-                    className={`${s.inputIcon} ${errorMessage ? s.error : ''}`}
-                    size={20}
-                  />
-                )
-              : value && (
-                  <EyeOffOutline
-                    className={`${s.inputIcon} ${errorMessage ? s.error : ''}`}
-                    size={20}
-                  />
-                )}
+            {showPassword ? (
+              // value &&
+              <EyeOutline className={classNames.inputIcon} size={20} />
+            ) : (
+              // value &&
+              <EyeOffOutline className={classNames.inputIcon} size={20} />
+            )}
           </button>
         )}
         {variant === 'search' && (
-          <div className={`${s.searchContainer} ${disabled ? s.disabled : ''}`}>
-            <Search className={`${s.inputIcon} ${errorMessage ? s.error : ''}`} />
+          <div className={classNames.searchContainer}>
+            <Search className={classNames.inputIcon} />
           </div>
         )}
-        {variant === 'search' && value && (
-          <button className={s.inputButton} disabled={disabled} onClick={cleanSearch}>
-            <Close className={`${s.inputIcon} ${errorMessage ? s.error : ''}`} />
+        {variant === 'search' && (
+          // value &&
+          <button className={classNames.inputButton} disabled={disabled} onClick={cleanSearch}>
+            <Close className={classNames.inputIcon} />
           </button>
         )}
       </div>
