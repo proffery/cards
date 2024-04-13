@@ -15,7 +15,7 @@ type FormFields = {
 }
 
 export const SignUp = ({ onSubmit }: Props) => {
-  const { handleSubmit, register } = useForm<FormFields>()
+  const { handleSubmit, register, setValue, watch } = useForm<FormFields>()
   const classNames = {
     form: clsx(s.form),
     root: clsx(s.root),
@@ -27,12 +27,21 @@ export const SignUp = ({ onSubmit }: Props) => {
       <Typography.H1>Sign Up</Typography.H1>
       <form className={classNames.form} onSubmit={handleSubmit(data => onSubmit(data))}>
         <Input fullWidth {...register('email')} label={'Email'} />
-        <Input fullWidth label={'Password'} type={'password'} {...register('password')} />
+        <Input
+          fullWidth
+          label={'Password'}
+          type={'password'}
+          {...register('password')}
+          onChange={e => setValue('password', e.target.value)}
+          value={watch('password')}
+        />
         <Input
           fullWidth
           label={'Confirm Password'}
           type={'password'}
           {...register('confirmPassword')}
+          onChange={e => setValue('confirmPassword', e.target.value)}
+          value={watch('confirmPassword')}
         />
         <Button className={classNames.submit} fullWidth>
           Sign Up

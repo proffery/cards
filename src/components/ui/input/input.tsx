@@ -41,6 +41,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       label: clsx(s.label),
       searchContainer: clsx(s.searchContainer, disabled && s.disabled),
     }
+    const isTypePassword = type === 'password'
+    const isVariantSearch = variant === 'search'
 
     const [showPassword, setShowPassword] = useState(false)
     const new_id = useId()
@@ -66,10 +68,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           value={value}
           {...rest}
-          type={type === 'password' && !showPassword ? 'password' : 'text'}
+          type={isTypePassword && !showPassword ? 'password' : 'text'}
         />
         {errorMessage && <div className={classNames.errorMessage}>{errorMessage}</div>}
-        {type === 'password' && (
+        {isTypePassword && (
           <button
             className={classNames.inputButton}
             disabled={disabled}
@@ -77,22 +79,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             onMouseUp={hidePasswordHandler}
             title={'Show password'}
           >
-            {showPassword ? (
-              // value &&
-              <EyeOutline className={classNames.inputIcon} size={20} />
-            ) : (
-              // value &&
-              <EyeOffOutline className={classNames.inputIcon} size={20} />
-            )}
+            {showPassword
+              ? value && <EyeOutline className={classNames.inputIcon} size={20} />
+              : value && <EyeOffOutline className={classNames.inputIcon} size={20} />}
           </button>
         )}
-        {variant === 'search' && (
+        {isVariantSearch && (
           <div className={classNames.searchContainer}>
             <Search className={classNames.inputIcon} />
           </div>
         )}
-        {variant === 'search' && (
-          // value &&
+        {isVariantSearch && value && (
           <button className={classNames.inputButton} disabled={disabled} onClick={cleanSearch}>
             <Close className={classNames.inputIcon} />
           </button>
