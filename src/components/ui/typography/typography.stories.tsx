@@ -89,3 +89,10 @@ export const Link2: Story = {
     </Typography.Link2>
   ),
 }
+export const Link3: Story = {
+  render: () => (
+    <Typography.Link3>
+      Carosserie Test Zürich Stauffacherstrasse 31 8004 Zürich, ZH, CH
+    </Typography.Link3>
+  ),
+}
