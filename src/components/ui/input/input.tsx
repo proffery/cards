@@ -41,18 +41,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       label: clsx(s.label),
       searchContainer: clsx(s.searchContainer, disabled && s.disabled),
     }
-    const isTypePassword = type === 'password'
-    const isVariantSearch = variant === 'search'
+
+    const typeIsPassword = type === 'password'
+    const variantIsSearch = variant === 'search'
 
     const [showPassword, setShowPassword] = useState(false)
-    const new_id = useId()
 
-    const showPasswordHandler = () => {
-      setShowPassword(true)
-    }
-    const hidePasswordHandler = () => {
-      setShowPassword(false)
-    }
+    const new_id = useId()
 
     return (
       <div className={classNames.container}>
@@ -68,15 +63,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           value={value}
           {...rest}
-          type={isTypePassword && !showPassword ? 'password' : 'text'}
+          type={typeIsPassword && !showPassword ? 'password' : 'text'}
         />
         {errorMessage && <div className={classNames.errorMessage}>{errorMessage}</div>}
-        {isTypePassword && (
+        {typeIsPassword && (
           <button
             className={classNames.inputButton}
             disabled={disabled}
-            onMouseDown={showPasswordHandler}
-            onMouseUp={hidePasswordHandler}
+            onMouseDown={() => setShowPassword(true)}
+            onMouseUp={() => setShowPassword(false)}
             title={'Show password'}
           >
             {showPassword
@@ -84,12 +79,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               : value && <EyeOffOutline className={classNames.inputIcon} size={20} />}
           </button>
         )}
-        {isVariantSearch && (
+        {variantIsSearch && (
           <div className={classNames.searchContainer}>
             <Search className={classNames.inputIcon} />
           </div>
         )}
-        {isVariantSearch && value && (
+        {variantIsSearch && value && (
           <button className={classNames.inputButton} disabled={disabled} onClick={cleanSearch}>
             <Close className={classNames.inputIcon} />
           </button>

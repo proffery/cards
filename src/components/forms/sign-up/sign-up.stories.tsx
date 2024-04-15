@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>
 export const SignUpForm: Story = {
   args: {
     onSubmit: data => {
-      console.log(data)
+      alert(JSON.stringify(data))
     },
   },
 }

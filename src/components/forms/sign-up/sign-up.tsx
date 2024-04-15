@@ -1,21 +1,26 @@
 import { useForm } from 'react-hook-form'
 
 import { Button, Card, Input, Typography } from '@/components'
+import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
 import s from './sign-up.module.scss'
 
+import { logoutSchema } from './schema'
+import { FormFields } from './types'
+
 type Props = {
   onSubmit: (data: FormFields) => void
 }
-type FormFields = {
-  confirmPassword: string
-  email: string
-  password: string
-}
 
 export const SignUp = ({ onSubmit }: Props) => {
-  const { handleSubmit, register, setValue, watch } = useForm<FormFields>()
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+    watch,
+  } = useForm<FormFields>({ resolver: zodResolver(logoutSchema) })
+
   const classNames = {
     form: clsx(s.form),
     root: clsx(s.root),
@@ -26,22 +31,27 @@ export const SignUp = ({ onSubmit }: Props) => {
     <Card className={classNames.root}>
       <Typography.H1>Sign Up</Typography.H1>
       <form className={classNames.form} onSubmit={handleSubmit(data => onSubmit(data))}>
-        <Input fullWidth {...register('email')} label={'Email'} />
         <Input
+          fullWidth
+          {...register('email')}
+          errorMessage={errors.email?.message}
+          label={'Email'}
+        />
+        <Input
+          errorMessage={errors.password?.message}
           fullWidth
           label={'Password'}
           type={'password'}
+          value={watch('password') || ''}
           {...register('password')}
-          onChange={e => setValue('password', e.target.value)}
-          value={watch('password')}
         />
         <Input
+          errorMessage={errors.confirmPassword?.message}
           fullWidth
           label={'Confirm Password'}
           type={'password'}
+          value={watch('confirmPassword') || ''}
           {...register('confirmPassword')}
-          onChange={e => setValue('confirmPassword', e.target.value)}
-          value={watch('confirmPassword')}
         />
         <Button className={classNames.submit} fullWidth>
           Sign Up
