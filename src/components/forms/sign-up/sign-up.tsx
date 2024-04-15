@@ -42,7 +42,7 @@ export const SignUp = ({ onSubmit }: Props) => {
           fullWidth
           label={'Password'}
           type={'password'}
-          value={watch('password') || ''}
+          value={watch('password', '')}
           {...register('password')}
         />
         <Input
@@ -50,7 +50,7 @@ export const SignUp = ({ onSubmit }: Props) => {
           fullWidth
           label={'Confirm Password'}
           type={'password'}
-          value={watch('confirmPassword') || ''}
+          value={watch('confirmPassword', '')}
           {...register('confirmPassword')}
         />
         <Button className={classNames.submit} fullWidth>
