@@ -15,7 +15,7 @@ const meta = {
   },
   component: GradeIcons,
   tags: ['autodocs'],
-  title: 'Components/Table/Primitives/GradeIcon',
+  title: 'Components/Other/GradeIcon',
 } satisfies Meta<typeof GradeIcons>
 
 export default meta

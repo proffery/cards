@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import cover from '@/assets/images/cover.png'
-import { DecksTableSortField, SortDirection, TableDecks } from '@/components'
+import { SortDirection, TableDecks } from '@/components'
 import { Deck } from '@/components/ui/table'
-const myDecksExample: Deck[] = [
+const decks: Deck[] = [
   {
     author: {
       id: '1',
@@ -33,50 +33,26 @@ const myDecksExample: Deck[] = [
     userId: 'user2',
   },
 ]
-
-const allDecksExemple = [
-  {
-    author: {
-      id: '3',
-      name: 'Bob Johnson',
-    },
-    cardsCount: 18,
-    cover: '',
-    created: '2022-01-01',
-    id: '3',
-    isPrivate: false,
-    name: 'Deck 3',
-    updated: '2023-01-01',
-    userId: 'user3',
-  },
-  {
-    author: {
-      id: '4',
-      name: 'Alice Williams',
-    },
-    cardsCount: 0,
-    cover: cover,
-    created: '2022-01-01',
-    id: '4',
-    isPrivate: false,
-    name: 'Deck 4',
-    updated: '2024-04-04',
-    userId: 'user4',
-  },
-]
 const meta = {
+  argTypes: {
+    orderField: {
+      control: { type: 'radio' },
+      options: ['name', 'cardsCount', 'updated', 'author.name'],
+    },
+  },
   component: TableDecks,
   tags: ['autodocs'],
-  title: 'Components/Table/Tables/DecksTable',
+  title: 'Components/Table/DecksTable',
 } satisfies Meta<typeof TableDecks>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const TableWithMyDecks: Story = {
+export const DecksTable: Story = {
   args: {
-    items: myDecksExample,
+    decks: decks,
+    isOwner: true,
     onDeckDelete: itemId => {
       alert(`Delete button with id:${itemId} is pushed!`)
     },
@@ -86,26 +62,7 @@ export const TableWithMyDecks: Story = {
     onDeckPlay: itemId => {
       alert(`Play button with id:${itemId} is pushed!`)
     },
-    onDecksSort: (orderDirection: SortDirection, orderField: DecksTableSortField) => {
-      alert(`Table must be sorted: Field name: ${orderField}, Direction: ${orderDirection}`)
-    },
-    orderDirection: 'asc',
-    orderField: 'name',
-  },
-}
-export const TableWithAllDecks: Story = {
-  args: {
-    items: allDecksExemple,
-    onDeckDelete: itemId => {
-      alert(`Delete button with id:${itemId} is pushed!`)
-    },
-    onDeckEdit: itemId => {
-      alert(`Edit button with id:${itemId} is pushed!`)
-    },
-    onDeckPlay: itemId => {
-      alert(`Play button with id:${itemId} is pushed!`)
-    },
-    onDecksSort: (orderDirection: SortDirection, orderField: DecksTableSortField) => {
+    onDecksSort: (orderDirection: SortDirection, orderField: string) => {
       alert(`Table must be sorted: Field name: ${orderField}, Direction: ${orderDirection}`)
     },
     orderDirection: 'asc',

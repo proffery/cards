@@ -5,7 +5,7 @@ import { Table, TableBody, TableBodyCell, TableHead, TableHeadCell, TableRow } f
 const meta = {
   component: Table,
   tags: ['autodocs'],
-  title: 'Components/Table/Primitives/TablePrimitives',
+  title: 'Components/Table/Default',
 } satisfies Meta<typeof Table>
 
 export default meta

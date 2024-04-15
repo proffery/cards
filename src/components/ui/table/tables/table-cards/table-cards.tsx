@@ -1,21 +1,57 @@
 import { Edit, Trash } from '@/assets/icons'
-import { Table, TableBody, TableBodyCell, TableHead, TableHeadCell, TableRow } from '@/components'
-import { GradeIcons, SortDirection, SortDirectionIcons } from '@/components/ui/table'
+import {
+  Columns,
+  GradeIcons,
+  Table,
+  TableBody,
+  TableBodyCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+  TableSortButton,
+} from '@/components'
+import { SortDirection } from '@/components/ui/table'
 import { localDate } from '@/utils'
 
 import s from '../tables.module.scss'
 
+const columns: Columns[] = [
+  {
+    isClickable: true,
+    key: 'question',
+    title: 'Question',
+  },
+  {
+    isClickable: true,
+    key: 'answer',
+    title: 'Answer',
+  },
+  {
+    isClickable: true,
+    key: 'updated',
+    title: 'Last Updated',
+  },
+  {
+    isClickable: true,
+    key: 'grade',
+    title: 'Grade',
+  },
+  {
+    isClickable: false,
+    key: '',
+    title: '',
+  },
+]
+
 type CardsTableProps = {
-  isPrivate: boolean
-  items: CardType[]
+  cards: CardType[]
+  isOwner: boolean
   onCardDelete: (itemId: string) => void
   onCardEdit: (itemId: string) => void
-  onCardsSort: (orderDirection: SortDirection, orderField: CardsTableSortField) => void
+  onCardsSort: (orderDirection: SortDirection, orderField: string) => void
   orderDirection: SortDirection
-  orderField: CardsTableSortField
+  orderField: string
 }
-
-export type CardsTableSortField = 'answer' | 'grade' | 'question' | 'updated'
 
 export type CardType = {
   answer: string
@@ -34,59 +70,45 @@ export type CardType = {
 }
 
 export const TableCards = ({
-  isPrivate,
-  items,
+  cards,
+  isOwner,
   onCardDelete,
   onCardEdit,
   onCardsSort,
   orderDirection,
   orderField,
 }: CardsTableProps) => {
-  const onSort = (orderField: CardsTableSortField) => {
-    onCardsSort(orderDirection === 'asc' ? 'desc' : 'asc', orderField)
+  const toggleDirection = orderDirection === 'asc' ? 'desc' : 'asc'
+
+  const onSortHandler = (columnField: string) => {
+    if (orderField === columnField) {
+      onCardsSort(toggleDirection, orderField)
+    } else {
+      onCardsSort('asc', columnField)
+    }
   }
 
   return (
     <Table>
       <TableHead>
         <TableRow>
-          <TableHeadCell className={s.columnButton} onClick={() => onSort('question')}>
-            Question
-            <SortDirectionIcons
-              fieldName={'question'}
-              orderDirection={orderDirection}
-              orderField={orderField}
-            />
-          </TableHeadCell>
-          <TableHeadCell className={s.columnButton} onClick={() => onSort('answer')}>
-            Answer
-            <SortDirectionIcons
-              fieldName={'answer'}
-              orderDirection={orderDirection}
-              orderField={orderField}
-            />
-          </TableHeadCell>
-          <TableHeadCell className={s.columnButton} onClick={() => onSort('updated')}>
-            Last Updated
-            <SortDirectionIcons
-              fieldName={'updated'}
-              orderDirection={orderDirection}
-              orderField={orderField}
-            />
-          </TableHeadCell>
-          <TableHeadCell className={s.columnButton} onClick={() => onSort('grade')}>
-            Grade
-            <SortDirectionIcons
-              fieldName={'grade'}
-              orderDirection={orderDirection}
-              orderField={orderField}
-            />
-          </TableHeadCell>
-          <TableHeadCell className={s.columnButton} onClick={() => onSort('grade')} />
+          {columns.map(column => (
+            <TableHeadCell className={s.columnButton} key={column.key}>
+              <TableSortButton
+                disabled={!column.isClickable}
+                fieldKey={column.key}
+                onClick={() => onSortHandler(column.key)}
+                orderDirection={orderDirection}
+                orderField={orderField}
+              >
+                {column.title}
+              </TableSortButton>
+            </TableHeadCell>
+          ))}
         </TableRow>
       </TableHead>
       <TableBody>
-        {items?.map(item => (
+        {cards?.map(item => (
           <TableRow key={item.id}>
             <TableBodyCell>
               <div className={s.contentContainer}>
@@ -104,20 +126,19 @@ export const TableCards = ({
             <TableBodyCell>
               <GradeIcons from={5} grade={item.grade} />
             </TableBodyCell>
-            <TableBodyCell>
-              <div className={s.buttonsContainer}>
-                {isPrivate && (
+            {isOwner && (
+              <TableBodyCell>
+                <div className={s.buttonsContainer}>
                   <button className={s.actionButton} onClick={() => onCardEdit(item.id)}>
                     <Edit />
                   </button>
-                )}
-                {isPrivate && (
+
                   <button className={s.actionButton} onClick={() => onCardDelete(item.id)}>
                     <Trash />
                   </button>
-                )}
-              </div>
-            </TableBodyCell>
+                </div>
+              </TableBodyCell>
+            )}
           </TableRow>
         ))}
       </TableBody>

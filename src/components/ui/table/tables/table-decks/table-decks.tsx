@@ -1,21 +1,57 @@
 import { Edit, Play, Trash } from '@/assets/icons'
-import { Table, TableBody, TableBodyCell, TableHead, TableHeadCell, TableRow } from '@/components'
-import { SortDirectionIcons } from '@/components/ui/table'
+import {
+  Columns,
+  Table,
+  TableBody,
+  TableBodyCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+  TableSortButton,
+} from '@/components'
 import { localDate } from '@/utils'
 
 import s from '../tables.module.scss'
 
+const columns: Columns[] = [
+  {
+    isClickable: true,
+    key: 'name',
+    title: 'Name',
+  },
+  {
+    isClickable: true,
+    key: 'cardsCount',
+    title: 'Cards',
+  },
+  {
+    isClickable: true,
+    key: 'updated',
+    title: 'Last Updated',
+  },
+  {
+    isClickable: true,
+    key: 'author.name',
+    title: 'Created by',
+  },
+  {
+    isClickable: false,
+    key: '',
+    title: '',
+  },
+]
+
 type DecksTableProps = {
-  items: Deck[]
+  decks: Deck[]
+  isOwner: boolean
   onDeckDelete: (itemId: string) => void
   onDeckEdit: (itemId: string) => void
   onDeckPlay: (itemId: string) => void
-  onDecksSort: (orderDirection: SortDirection, orderField: DecksTableSortField) => void
+  onDecksSort: (orderDirection: SortDirection, orderField: string) => void
   orderDirection: SortDirection
-  orderField: DecksTableSortField
+  orderField: string
 }
 export type SortDirection = 'asc' | 'desc'
-export type DecksTableSortField = 'author.name' | 'cardsCount' | 'name' | 'updated'
 
 export type Author = {
   id: string
@@ -33,7 +69,8 @@ export type Deck = {
   userId: string
 }
 export const TableDecks = ({
-  items,
+  decks,
+  isOwner,
   onDeckDelete,
   onDeckEdit,
   onDeckPlay,
@@ -41,51 +78,37 @@ export const TableDecks = ({
   orderDirection = 'asc',
   orderField = 'name',
 }: DecksTableProps) => {
-  const onSort = (orderField: DecksTableSortField) => {
-    onDecksSort(orderDirection === 'asc' ? 'desc' : 'asc', orderField)
+  const toggleDirection = orderDirection === 'asc' ? 'desc' : 'asc'
+
+  const onSortHandler = (columnField: string) => {
+    if (orderField === columnField) {
+      onDecksSort(toggleDirection, orderField)
+    } else {
+      onDecksSort('asc', columnField)
+    }
   }
 
   return (
     <Table>
       <TableHead>
         <TableRow>
-          <TableHeadCell className={s.columnButton} onClick={() => onSort('name')}>
-            Name
-            <SortDirectionIcons
-              fieldName={'name'}
-              orderDirection={orderDirection}
-              orderField={orderField}
-            />
-          </TableHeadCell>
-          <TableHeadCell className={s.columnButton} onClick={() => onSort('cardsCount')}>
-            Cards
-            <SortDirectionIcons
-              fieldName={'cardsCount'}
-              orderDirection={orderDirection}
-              orderField={orderField}
-            />
-          </TableHeadCell>
-          <TableHeadCell className={s.columnButton} onClick={() => onSort('updated')}>
-            Last Updated
-            <SortDirectionIcons
-              fieldName={'updated'}
-              orderDirection={orderDirection}
-              orderField={orderField}
-            />
-          </TableHeadCell>
-          <TableHeadCell className={s.columnButton} onClick={() => onSort('author.name')}>
-            Created by
-            <SortDirectionIcons
-              fieldName={'author.name'}
-              orderDirection={orderDirection}
-              orderField={orderField}
-            />
-          </TableHeadCell>
-          <TableHeadCell className={s.columnButton} onClick={() => onSort('author.name')} />
+          {columns.map(column => (
+            <TableHeadCell className={s.columnButton} key={column.key}>
+              <TableSortButton
+                disabled={!column.isClickable}
+                fieldKey={column.key}
+                onClick={() => onSortHandler(column.key)}
+                orderDirection={orderDirection}
+                orderField={orderField}
+              >
+                {column.title}
+              </TableSortButton>
+            </TableHeadCell>
+          ))}
         </TableRow>
       </TableHead>
       <TableBody>
-        {items?.map(item => (
+        {decks?.map(item => (
           <TableRow key={item.id}>
             <TableBodyCell className={s.contentContainer}>
               {item.cover && <img className={s.cover} src={item.cover} />}
@@ -103,7 +126,7 @@ export const TableDecks = ({
                 >
                   <Play size={16} />
                 </button>
-                {item.isPrivate && (
+                {isOwner && (
                   <button
                     className={s.actionButton}
                     disabled={item.cardsCount === 0}
@@ -112,7 +135,7 @@ export const TableDecks = ({
                     <Edit size={16} />
                   </button>
                 )}
-                {item.isPrivate && (
+                {isOwner && (
                   <button
                     className={s.actionButton}
                     disabled={item.cardsCount === 0}

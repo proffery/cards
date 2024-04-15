@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import cover from '@/assets/images/cover.png'
 import { SortDirection } from '@/components'
-import { CardType, CardsTableSortField, TableCards } from '@/components/ui/table/index'
+import { CardType, TableCards } from '@/components/ui/table/index'
 
 const cardsExample: CardType[] = [
   {
@@ -53,9 +53,15 @@ const cardsExample: CardType[] = [
 ]
 
 const meta = {
+  argTypes: {
+    orderField: {
+      control: { type: 'radio' },
+      options: ['name', 'cardsCount', 'updated', 'author.name'],
+    },
+  },
   component: TableCards,
   tags: ['autodocs'],
-  title: 'Components/Table/Tables/CardsTable',
+  title: 'Components/Table/CardsTable',
 } satisfies Meta<typeof TableCards>
 
 export default meta
@@ -64,15 +70,15 @@ type Story = StoryObj<typeof meta>
 
 export const CardsTable: Story = {
   args: {
-    isPrivate: true,
-    items: cardsExample,
+    cards: cardsExample,
+    isOwner: true,
     onCardDelete: itemId => {
       alert(`Delete button with id:${itemId} is pushed!`)
     },
     onCardEdit: itemId => {
       alert(`Edit button with id:${itemId} is pushed!`)
     },
-    onCardsSort: (orderDirection: SortDirection, orderField: CardsTableSortField) => {
+    onCardsSort: (orderDirection: SortDirection, orderField: string) => {
       alert(`Table must be sorted: Field name: ${orderField}, Direction: ${orderDirection}`)
     },
     orderDirection: 'asc',

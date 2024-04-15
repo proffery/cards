@@ -1,14 +1,3 @@
-.columnButton {
-  cursor: pointer;
-  position: relative;
-
-  svg {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-}
-
 .contentContainer {
   display: flex;
   gap: 10px;
