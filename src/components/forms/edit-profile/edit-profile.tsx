@@ -37,6 +37,7 @@ export const EditProfile = ({
 
   const classNames = {
     avatar: clsx(s.centered),
+    backButton: clsx(s.linkButton),
     description: clsx(s.description, s.centered),
     editAvatarContainer: clsx(s2.editAvatarContainer, s.centered),
     editButton: clsx(s2.editButton),
@@ -72,7 +73,13 @@ export const EditProfile = ({
               Save Changes
             </Button>
           </form>
-          <Typography.Link3 onClick={() => setEditMode(false)}>Back</Typography.Link3>
+          <Typography.Link3
+            as={'button'}
+            className={classNames.backButton}
+            onClick={() => setEditMode(false)}
+          >
+            Back
+          </Typography.Link3>
         </>
       ) : (
         <>
