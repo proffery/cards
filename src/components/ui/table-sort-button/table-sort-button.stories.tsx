@@ -11,7 +11,7 @@ const meta = {
   },
   component: TableSortButton,
   tags: ['autodocs'],
-  title: 'Components/Other/TableSortButton',
+  title: 'Components/TableSortButton',
 } satisfies Meta<typeof TableSortButton>
 
 export default meta

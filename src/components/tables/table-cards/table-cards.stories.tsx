@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import cover from '@/assets/images/cover.png'
-import { SortDirection } from '@/components'
-import { CardType, TableCards } from '@/components/ui/table/index'
+import { CardType, SortDirection, TableCards } from '@/components/tables'
 
 const cardsExample: CardType[] = [
   {
@@ -61,7 +60,7 @@ const meta = {
   },
   component: TableCards,
   tags: ['autodocs'],
-  title: 'Components/Table/CardsTable',
+  title: 'Tables/CardsTable',
 } satisfies Meta<typeof TableCards>
 
 export default meta

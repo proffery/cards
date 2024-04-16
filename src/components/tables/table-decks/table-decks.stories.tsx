@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import cover from '@/assets/images/cover.png'
-import { SortDirection, TableDecks } from '@/components'
-import { Deck } from '@/components/ui/table'
+import { Deck, SortDirection, TableDecks } from '@/components/tables'
 const decks: Deck[] = [
   {
     author: {
@@ -42,7 +41,7 @@ const meta = {
   },
   component: TableDecks,
   tags: ['autodocs'],
-  title: 'Components/Table/DecksTable',
+  title: 'Tables/DecksTable',
 } satisfies Meta<typeof TableDecks>
 
 export default meta

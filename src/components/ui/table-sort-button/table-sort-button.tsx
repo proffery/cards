@@ -1,10 +1,9 @@
 import { ComponentPropsWithoutRef } from 'react'
 
 import { ArrowDropDown, ArrowDropUp } from '@/assets/icons'
+import { SortDirection } from '@/components/tables'
 
 import s from './table-sort-button.module.scss'
-
-import { SortDirection } from '../index'
 
 type Props = {
   disabled: boolean

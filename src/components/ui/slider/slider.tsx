@@ -4,7 +4,7 @@ import * as SliderRadix from '@radix-ui/react-slider'
 
 import s from './slider.module.scss'
 
-export type Props = {
+type Props = {
   max: number
   min: number
   onValueChange: (value: number[]) => void

@@ -10,7 +10,7 @@ import {
   TableRow,
   TableSortButton,
 } from '@/components'
-import { SortDirection } from '@/components/ui/table'
+import { SortDirection } from '@/components/tables'
 import { localDate } from '@/utils'
 
 import s from '../tables.module.scss'
