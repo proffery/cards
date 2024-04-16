@@ -26,7 +26,7 @@ export const Button = <T extends ElementType>(props: ButtonProps<T>) => {
       s.button,
       s[variant],
       fullWidth && s.fullWidth,
-      disabled && disabled,
+      disabled && s.disabled,
       className
     ),
   }
