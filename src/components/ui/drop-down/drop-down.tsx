@@ -1,28 +1,25 @@
-import React from 'react'
+import { ComponentPropsWithoutRef, ReactNode } from 'react'
 
 import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
 
 import s from './drop-down.module.scss'
 
 type Props = {
-  children: React.ReactNode
-} & React.ComponentPropsWithoutRef<typeof DropdownMenuRadix.Root>
+  ariaLabel?: string
+  trigger: ReactNode
+} & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Root>
 
 export const DropdownMenu = (props: Props) => {
-  const { children } = props
+  const { ariaLabel, children, trigger } = props
 
   return (
     <DropdownMenuRadix.Root>
-      <DropdownMenuRadix.Trigger asChild>
-        <button aria-label={'Customise options'} className={s.IconButton}>
-          {/*<HamburgerMenuIcon />*/}
-        </button>
+      <DropdownMenuRadix.Trigger aria-label={ariaLabel} className={s.trigger}>
+        {trigger}
       </DropdownMenuRadix.Trigger>
 
       <DropdownMenuRadix.Portal>
-        <DropdownMenuRadix.Content className={'DropdownMenuContent'} sideOffset={5}>
-          {children}
-        </DropdownMenuRadix.Content>
+        <DropdownMenuRadix.Content className={s.content}>{children}</DropdownMenuRadix.Content>
       </DropdownMenuRadix.Portal>
     </DropdownMenuRadix.Root>
   )
