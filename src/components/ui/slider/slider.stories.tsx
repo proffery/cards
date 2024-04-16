@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Meta, StoryObj } from '@storybook/react'
 
-import { Slider, SliderProps } from './' // Make sure this path is correct
+import { Props, Slider } from './' // Make sure this path is correct
 
 const meta: Meta<typeof Slider> = {
   component: Slider,
@@ -12,7 +12,7 @@ const meta: Meta<typeof Slider> = {
 
 export default meta
 
-export const Default: StoryObj<typeof Slider> = (args: SliderProps) => {
+export const Default: StoryObj<typeof Slider> = (args: Props) => {
   const [value, setValue] = useState<number[]>(args.value)
 
   return <Slider {...args} onValueChange={setValue} value={value} />
