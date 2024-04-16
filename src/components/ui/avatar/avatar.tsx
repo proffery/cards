@@ -20,7 +20,7 @@ export const Avatar = ({ className, name, size = 's', url }: Props) => {
       className={classNames.container}
       style={!url ? { border: '1px solid' } : { border: 'none' }}
     >
-      {name && !url ? <span>{name[0].toUpperCase()}</span> : ''}
+      {name && !url ? <span>{name[0].toUpperCase().trim()}</span> : ''}
       {url && <img alt={'avatar'} className={classNames.image} src={url} />}
     </div>
   )
