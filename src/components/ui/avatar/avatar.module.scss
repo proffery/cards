@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  aspect-ratio: 1/1;
+
+  font-size: inherit;
+
+  background-color: var(--color-accent-500);
+  border-radius: 50%;
+}
+
+.s {
+  width: 36px;
+  height: 36px;
+  font-size: var(--font-size-l);
+}
+
+.m {
+  width: 72px;
+  height: 72px;
+
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+}
+
+.l {
+  width: 96px;
+  height: 96px;
+
+  font-size: var(--font-size-xxl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-l);
+}
+
+.image {
+  display: flex;
+
+  aspect-ratio: 1/1;
+  width: 100%;
+
+  object-fit: fill;
+  object-position: center;
+  border-radius: 50%;
+}
