@@ -5,10 +5,6 @@ import { Button } from '@/components'
 
 const meta = {
   argTypes: {
-    as: {
-      control: { type: 'radio' },
-      options: ['button', 'a'],
-    },
     onClick: {
       action: 'clicked',
       description: 'Button clicked',
