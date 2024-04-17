@@ -1,19 +1,19 @@
 import { useState } from 'react'
 
 import { Button } from '@/components'
-import { AddDeckDialog } from '@/components/dialogs'
+import { AddNewDeck } from '@/components/dialogs'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
-  component: AddDeckDialog,
+  component: AddNewDeck,
   tags: ['autodocs'],
-  title: 'Dialogs/AddDeckDialog',
-} satisfies Meta<typeof AddDeckDialog>
+  title: 'Dialogs/AddNewDeck',
+} satisfies Meta<typeof AddNewDeck>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const AddDeck: Story = {
+export const AddNewDeckDialog: Story = {
   args: {
     onConfirm: () => {},
     onOpenChange: () => {},
@@ -24,7 +24,7 @@ export const AddDeck: Story = {
     return (
       <>
         <Button onClick={() => setOpen(true)}>Open</Button>
-        <AddDeckDialog
+        <AddNewDeck
           {...args}
           onCancel={() => setOpen(false)}
           onConfirm={data => {

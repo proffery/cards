@@ -1,19 +1,19 @@
 import { ChangeEvent, useState } from 'react'
 import { useController, useForm } from 'react-hook-form'
 
-import { Edit } from '@/assets/icons'
+import { Image, Trash } from '@/assets/icons'
 import { Button, Checkbox, Dialog, DialogProps, Input } from '@/components'
 import { addDeckSchema } from '@/components/dialogs/add-deck/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import s from './add-deck-dialog.module.scss'
+import s from './add-new-deck.module.scss'
 
 type FormFields = z.infer<typeof addDeckSchema>
 type Props = {
   onConfirm: (data: FormFields) => void
 } & DialogProps
-export const AddDeckDialog = ({ onCancel, onConfirm, onOpenChange, ...rest }: Props) => {
+export const AddNewDeck = ({ onCancel, onConfirm, onOpenChange, ...rest }: Props) => {
   const [image, setImage] = useState<File | null>(null)
 
   const {
@@ -65,6 +65,7 @@ export const AddDeckDialog = ({ onCancel, onConfirm, onOpenChange, ...rest }: Pr
         <div className={s.buttons}>
           {image && (
             <Button onClick={() => setImage(null)} title={'Delete image'} variant={'secondary'}>
+              <Trash />
               Delete image
             </Button>
           )}
@@ -84,7 +85,7 @@ export const AddDeckDialog = ({ onCancel, onConfirm, onOpenChange, ...rest }: Pr
               {...register('cover')}
               onChange={handleCoverChange}
             />
-            <Edit /> Upload Image
+            <Image /> Upload Image
           </Button>
         </div>
         <Checkbox
