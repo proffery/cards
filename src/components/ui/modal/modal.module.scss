@@ -6,22 +6,23 @@
 }
 
 .root {
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
 
   width: 532px;
   height: fit-content;
-  max-height: 100vh;
 
   background-color: var(--color-dark-700);
   border: 1px solid var(--color-dark-500);
 }
 
 .content {
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 24px;
+
+  max-height: 85vh;
   padding: 24px;
 }
 

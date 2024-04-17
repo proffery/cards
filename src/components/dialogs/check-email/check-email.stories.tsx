@@ -10,7 +10,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const CreatePasswordForm: Story = {
+export const CheckEmailDialog: Story = {
   args: {
     email: 'email@email.email',
   },

@@ -1,0 +1,14 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.fileInput {
+  display: none;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}

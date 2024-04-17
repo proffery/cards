@@ -14,6 +14,9 @@ import {
 } from '@/components'
 
 const meta = {
+  args: {
+    title: 'Title',
+  },
   component: Modal,
   tags: ['autodocs'],
   title: 'Components/Modal',
@@ -31,7 +34,6 @@ const InteractiveModal = () => {
       <Modal
         onOpenChange={setIsOpen}
         open={isOpen}
-        title={'Title'}
         trigger={
           <ModalTrigger>
             <Button>Open</Button>

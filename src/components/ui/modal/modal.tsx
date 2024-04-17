@@ -7,7 +7,7 @@ import clsx from 'clsx'
 
 import s from './modal.module.scss'
 
-type ModalProps = {
+export type ModalProps = {
   className?: string
   title?: string
   trigger?: ReactNode
@@ -27,7 +27,7 @@ export const Modal = forwardRef<ElementRef<typeof ModalPrimitive.Root>, ModalPro
       <ModalPrimitive.Root onOpenChange={onOpenChange} open={open}>
         {trigger}
         <ModalPrimitive.Portal>
-          <ModalPrimitive.Overlay className={classNames.overlay}>
+          <ModalPrimitive.Overlay className={classNames.overlay} ref={ref}>
             <div className={classNames.root}>
               <Typography.H3 className={classNames.title}>
                 {title}
@@ -35,7 +35,7 @@ export const Modal = forwardRef<ElementRef<typeof ModalPrimitive.Root>, ModalPro
                   <Close size={24} />
                 </ModalPrimitive.Close>
               </Typography.H3>
-              <ModalPrimitive.Content {...props} className={classNames.content} ref={ref}>
+              <ModalPrimitive.Content {...props} className={classNames.content}>
                 {children}
               </ModalPrimitive.Content>
             </div>
