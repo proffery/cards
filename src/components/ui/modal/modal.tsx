@@ -14,7 +14,7 @@ export type ModalProps = {
 } & ComponentPropsWithoutRef<typeof ModalPrimitive.Root>
 
 export const Modal = forwardRef<ElementRef<typeof ModalPrimitive.Root>, ModalProps>(
-  ({ children, className, onOpenChange, open, title, trigger, ...props }: ModalProps, ref) => {
+  ({ children, className, title, trigger, ...props }: ModalProps, ref) => {
     const classNames = {
       close: clsx(s.close),
       content: clsx(s.content, className),
@@ -24,7 +24,7 @@ export const Modal = forwardRef<ElementRef<typeof ModalPrimitive.Root>, ModalPro
     }
 
     return (
-      <ModalPrimitive.Root onOpenChange={onOpenChange} open={open}>
+      <ModalPrimitive.Root {...props}>
         {trigger}
         <ModalPrimitive.Portal>
           <ModalPrimitive.Overlay className={classNames.overlay} ref={ref}>
@@ -35,7 +35,7 @@ export const Modal = forwardRef<ElementRef<typeof ModalPrimitive.Root>, ModalPro
                   <Close size={24} />
                 </ModalPrimitive.Close>
               </Typography.H3>
-              <ModalPrimitive.Content {...props} className={classNames.content}>
+              <ModalPrimitive.Content className={classNames.content}>
                 {children}
               </ModalPrimitive.Content>
             </div>

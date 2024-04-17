@@ -12,7 +12,7 @@ import s from './add-new-deck.module.scss'
 type FormFields = z.infer<typeof addDeckSchema>
 type Props = {
   onConfirm: (data: FormFields) => void
-} & DialogProps
+} & Omit<DialogProps, 'onConfirm'>
 export const AddNewDeck = ({ onCancel, onConfirm, onOpenChange, ...rest }: Props) => {
   const [image, setImage] = useState<File | null>(null)
 

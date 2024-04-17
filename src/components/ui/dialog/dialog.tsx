@@ -6,7 +6,7 @@ export type DialogProps = {
   cancelText?: string
   confirmText?: string
   onCancel?: () => void
-  onConfirm?: (data: any) => void
+  onConfirm?: () => void
 } & ModalProps
 export const Dialog = ({
   cancelText = 'Cancel',
@@ -21,6 +21,10 @@ export const Dialog = ({
     onOpenChange?.(false)
     onCancel?.()
   }
+  const handleConfirm = () => {
+    onConfirm?.()
+    onOpenChange?.(false)
+  }
 
   return (
     <Modal onOpenChange={handleCancel} {...rest}>
@@ -29,7 +33,7 @@ export const Dialog = ({
         <Button onClick={handleCancel} variant={'secondary'}>
           {cancelText}
         </Button>
-        <Button onClick={onConfirm}>{confirmText}</Button>
+        <Button onClick={handleConfirm}>{confirmText}</Button>
       </div>
     </Modal>
   )
