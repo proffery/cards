@@ -62,7 +62,7 @@ export const AddNewDeck = ({ onCancel, onConfirm, onOpenChange, ...rest }: Props
           label={'Deck Name'}
           {...register('name')}
         />
-        {image && <img src={URL.createObjectURL(image)} />}
+        {image && <img alt={'Deck cover'} src={URL.createObjectURL(image)} />}
         <div className={s.buttons}>
           {image && (
             <Button onClick={() => setImage(null)} title={'Delete image'} variant={'secondary'}>
