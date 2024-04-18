@@ -1,10 +1,10 @@
-import { CheckEmail } from '@/components/dialogs'
+import { CheckEmail } from '@/components/pages'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   component: CheckEmail,
   tags: ['autodocs'],
-  title: 'Dialogs/CheckEmail',
+  title: 'Pages/CheckEmail',
 } satisfies Meta<typeof CheckEmail>
 
 export default meta
