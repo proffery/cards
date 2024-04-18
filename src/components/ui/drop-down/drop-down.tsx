@@ -19,7 +19,9 @@ export const DropdownMenu = (props: Props) => {
       </DropdownMenuRadix.Trigger>
 
       <DropdownMenuRadix.Portal>
-        <DropdownMenuRadix.Content className={s.content}>{children}</DropdownMenuRadix.Content>
+        <DropdownMenuRadix.Content className={s.content} sideOffset={10}>
+          {children}
+        </DropdownMenuRadix.Content>
       </DropdownMenuRadix.Portal>
     </DropdownMenuRadix.Root>
   )

@@ -4,10 +4,38 @@
   padding: 0.5rem 1rem;
 }
 
-.separator {
-  margin: 0.5rem 0;
-  border-bottom: 1px solid #e0e0e0;
+.content {
+  background-color: var(--color-dark-700);
+  border: 1px solid var(--color-dark-500);
+
+  &[data-state='open'] {
+    padding: 12px;
+    border-radius: 4px;
+  }
 }
 
-.content {
+.separator {
+  border: 1px solid var(--color-dark-500);
+}
+
+.item {
+  cursor: pointer;
+
+  display: flex;
+  gap: 6px;
+  align-items: center;
+
+  padding: 12px 0;
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
 }
