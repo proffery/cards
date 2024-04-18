@@ -27,9 +27,7 @@ export const AddNewDeckDialog: Story = {
         <AddNewDeck
           {...args}
           onCancel={() => setOpen(false)}
-          onConfirm={data => {
-            alert(`Confirm: ${JSON.stringify(data)}`)
-          }}
+          onConfirm={data => alert(`Confirm: ${JSON.stringify(data)}`)}
           onOpenChange={setOpen}
           open={open}
         />

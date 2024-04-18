@@ -1,4 +1,7 @@
 export { CheckEmail } from '../dialogs/check-email/check-email'
 export { AddNewDeck } from './add-deck/add-new-deck'
+export { addDeckSchema } from './add-deck/schema'
+export { AddNewCard } from './add-new-card/add-new-card'
+export { addCardSchema } from './add-new-card/schema'
 export { DeleteCard } from './delete-card/delete-card'
 export { DeleteDeck } from './delete-deck/delete-deck'

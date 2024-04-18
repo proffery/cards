@@ -3,11 +3,12 @@ import { useController, useForm } from 'react-hook-form'
 
 import { Image, Trash } from '@/assets/icons'
 import { Button, Checkbox, Dialog, DialogProps, Input } from '@/components'
-import { addDeckSchema } from '@/components/dialogs/add-deck/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './add-new-deck.module.scss'
+
+import { addDeckSchema } from './schema'
 
 type FormFields = z.infer<typeof addDeckSchema>
 type Props = {
@@ -73,14 +74,14 @@ export const AddNewDeck = ({ onCancel, onConfirm, onOpenChange, ...rest }: Props
             as={'label'}
             className={s.fileLabel}
             fullWidth={!image}
-            htmlFor={'avatar'}
+            htmlFor={'deck-cover'}
             title={'Upload image'}
             variant={'secondary'}
           >
             <input
               accept={'image/*'}
               className={s.fileInput}
-              id={'avatar'}
+              id={'deck-cover'}
               type={'file'}
               {...register('cover')}
               onChange={handleCoverChange}
