@@ -65,7 +65,7 @@ export const AddNewCard = ({ onCancel, onConfirm, onOpenChange, ...rest }: Props
           label={'Question?'}
           {...register('question')}
         />
-        {questionImage && <img src={URL.createObjectURL(questionImage)} />}
+        {questionImage && <img alt={'Question cover'} src={URL.createObjectURL(questionImage)} />}
         <div className={s.buttons}>
           {questionImage && (
             <Button
@@ -103,7 +103,7 @@ export const AddNewCard = ({ onCancel, onConfirm, onOpenChange, ...rest }: Props
           label={'Answer?'}
           {...register('answer')}
         />
-        {answerImage && <img src={URL.createObjectURL(answerImage)} />}
+        {answerImage && <img alt={'Answer cover'} src={URL.createObjectURL(answerImage)} />}
         <div className={s.buttons}>
           {answerImage && (
             <Button
