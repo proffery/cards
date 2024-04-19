@@ -1,21 +1,34 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Image, Trash } from '@/assets/icons'
 import { Button, Dialog, DialogProps, Input, Typography } from '@/components'
+import { convertUrlToFile } from '@/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import s from './add-new-card.module.scss'
+import s from './card-dialog.module.scss'
 
 import { addCardSchema } from './schema'
 
 type FormFields = z.infer<typeof addCardSchema>
 type Props = {
+  defaultValues?: {
+    answer: string
+    answerImg: string
+    question: string
+    questionImg: string
+  }
   onConfirm: (data: FormFields) => void
 } & Omit<DialogProps, 'onConfirm'>
 
-export const AddNewCard = ({ onCancel, onConfirm, onOpenChange, ...rest }: Props) => {
+export const CardDialog = ({
+  defaultValues,
+  onCancel,
+  onConfirm,
+  onOpenChange,
+  ...rest
+}: Props) => {
   const [questionImage, setQuestionImage] = useState<File | null>(null)
   const [answerImage, setAnswerImage] = useState<File | null>(null)
 
@@ -24,7 +37,22 @@ export const AddNewCard = ({ onCancel, onConfirm, onOpenChange, ...rest }: Props
     handleSubmit,
     register,
     reset,
-  } = useForm<FormFields>({ resolver: zodResolver(addCardSchema) })
+  } = useForm<FormFields>({
+    defaultValues: {
+      answer: defaultValues?.answer || '',
+      question: defaultValues?.question || '',
+    },
+    resolver: zodResolver(addCardSchema),
+  })
+
+  useEffect(() => {
+    defaultValues?.answerImg &&
+      convertUrlToFile(defaultValues?.answerImg).then(answerImage => setAnswerImage(answerImage))
+    defaultValues?.questionImg &&
+      convertUrlToFile(defaultValues?.questionImg).then(questionImg =>
+        setQuestionImage(questionImg)
+      )
+  }, [defaultValues?.answerImg, defaultValues?.questionImg])
 
   const handleCancel = () => {
     reset()
@@ -53,7 +81,6 @@ export const AddNewCard = ({ onCancel, onConfirm, onOpenChange, ...rest }: Props
       cancelText={'Cancel'}
       confirmText={'Add New Card'}
       onConfirm={handleConfirm}
-      title={'Add New Card'}
       {...rest}
       onCancel={handleCancel}
     >
@@ -73,7 +100,7 @@ export const AddNewCard = ({ onCancel, onConfirm, onOpenChange, ...rest }: Props
               title={'Delete Question Image'}
               variant={'secondary'}
             >
-              <Trash />
+              <Trash size={16} />
               Delete image
             </Button>
           )}
@@ -93,7 +120,7 @@ export const AddNewCard = ({ onCancel, onConfirm, onOpenChange, ...rest }: Props
               {...register('questionImg')}
               onChange={e => handleCoverChange(e, setQuestionImage)}
             />
-            <Image /> Upload Image
+            <Image size={16} /> Upload Image
           </Button>
         </div>
         <Typography.Subtitle2>Answer:</Typography.Subtitle2>
@@ -111,7 +138,7 @@ export const AddNewCard = ({ onCancel, onConfirm, onOpenChange, ...rest }: Props
               title={'Delete Answer Image'}
               variant={'secondary'}
             >
-              <Trash />
+              <Trash size={16} />
               Delete image
             </Button>
           )}
@@ -131,7 +158,7 @@ export const AddNewCard = ({ onCancel, onConfirm, onOpenChange, ...rest }: Props
               {...register('answerImg')}
               onChange={e => handleCoverChange(e, setAnswerImage)}
             />
-            <Image /> Upload Image
+            <Image size={16} /> Upload Image
           </Button>
         </div>
       </form>

@@ -130,11 +130,11 @@ export const TableCards = ({
               <TableBodyCell>
                 <div className={s.buttonsContainer}>
                   <button className={s.actionButton} onClick={() => onCardEdit(item.id)}>
-                    <Edit />
+                    <Edit size={16} />
                   </button>
 
                   <button className={s.actionButton} onClick={() => onCardDelete(item.id)}>
-                    <Trash />
+                    <Trash size={16} />
                   </button>
                 </div>
               </TableBodyCell>

@@ -10,5 +10,11 @@
 
 .buttons {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
 }

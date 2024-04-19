@@ -67,11 +67,11 @@
   align-items: center;
   white-space: nowrap;
 
-  button {
+  & button {
     gap: 4px;
     align-items: center;
 
-    max-width: fit-content;
+    max-width: 60px;
     max-height: 24px;
     padding: 0 4px;
 
@@ -82,19 +82,8 @@
 }
 
 // select items container
-div[dir='ltr'] {
-  width: fit-content;
+.container > div[dir='ltr'] {
+  max-width: 60px;
   padding: 0;
   border-radius: 2px;
-
-  // select item
-  div[role='option'] {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-
-    width: 100%;
-    max-height: 24px;
-    padding: 0 4px;
-  }
 }

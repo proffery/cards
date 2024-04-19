@@ -55,7 +55,7 @@ const meta = {
   argTypes: {
     orderField: {
       control: { type: 'radio' },
-      options: ['name', 'cardsCount', 'updated', 'author.name'],
+      options: ['answer', 'question', 'updated', 'grade'],
     },
   },
   component: TableCards,
