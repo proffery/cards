@@ -143,20 +143,22 @@ export const Pagination = ({
   return (
     <Typography.Body2 as={'div'} className={`${className || ''} ${s.container}`}>
       <button className={s.arrow} disabled={isBackArrowDisabled} onClick={onBackArrowClick}>
-        <ArrowBack />
+        <ArrowBack size={16} />
       </button>
       {startRangeCondition && startRangeFilter}
       {middleRangeCondition && middleRangeFilter}
       {endRangeCondition && endRangeFilter}
       <button className={s.arrow} disabled={isForwardArrowDisabled} onClick={onForwardArrowClick}>
-        <ArrowForward />
+        <ArrowForward size={16} />
       </button>
       <div className={s.selectContainer}>
         Show
         <Select onValueChange={onItemsPerPageChange} placeholder={PAGE_SELECT_OPTIONS[0].label}>
           {PAGE_SELECT_OPTIONS.map(option => (
             <Typography.Body2 as={'div'} key={option.value}>
-              <SelectItem value={option.value.toString()}>{option.label}</SelectItem>
+              <SelectItem className={s.item} value={option.value.toString()}>
+                {option.label}
+              </SelectItem>
             </Typography.Body2>
           ))}
         </Select>

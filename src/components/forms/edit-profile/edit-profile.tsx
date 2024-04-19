@@ -94,7 +94,7 @@ export const EditProfile = ({
                   onChange={avatarChangeHandler}
                   type={'file'}
                 />
-                <Edit />
+                <Edit size={16} />
               </label>
             </div>
             <Typography.H2 as={'span'} className={classNames.nameContainer}>
@@ -104,7 +104,7 @@ export const EditProfile = ({
                 onClick={() => setEditMode(true)}
                 title={'Edit name'}
               >
-                <Edit />
+                <Edit size={16} />
               </button>
             </Typography.H2>
             <Typography.Body2 className={classNames.description}>{email}</Typography.Body2>

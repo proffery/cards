@@ -81,12 +81,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         {variantIsSearch && (
           <div className={classNames.searchContainer}>
-            <Search className={classNames.inputIcon} />
+            <Search className={classNames.inputIcon} size={20} />
           </div>
         )}
         {variantIsSearch && value && (
           <button className={classNames.inputButton} disabled={disabled} onClick={cleanSearch}>
-            <Close className={classNames.inputIcon} />
+            <Close className={classNames.inputIcon} size={16} />
           </button>
         )}
       </div>

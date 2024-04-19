@@ -17,18 +17,29 @@
 
 .checkbox {
   position: relative;
+  top: 0;
+  left: 0;
 
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
 
-  background-color: var(--color-dark-900);
-  border-color: var(--color-light-900);
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 2px;
+  &::before {
+    content: '';
 
-  &:active:not([disabled])::after,
-  &:focus:not([disabled])::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 16px;
+    height: 16px;
+
+    background-color: var(--color-dark-900);
+    border: var(--color-light-900) solid 2px;
+    border-radius: 2px;
+  }
+
+  &:active::before:not([disabled])::after,
+  &:focus::before:not([disabled])::after {
     background-color: var(--color-dark-100);
   }
 
@@ -49,7 +60,7 @@
   }
 }
 
-.checkbox.disabled.checked {
+.checkbox.disabled.checked::before {
   background-color: var(--color-light-100);
 }
 
@@ -61,12 +72,11 @@
 
   svg {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0%;
+    left: 0%;
 
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -74,6 +84,10 @@
   cursor: initial;
   color: var(--color-dark-100);
   border-color: var(--color-dark-100);
+
+  &::before {
+    border-color: var(--color-dark-100);
+  }
 
   &:hover::after {
     all: unset;
