@@ -25,7 +25,7 @@ export const MenuProfile = (props: Props) => {
         <div className={s.userWrapper}>
           <Avatar name={name} size={'s'} url={avatar} />
           <div className={s.userData}>
-            <Typography.Subtitle2>{name}</Typography.Subtitle2>
+            <Typography.Subtitle2 as={'span'}>{name}</Typography.Subtitle2>
             <Typography.Caption className={s.userEmail}>{email}</Typography.Caption>
           </div>
         </div>
