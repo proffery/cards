@@ -9,7 +9,7 @@ export const MenuDeck = () => {
         <DropdownItem asChild>
           <a href={'#'}>
             <Play />
-            Learn
+            Learn1
           </a>
         </DropdownItem>
         <DropdownSeparator />
