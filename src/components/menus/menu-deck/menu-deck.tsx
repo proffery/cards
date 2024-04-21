@@ -2,6 +2,12 @@ import { Edit, MoreVertical, Play, Trash } from '@/assets/icons'
 
 import { DropdownItem, DropdownMenu, DropdownSeparator } from '../../ui/drop-down'
 
+export type Props = {
+  deleteUrl: string
+  editUrl: string
+  learnUrl: string
+}
+
 export const MenuDeck = () => {
   return (
     <div>
