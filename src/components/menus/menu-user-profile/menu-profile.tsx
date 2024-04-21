@@ -1,6 +1,6 @@
 import { Logout, Person } from '@/assets/icons'
-import UserProfile from '@/assets/images/user-profile.png'
-import { Typography } from '@/components'
+import UserImage from '@/assets/images/user-profile.png'
+import { Avatar, Typography } from '@/components'
 
 import s from './menu-profile.module.scss'
 
@@ -10,29 +10,27 @@ export const MenuProfile = () => {
   return (
     <DropdownMenu
       ariaLabel={'Menu user profile'}
-      trigger={<img alt={'UserProfile'} className={s.userTirgger} src={UserProfile}></img>}
+      trigger={<Avatar name={'John Doe'} size={'s'} url={UserImage} />}
     >
       <DropdownItem asChild>
         <div className={s.userWrapper}>
-          <img alt={'UserProfile'} className={s.userImage} src={UserProfile}></img>
+          <Avatar name={'John Doe'} size={'s'} url={UserImage} />
           <div className={s.userData}>
-            <Typography.Subtitle2 className={s.userName}>
-              John Doe John Doe John Doe
-            </Typography.Subtitle2>
+            <Typography.Subtitle2>John Doe John Doe John Doe</Typography.Subtitle2>
             <Typography.Caption className={s.userEmail}>email@email.com</Typography.Caption>
           </div>
         </div>
       </DropdownItem>
       <DropdownSeparator />
       <DropdownItem asChild>
-        <a className={s.userItemLink} href={'#'}>
+        <a href={'#'}>
           <Person />
           My Profile
         </a>
       </DropdownItem>
       <DropdownSeparator />
       <DropdownItem asChild>
-        <a className={s.userItemLink} href={'#'}>
+        <a href={'#'}>
           <Logout />
           Sing Out
         </a>

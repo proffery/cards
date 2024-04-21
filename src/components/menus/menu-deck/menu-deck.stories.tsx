@@ -13,5 +13,9 @@ export default meta
 type MenuDeckStory = StoryObj<typeof MenuDeck>
 
 export const Default: MenuDeckStory = {
-  render: () => <MenuDeck />,
+  render: () => (
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <MenuDeck />
+    </div>
+  ),
 }

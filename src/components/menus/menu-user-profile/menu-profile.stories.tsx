@@ -13,5 +13,9 @@ export default meta
 type MenuProfileStory = StoryObj<typeof MenuProfile>
 
 export const Default: MenuProfileStory = {
-  render: () => <MenuProfile />,
+  render: () => (
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <MenuProfile />
+    </div>
+  ),
 }

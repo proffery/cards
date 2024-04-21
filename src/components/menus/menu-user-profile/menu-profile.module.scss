@@ -1,17 +1,5 @@
-.userTirgger {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-}
-
 .userWrapper {
   gap: 8px;
-}
-
-.userImage {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
 }
 
 .userData {
@@ -19,20 +7,6 @@
   flex-direction: column;
 }
 
-.userName {
-}
-
 .userEmail {
   color: var(--color-dark-100);
-}
-
-.userItemLink {
-  cursor: pointer;
-
-  display: flex;
-  gap: 8px;
-  align-items: center;
-
-  color: var(--color-light-100);
-  text-decoration: none;
 }
