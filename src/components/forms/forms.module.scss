@@ -26,3 +26,21 @@
   align-self: center;
   width: fit-content;
 }
+
+.formLink{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.enterEmail{
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 171%;
+  color: var(--color-light-900);
+
+  opacity: 0.5;
+}
+
+.rememberPassword{
+  color: var(--color-light-900);
+}
