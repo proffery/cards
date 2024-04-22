@@ -16,7 +16,7 @@ const classNames = {
 }
 
 type Props = {
-  onSubmit?: (data: FormValues) => void
+  onSubmit: (data: FormValues) => void
 }
 export const SignIn = ({ onSubmit }: Props) => {
   const {

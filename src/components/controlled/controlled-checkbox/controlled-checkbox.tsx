@@ -5,10 +5,11 @@ import { FormValues } from '@/components/forms/sign-in/signInSchema'
 import { CheckboxProps } from '@radix-ui/react-checkbox'
 
 type Props<T extends FormValues> = UseControllerProps<T> &
-  Omit<CheckboxProps, 'checked' | 'onBlur' | 'onCheckedChange'>
+  Omit<CheckboxProps, 'checked' | 'label' | 'onBlur' | 'onCheckedChange'> & { label: string }
 export const ControlledCheckbox = <T extends FormValues>({
   control,
   disabled,
+  label,
   name,
   shouldUnregister,
   ...rest
@@ -24,8 +25,9 @@ export const ControlledCheckbox = <T extends FormValues>({
 
   return (
     <Checkbox
-      checked={value}
+      checked={!!value}
       disabled={disabled}
+      label={label}
       onCheckedChange={onChange}
       ref={ref}
       {...rest}
