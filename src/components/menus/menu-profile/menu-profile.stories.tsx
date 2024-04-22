@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { MenuProfile } from './menu-profile'
+import avatarImage from '@/assets/images/user-profile.png'
+import { MenuProfile } from '@/components/menus'
 
 const meta: Meta<typeof MenuProfile> = {
   component: MenuProfile,
@@ -13,9 +14,11 @@ export default meta
 type MenuProfileStory = StoryObj<typeof MenuProfile>
 
 export const Default: MenuProfileStory = {
-  render: () => (
-    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-      <MenuProfile />
-    </div>
-  ),
+  args: {
+    avatarUrl: avatarImage,
+    email: 'john@example.com',
+    onLogout: () => alert('Logged out'),
+    userName: 'John Doe',
+  },
+  render: args => <MenuProfile {...args} />,
 }
