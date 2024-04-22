@@ -2,29 +2,35 @@ import { Edit, MoreVertical, Play, Trash } from '@/assets/icons'
 
 import { DropdownItem, DropdownMenu, DropdownSeparator } from '../../ui/drop-down'
 
-export const MenuDeck = () => {
+type MenuDeckProps = {
+  onDelete: () => void
+  onEdit: () => void
+  onLearn: () => void
+}
+
+export const MenuDeck = ({ onDelete, onEdit, onLearn }: MenuDeckProps) => {
   return (
     <div>
       <DropdownMenu ariaLabel={'Menu deck'} trigger={<MoreVertical />}>
         <DropdownItem asChild>
-          <a href={'#'}>
+          <button onClick={onLearn}>
             <Play />
-            Learn1
-          </a>
+            Learn
+          </button>
         </DropdownItem>
         <DropdownSeparator />
         <DropdownItem asChild>
-          <a href={'#'}>
+          <button onClick={onEdit}>
             <Edit />
             Edit
-          </a>
+          </button>
         </DropdownItem>
         <DropdownSeparator />
         <DropdownItem asChild>
-          <a href={'#'}>
+          <button onClick={onDelete}>
             <Trash />
             Delete
-          </a>
+          </button>
         </DropdownItem>
       </DropdownMenu>
     </div>

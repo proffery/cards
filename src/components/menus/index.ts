@@ -1,2 +1,2 @@
 export * from './menu-deck/menu-deck'
-export * from './menu-user-profile/menu-profile'
+export * from '@/components/menus/menu-profile/menu-profile'
