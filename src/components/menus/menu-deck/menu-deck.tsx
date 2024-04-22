@@ -1,61 +1,38 @@
-import { useId, useState } from 'react'
-
 import { Edit, MoreVertical, Play, Trash } from '@/assets/icons'
-import { DeckDialog, DeleteDeck } from '@/components/dialogs'
 
 import { DropdownItem, DropdownMenu, DropdownSeparator } from '../../ui/drop-down'
 
-export const MenuDeck = () => {
-  const [editOpen, setEditOpen] = useState(false)
-  const [deleteOpen, setDeleteOpen] = useState(false)
+type MenuDeckProps = {
+  onDelete: () => void
+  onEdit: () => void
+  onLearn: () => void
+}
 
-  const id = useId()
-
-  const handleConfirmEdit = (data: { cover?: any; isPrivate: boolean; name: string }) => {
-    alert(`Confirm: ${JSON.stringify(data)}`)
-    setEditOpen(false)
-  }
-
-  const handleConfirmDelete = () => {
-    alert(`Confirm deletion deck by id=${id}`)
-    setDeleteOpen(false)
-  }
-
+export const MenuDeck = ({ onDelete, onEdit, onLearn }: MenuDeckProps) => {
   return (
     <div>
       <DropdownMenu ariaLabel={'Menu deck'} trigger={<MoreVertical />}>
         <DropdownItem asChild>
-          <button>
+          <button onClick={onLearn}>
             <Play />
             Learn
           </button>
         </DropdownItem>
         <DropdownSeparator />
         <DropdownItem asChild>
-          <button onClick={() => setEditOpen(true)}>
+          <button onClick={onEdit}>
             <Edit />
             Edit
           </button>
         </DropdownItem>
         <DropdownSeparator />
         <DropdownItem asChild>
-          <button onClick={() => setDeleteOpen(true)}>
+          <button onClick={onDelete}>
             <Trash />
             Delete
           </button>
         </DropdownItem>
       </DropdownMenu>
-      <DeckDialog
-        onCancel={() => setEditOpen(false)}
-        onConfirm={handleConfirmEdit}
-        open={editOpen}
-      />
-      <DeleteDeck
-        deckName={'Deck Name'}
-        onCancel={() => setDeleteOpen(false)}
-        onConfirm={handleConfirmDelete}
-        open={deleteOpen}
-      />
     </div>
   )
 }
