@@ -1,8 +1,9 @@
 import { ChangeEvent, useEffect, useState } from 'react'
-import { useController, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import { Image, Trash } from '@/assets/icons'
-import { Button, Checkbox, Dialog, DialogProps, Input } from '@/components'
+import { Button, Dialog, DialogProps, Input } from '@/components'
+import { ControlledCheckbox } from '@/components/controlled/controlled-checkbox/controlled-checkbox'
 import { convertUrlToFile } from '@/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -43,10 +44,6 @@ export const DeckDialog = ({
     },
     resolver: zodResolver(addDeckSchema),
   })
-
-  const {
-    field: { disabled, name, onBlur, onChange, ref: checkRef, value },
-  } = useController({ control, name: 'isPrivate' })
 
   const handleCancel = () => {
     reset()
@@ -112,15 +109,7 @@ export const DeckDialog = ({
             <Image size={16} /> Upload Image
           </Button>
         </div>
-        <Checkbox
-          checked={value}
-          disabled={disabled}
-          label={'Private pack'}
-          name={name}
-          onBlur={onBlur}
-          onCheckedChange={onChange}
-          ref={checkRef}
-        />
+        <ControlledCheckbox control={control} label={'Private pack'} name={'isPrivate'} />
       </form>
     </Dialog>
   )
