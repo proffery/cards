@@ -1,24 +1,40 @@
-import { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import * as RadioGroupRadix from '@radix-ui/react-radio-group'
 
 import s from './radio-group.module.scss'
 
-type Props = {
-  children: ReactNode
-  defaultValue?: string
+type Option = {
   disabled?: boolean
-  label?: string
+  label: string
+  required?: boolean
+  value: string
+}
+export type RadioGroupProps = {
+  options: Option[]
 } & ComponentPropsWithoutRef<typeof RadioGroupRadix.Root>
 
-export const RadioGroup = (props: Props) => {
-  const { children, defaultValue, disabled } = props
-
-  return (
-    <form>
-      <RadioGroupRadix.Root className={s.root} defaultValue={defaultValue} disabled={disabled}>
-        {children}
+export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, RadioGroupProps>(
+  ({ options, ...rest }, ref) => {
+    return (
+      <RadioGroupRadix.Root className={s.root} {...rest} ref={ref}>
+        {options.map(option => (
+          <div className={s.item} key={option.value}>
+            <RadioGroupRadix.Item
+              className={s.radio}
+              disabled={option.disabled}
+              id={`${option.value}`}
+              required={option.required}
+              value={option.value}
+            >
+              <RadioGroupRadix.Indicator className={s.indicator} />
+            </RadioGroupRadix.Item>
+            <label className={s.label} htmlFor={`${option.value}`}>
+              {option.label}
+            </label>
+          </div>
+        ))}
       </RadioGroupRadix.Root>
-    </form>
-  )
-}
+    )
+  }
+)
