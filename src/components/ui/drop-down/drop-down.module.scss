@@ -68,8 +68,9 @@
     animation: fade-out 300ms ease-out;
   }
 
-  &:has(a) {
-    a {
+  &:has(a, button) {
+    a,
+    button {
       cursor: pointer;
       color: var(--color-light-100);
       text-decoration: none;
