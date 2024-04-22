@@ -1,15 +1,13 @@
-import { UseControllerProps, useController } from 'react-hook-form'
+import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
 
 import { Checkbox } from '@/components'
-import { FormValues } from '@/components/forms/sign-in/signInSchema'
 import { CheckboxProps } from '@radix-ui/react-checkbox'
 
-type Props<T extends FormValues> = UseControllerProps<T> &
-  Omit<CheckboxProps, 'checked' | 'label' | 'onBlur' | 'onCheckedChange'> & { label: string }
-export const ControlledCheckbox = <T extends FormValues>({
+type Props<T extends FieldValues> = UseControllerProps<T> &
+  Omit<CheckboxProps, 'checked' | 'label' | 'onBlur' | 'onCheckedChange'> & { label?: string }
+export const ControlledCheckbox = <T extends FieldValues>({
   control,
   disabled,
-  label,
   name,
   shouldUnregister,
   ...rest
@@ -27,7 +25,6 @@ export const ControlledCheckbox = <T extends FormValues>({
     <Checkbox
       checked={!!value}
       disabled={disabled}
-      label={label}
       onCheckedChange={onChange}
       ref={ref}
       {...rest}
