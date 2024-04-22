@@ -3,16 +3,16 @@ import { useForm } from 'react-hook-form'
 import { Button, Card, Input, Typography } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import { z } from 'zod'
 
 import s from '../forms.module.scss'
 
 import { logoutSchema } from './schema'
-import { FormFields } from './types'
 
 type Props = {
-  onSubmit: (data: FormFields) => void
+  onSubmit: (data: Omit<FormFields, 'confirmPassword'>) => void
 }
-
+type FormFields = z.infer<typeof logoutSchema>
 export const SignUp = ({ onSubmit }: Props) => {
   const {
     formState: { errors },

@@ -6,11 +6,10 @@ import { Avatar, Button, Card, Input, Typography } from '@/components'
 import { editProfileSchema } from '@/components/forms/edit-profile/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import { z } from 'zod'
 
 import s from '../forms.module.scss'
 import s2 from './edit-profile.module.scss'
-
-import { FormFields } from './types'
 
 type Props = {
   avatarUrl?: string
@@ -20,7 +19,7 @@ type Props = {
   onLogout: () => void
   onSubmit: (data: FormFields) => void
 }
-
+type FormFields = z.infer<typeof editProfileSchema>
 export const EditProfile = ({
   avatarUrl,
   email,
