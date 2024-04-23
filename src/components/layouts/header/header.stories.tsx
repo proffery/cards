@@ -1,10 +1,10 @@
-import { Header } from '@/components/layout/header/header'
+import { Header } from '@/components/layouts/header/header'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   component: Header,
   tags: ['autodocs'],
-  title: 'Pages/Header',
+  title: 'Layouts/Header',
 } satisfies Meta<typeof Header>
 
 export default meta
