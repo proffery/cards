@@ -1,6 +1,7 @@
 import type { Preview } from '@storybook/react'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/700.css'
+import { MemoryRouter } from 'react-router-dom'
 import '../src/styles/index.scss'
 const preview: Preview = {
   parameters: {
@@ -24,6 +25,13 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [
+    Story => (
+      <MemoryRouter initialEntries={['/']}>
+        <Story />
+      </MemoryRouter>
+    ),
+  ],
 }
 
 export default preview

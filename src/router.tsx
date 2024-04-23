@@ -6,63 +6,74 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
+import { Layout, Page } from '@/components/layouts'
+
 const publicRoutes: RouteObject[] = [
   {
-    children: [
-      {
-        element: <div>SignIn page</div>,
-        path: '/sign-in',
-      },
-      {
-        element: <div>SignUp page</div>,
-        path: '/sign-up',
-      },
-      {
-        element: <div>ForgotPassword page</div>,
-        path: '/forgot-password',
-      },
-      {
-        element: <div>CheckEmail page</div>,
-        path: '/check-email',
-      },
-    ],
-    element: <Outlet />,
+    element: <Page>SignIn page</Page>,
+    path: '/sign-in',
+  },
+  {
+    element: <Page>SignUp page</Page>,
+    path: '/sign-up',
+  },
+  {
+    element: <Page>ForgotPassword page</Page>,
+    path: '/forgot-password',
+  },
+  {
+    element: <Page>CheckEmail page</Page>,
+    path: '/check-email',
   },
 ]
 
 const privateRoutes: RouteObject[] = [
   {
-    element: <div>Decks page</div>,
+    element: <Navigate to={'/decks'} />,
     path: '/',
   },
   {
-    element: <div>Deck page</div>,
+    element: <Page>Decks page</Page>,
+    path: '/decks',
+  },
+  {
+    element: <Page>Deck page</Page>,
     path: '/decks/:deckId',
   },
   {
-    element: <div>Learn Deck page</div>,
+    element: <Page>Learn Deck page</Page>,
     path: '/decks/:deckId/learn',
   },
   {
-    element: <div>Profile page</div>,
+    element: <Page>Profile page</Page>,
     path: '/profile',
   },
   {
-    element: <div>CreateNewPassword page</div>,
+    element: <Page>CreateNewPassword page</Page>,
     path: '/create-password',
-  },
-  {
-    element: <div>Error404 page</div>,
-    path: '*',
   },
 ]
 
 const router = createBrowserRouter([
   {
-    children: privateRoutes,
-    element: <PrivateRoutes />,
+    children: [
+      {
+        children: privateRoutes,
+        element: <PrivateRoutes />,
+      },
+      ...publicRoutes,
+    ],
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+    errorElement: (
+      <Layout>
+        <Page>Error404 page</Page>
+      </Layout>
+    ),
   },
-  ...publicRoutes,
 ])
 
 export const Router = () => {
@@ -70,7 +81,7 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = true
+  const isAuthenticated = false
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />
 }

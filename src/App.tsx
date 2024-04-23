@@ -1,5 +1,5 @@
-import { Layout } from './components/layouts'
+import { Router } from '@/router'
 
 export default function App() {
-  return <Layout>Hello!</Layout>
+  return <Router />
 }
