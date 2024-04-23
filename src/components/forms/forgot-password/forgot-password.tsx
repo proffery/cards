@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import { Button, Card, Input, Typography } from '@/components'
 import { ForgotPasswordSchema } from '@/components/forms/forgot-password/schema'
@@ -48,7 +49,8 @@ export const ForgotPassword = ({ onSubmit }: Props) => {
       <Typography.Body2 className={s.rememberPassword}>
         Did you remember your password?
       </Typography.Body2>
-      <Typography.Link3 className={classNames.signInButton} href={'/sign-in'}>
+
+      <Typography.Link3 as={Link} className={classNames.signInButton} to={'/sign-in'}>
         Try logging in
       </Typography.Link3>
     </Card>

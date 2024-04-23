@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, Input, Typography } from '@/components'
+import { Button, Card, Typography } from '@/components'
 import { ControlledCheckbox } from '@/components/controlled/controlled-checkbox/controlled-checkbox'
+import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { FormValues, schema } from '@/components/forms/sign-in/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
@@ -24,25 +25,28 @@ export const SignIn = ({ onSubmit }: Props) => {
     formState: { errors },
     handleSubmit,
     register,
-    watch,
   } = useForm<FormValues>({ resolver: zodResolver(schema) })
+  const onFormSubmit = (data: FormValues) => {
+    onSubmit(data)
+  }
 
   return (
     <Card className={classNames.root}>
       <Typography.H1>Sign In</Typography.H1>
-      <form className={classNames.form} onSubmit={handleSubmit(data => onSubmit(data))}>
-        <Input
+      <form className={classNames.form} onSubmit={handleSubmit(onFormSubmit)}>
+        <ControlledInput
+          control={control}
           fullWidth
           label={'Email'}
           {...register('email')}
           errorMessage={errors.email?.message}
         />
-        <Input
+        <ControlledInput
           fullWidth
           label={'Password'}
           type={'password'}
-          value={watch('password', '')}
           {...register('password')}
+          control={control}
           errorMessage={errors.password?.message}
         />
         <ControlledCheckbox control={control} label={'Remember me'} name={'rememberMe'} />
