@@ -30,6 +30,8 @@
 .formLink{
   display: flex;
   justify-content: flex-end;
+  color: var(--color-light-100);
+  text-decoration: none;
 }
 
 .enterEmail{
@@ -41,6 +43,7 @@
   opacity: 0.5;
 }
 
-.rememberPassword{
+.textOnCard900{
   color: var(--color-light-900);
+  text-decoration: none;
 }
