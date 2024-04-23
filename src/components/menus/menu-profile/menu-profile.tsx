@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { Logout, Person } from '@/assets/icons'
 import { Avatar, Typography } from '@/components'
 
@@ -29,17 +31,17 @@ export const MenuProfile = ({ avatarUrl, email, onLogout, userName }: MenuProfil
       </DropdownItem>
       <DropdownSeparator />
       <DropdownItem asChild>
-        <a href={'#'}>
+        <Link to={'/profile'}>
           <Person />
           My Profile
-        </a>
+        </Link>
       </DropdownItem>
       <DropdownSeparator />
       <DropdownItem asChild>
-        <a href={'#'} onClick={onLogout}>
+        <button onClick={onLogout}>
           <Logout />
           Sing Out
-        </a>
+        </button>
       </DropdownItem>
     </DropdownMenu>
   )

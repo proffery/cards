@@ -3,16 +3,16 @@ import { useForm } from 'react-hook-form'
 import { Button, Card, Input, Typography } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import { z } from 'zod'
 
 import s from '../forms.module.scss'
 
 import { createPasswordSchema } from './schema'
-import { FormFields } from './types'
 
 type Props = {
   onSubmit: (data: FormFields) => void
 }
-
+type FormFields = z.infer<typeof createPasswordSchema>
 export const CreatePassword = ({ onSubmit }: Props) => {
   const {
     formState: { errors },

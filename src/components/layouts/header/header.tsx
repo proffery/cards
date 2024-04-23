@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import logo from '@/assets/images/cover.png'
 import { Button, Typography } from '@/components'
 import { MenuProfile, MenuProfileProps } from '@/components/menus'
@@ -12,14 +14,14 @@ export const Header = ({ avatarUrl, email, isLoggedIn, onLogout, userName }: Hea
   return (
     <header className={s.root}>
       <div className={s.content}>
-        <a className={s.banner} href={'/'}>
+        <Link className={s.banner} to={'/'}>
           <img alt={'Logo'} src={logo} />
-        </a>
+        </Link>
         {isLoggedIn && (
           <div className={s.nameContainer}>
-            <Typography.Subtitle2 as={'a'} className={s.name} href={'#'}>
+            <Typography.Subtitle1 as={Link} className={s.name} to={'/profile'}>
               {userName}
-            </Typography.Subtitle2>
+            </Typography.Subtitle1>
             <MenuProfile
               avatarUrl={avatarUrl}
               email={email}
@@ -29,7 +31,7 @@ export const Header = ({ avatarUrl, email, isLoggedIn, onLogout, userName }: Hea
           </div>
         )}
         {!isLoggedIn && (
-          <Button as={'a'} href={'/sign-in'} variant={'secondary'}>
+          <Button as={Link} to={'/sign-in'} variant={'secondary'}>
             Sign In
           </Button>
         )}
