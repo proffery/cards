@@ -6,52 +6,53 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
+import { ROUTES } from '@/common/consts/routes'
 import { Layout, Page } from '@/components/layouts'
 import { CheckEmailPage, ErrorPage } from '@/components/pages'
 
 const publicRoutes: RouteObject[] = [
   {
     element: <Page>SignIn page</Page>,
-    path: '/sign-in',
+    path: ROUTES.signIn,
   },
   {
     element: <Page>SignUp page</Page>,
-    path: '/sign-up',
+    path: ROUTES.signUp,
   },
   {
     element: <Page>ForgotPassword page</Page>,
-    path: '/forgot-password',
+    path: ROUTES.forgotPassword,
   },
   {
     element: <CheckEmailPage />,
-    path: '/check-email',
+    path: ROUTES.checkEmail,
   },
 ]
 
 const privateRoutes: RouteObject[] = [
   {
-    element: <Navigate to={'/decks'} />,
-    path: '/',
+    element: <Navigate to={ROUTES.decks} />,
+    path: ROUTES.base,
   },
   {
     element: <Page>Decks page</Page>,
-    path: '/decks',
+    path: ROUTES.decks,
   },
   {
     element: <Page>Deck page</Page>,
-    path: '/decks/:deckId',
+    path: `${ROUTES.decks}/:deckId`,
   },
   {
     element: <Page>Learn Deck page</Page>,
-    path: '/decks/:deckId/learn',
+    path: `${ROUTES.decks}/:deckId/learn`,
   },
   {
     element: <Page>Profile page</Page>,
-    path: '/profile',
+    path: ROUTES.profile,
   },
   {
     element: <Page>CreateNewPassword page</Page>,
-    path: '/create-password',
+    path: ROUTES.createPassword,
   },
 ]
 
@@ -84,5 +85,5 @@ export const Router = () => {
 function PrivateRoutes() {
   const isAuthenticated = true
 
-  return isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />
+  return isAuthenticated ? <Outlet /> : <Navigate to={ROUTES.signIn} />
 }
