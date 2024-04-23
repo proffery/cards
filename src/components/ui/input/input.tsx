@@ -5,7 +5,7 @@ import clsx from 'clsx'
 
 import s from './input.module.scss'
 
-type InputProps = {
+export type InputProps = {
   className?: string
   cleanSearch?: () => void
   errorMessage?: string

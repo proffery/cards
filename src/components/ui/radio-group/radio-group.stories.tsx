@@ -35,3 +35,11 @@ export const Default: RadioGroupStory = {
     return <RadioGroup onValueChange={setValue} options={options} value={value} />
   },
 }
+
+export const Controlled: RadioGroupStory = {
+  render: () => {
+    const [value, setValue] = useState('banana')
+
+    return <RadioGroup onValueChange={setValue} options={options} value={value} />
+  },
+}

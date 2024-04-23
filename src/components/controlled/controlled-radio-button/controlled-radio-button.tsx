@@ -1,10 +1,8 @@
-import { ReactNode } from 'react'
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
 
 import { RadioGroup, RadioGroupProps } from '@/components'
 
 export type ControlledRadioGroupProps<T extends FieldValues> = {
-  children: ReactNode
   control: Control<T>
   name: FieldPath<T>
 } & Omit<RadioGroupProps, 'id' | 'onChange' | 'value'>
