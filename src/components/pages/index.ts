@@ -1,1 +1,1 @@
-export { CheckEmail } from '@/components/pages/check-email/check-email'
+export { ErrorPage } from '@/components/pages/error-page/error-page'

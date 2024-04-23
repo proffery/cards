@@ -4,7 +4,7 @@ import { Meta, StoryObj } from '@storybook/react'
 const meta = {
   component: CheckEmail,
   tags: ['autodocs'],
-  title: 'Pages/CheckEmail',
+  title: 'Forms/CheckEmail',
 } satisfies Meta<typeof CheckEmail>
 
 export default meta
