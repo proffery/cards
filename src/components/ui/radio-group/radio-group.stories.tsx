@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { RadioGroup, RadioGroupItem } from '@/components'
+import { useState } from 'react'
+
+import { RadioGroup } from '@/components'
 
 const meta: Meta<typeof RadioGroup> = {
   component: RadioGroup,
@@ -13,41 +15,31 @@ export default meta
 type RadioGroupStory = StoryObj<typeof RadioGroup>
 
 // Options for the radio group
-const fruitOptions = [
-  { label: 'Apple', value: 'apple' },
-  { label: 'Banana', value: 'banana' },
-  { label: 'Orange', value: 'orange' },
+const options = [
+  { disabled: true, label: 'Option 1', value: 'Option1' },
+  { label: 'Option 2', value: 'option2' },
+  { label: 'Option 3', value: 'option3' },
+  { label: 'Option 4', value: 'option4' },
+  { label: 'Option 5', value: 'option5' },
+  { label: 'Option 6', value: 'option6' },
+  { label: 'Option 7', value: 'option7' },
+  { label: 'Option 8', value: 'option8' },
+  { label: 'Option 9', value: 'option9' },
+  { label: 'Option 10', value: 'option10' },
 ]
 
 export const Default: RadioGroupStory = {
-  args: {
-    defaultValue: 'apple',
-    label: 'Favorite Fruit',
+  render: () => {
+    const [value, setValue] = useState('banana')
+
+    return <RadioGroup onValueChange={setValue} options={options} value={value} />
   },
-  render: args => (
-    <RadioGroup {...args}>
-      {fruitOptions.map(option => (
-        <RadioGroupItem key={option.value} value={option.value}>
-          {option.label}
-        </RadioGroupItem>
-      ))}
-    </RadioGroup>
-  ),
 }
 
-export const Disabled: RadioGroupStory = {
-  args: {
-    defaultValue: 'apple',
-    disabled: true,
-    label: 'Favorite Fruit',
+export const Controlled: RadioGroupStory = {
+  render: () => {
+    const [value, setValue] = useState('banana')
+
+    return <RadioGroup onValueChange={setValue} options={options} value={value} />
   },
-  render: args => (
-    <RadioGroup {...args}>
-      {fruitOptions.map(option => (
-        <RadioGroupItem key={option.value} value={option.value}>
-          {option.label}
-        </RadioGroupItem>
-      ))}
-    </RadioGroup>
-  ),
 }
