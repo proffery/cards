@@ -1,26 +1,29 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import { Button, Card, Input, Typography } from '@/components'
+import { Button, Card, Typography } from '@/components'
+import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import { z } from 'zod'
 
 import s from '../forms.module.scss'
 
-import { logoutSchema } from './schema'
+import { signUpSchema } from './schema'
 
 type Props = {
   onSubmit: (data: Omit<FormFields, 'confirmPassword'>) => void
 }
-type FormFields = z.infer<typeof logoutSchema>
+type FormFields = z.infer<typeof signUpSchema>
 export const SignUp = ({ onSubmit }: Props) => {
-  const {
-    formState: { errors },
-    handleSubmit,
-    register,
-    watch,
-  } = useForm<FormFields>({ resolver: zodResolver(logoutSchema) })
+  const { control, handleSubmit } = useForm<FormFields>({
+    defaultValues: {
+      confirmPassword: '',
+      email: '',
+      password: '',
+    },
+    resolver: zodResolver(signUpSchema),
+  })
 
   const classNames = {
     form: clsx(s.form),
@@ -33,27 +36,20 @@ export const SignUp = ({ onSubmit }: Props) => {
     <Card className={classNames.root}>
       <Typography.H1>Sign Up</Typography.H1>
       <form className={classNames.form} onSubmit={handleSubmit(data => onSubmit(data))}>
-        <Input
-          fullWidth
-          {...register('email')}
-          errorMessage={errors.email?.message}
-          label={'Email'}
-        />
-        <Input
-          errorMessage={errors.password?.message}
+        <ControlledInput control={control} fullWidth label={'Email'} name={'email'} />
+        <ControlledInput
+          control={control}
           fullWidth
           label={'Password'}
+          name={'password'}
           type={'password'}
-          value={watch('password', '')}
-          {...register('password')}
         />
-        <Input
-          errorMessage={errors.confirmPassword?.message}
+        <ControlledInput
+          control={control}
           fullWidth
           label={'Confirm Password'}
+          name={'confirmPassword'}
           type={'password'}
-          value={watch('confirmPassword', '')}
-          {...register('confirmPassword')}
         />
         <Button className={classNames.submitButton} fullWidth>
           Sign Up

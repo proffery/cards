@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, Input, Typography } from '@/components'
+import { Button, Card, Typography } from '@/components'
+import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import { z } from 'zod'
@@ -14,12 +15,10 @@ type Props = {
 }
 type FormFields = z.infer<typeof createPasswordSchema>
 export const CreatePassword = ({ onSubmit }: Props) => {
-  const {
-    formState: { errors },
-    handleSubmit,
-    register,
-    watch,
-  } = useForm<FormFields>({ resolver: zodResolver(createPasswordSchema) })
+  const { control, handleSubmit } = useForm<FormFields>({
+    defaultValues: { password: '' },
+    resolver: zodResolver(createPasswordSchema),
+  })
 
   const classNames = {
     description: clsx(s.description),
@@ -32,13 +31,12 @@ export const CreatePassword = ({ onSubmit }: Props) => {
     <Card className={classNames.root}>
       <Typography.H1>Create new password</Typography.H1>
       <form className={classNames.form} onSubmit={handleSubmit(data => onSubmit(data))}>
-        <Input
-          errorMessage={errors.password?.message}
+        <ControlledInput
+          control={control}
           fullWidth
           label={'Password'}
+          name={'password'}
           type={'password'}
-          value={watch('password', '')}
-          {...register('password')}
         />
         <Typography.Body2 className={classNames.description}>
           Create new password and we will send you further instructions to email

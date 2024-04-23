@@ -2,7 +2,8 @@ import { ChangeEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Edit, Logout } from '@/assets/icons'
-import { Avatar, Button, Card, Input, Typography } from '@/components'
+import { Avatar, Button, Card, Typography } from '@/components'
+import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { editProfileSchema } from '@/components/forms/edit-profile/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
@@ -28,11 +29,10 @@ export const EditProfile = ({
   onLogout,
   onSubmit,
 }: Props) => {
-  const {
-    formState: { errors },
-    handleSubmit,
-    register,
-  } = useForm<FormFields>({ resolver: zodResolver(editProfileSchema) })
+  const { control, handleSubmit } = useForm<FormFields>({
+    defaultValues: { name: '' },
+    resolver: zodResolver(editProfileSchema),
+  })
 
   const classNames = {
     avatar: clsx(s.centered),
@@ -60,14 +60,7 @@ export const EditProfile = ({
         <>
           <Avatar className={classNames.avatar} name={name} size={'l'} url={avatarUrl} />
           <form className={classNames.form} onSubmit={handleSubmit(data => onSubmit(data))}>
-            <Input
-              defaultValue={name}
-              errorMessage={errors.name?.message}
-              fullWidth
-              label={'Nickname'}
-              {...register('name')}
-            />
-
+            <ControlledInput control={control} fullWidth label={'Nickname'} name={'name'} />
             <Button className={classNames.submitButton} fullWidth type={'submit'}>
               Save Changes
             </Button>
