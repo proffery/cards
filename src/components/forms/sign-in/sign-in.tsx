@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import { Button, Card, Typography } from '@/components'
 import { ControlledCheckbox } from '@/components/controlled/controlled-checkbox/controlled-checkbox'
@@ -51,7 +52,7 @@ export const SignIn = ({ onSubmit }: Props) => {
         />
         <ControlledCheckbox control={control} label={'Remember me'} name={'rememberMe'} />
         <div className={s.formLink}>
-          <Typography.Body2 as={'a'} className={s.formLink} href={'/forgot-password'}>
+          <Typography.Body2 as={Link} className={s.formLink} to={'/forgot-password'}>
             Forgot Password?
           </Typography.Body2>
         </div>
@@ -59,8 +60,8 @@ export const SignIn = ({ onSubmit }: Props) => {
           Sign In
         </Button>
       </form>
-      <Typography.Body2 className={s.textOnCard900}>Don't have an account?</Typography.Body2>
-      <Typography.Link3 className={classNames.signInButton} href={'/sign-up'}>
+      <Typography.Body2 className={s.text}>Don't have an account?</Typography.Body2>
+      <Typography.Link3 as={Link} className={classNames.signInButton} to={'/sign-up'}>
         Sign Up
       </Typography.Link3>
     </Card>

@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import { Button, Card, Input, Typography } from '@/components'
+import { Button, Card, Typography } from '@/components'
+import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { ForgotPasswordSchema } from '@/components/forms/forgot-password/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
@@ -24,6 +25,7 @@ type Props = {
 
 export const ForgotPassword = ({ onSubmit }: Props) => {
   const {
+    control,
     formState: { errors },
     handleSubmit,
     register,
@@ -33,10 +35,11 @@ export const ForgotPassword = ({ onSubmit }: Props) => {
     <Card className={classNames.root}>
       <Typography.H1>Forgot your password?</Typography.H1>
       <form className={classNames.form} onSubmit={handleSubmit(data => onSubmit(data))}>
-        <Input
+        <ControlledInput
           fullWidth
           label={'Email'}
           {...register('email')}
+          control={control}
           errorMessage={errors.email?.message}
         />
         <Typography.Subtitle2 className={s.enterEmail}>
