@@ -47,15 +47,16 @@ export const SignIn = ({ onSubmit }: Props) => {
         />
         <ControlledCheckbox control={control} label={'Remember me'} name={'rememberMe'} />
         <div className={s.formLink}>
-          {/*//Need add link*/}
-          <Typography.Body2>Forgot Password?</Typography.Body2>
+          <Typography.Body2 as={'a'} className={s.formLink} href={'/forgot-password'}>
+            Forgot Password?
+          </Typography.Body2>
         </div>
         <Button className={classNames.submitButton} fullWidth>
           Sign In
         </Button>
       </form>
-      <Typography.Body2>Don't have an account?</Typography.Body2>
-      <Typography.Link3 className={classNames.signInButton} href={'/signup'}>
+      <Typography.Body2 className={s.textOnCard900}>Don't have an account?</Typography.Body2>
+      <Typography.Link3 className={classNames.signInButton} href={'/sign-up'}>
         Sign Up
       </Typography.Link3>
     </Card>
