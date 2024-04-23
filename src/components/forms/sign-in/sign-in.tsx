@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 
 import { Button, Card, Input, Typography } from '@/components'
 import { ControlledCheckbox } from '@/components/controlled/controlled-checkbox/controlled-checkbox'
-import { FormValues, signInSchema } from '@/components/forms/sign-in/signInSchema'
+import { FormValues, schema } from '@/components/forms/sign-in/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
@@ -25,7 +25,7 @@ export const SignIn = ({ onSubmit }: Props) => {
     handleSubmit,
     register,
     watch,
-  } = useForm<FormValues>({ resolver: zodResolver(signInSchema) })
+  } = useForm<FormValues>({ resolver: zodResolver(schema) })
 
   return (
     <Card className={classNames.root}>

@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 
 import { Button, Card, Input, Typography } from '@/components'
-import { ForgotPasswordSchema } from '@/components/forms/forgot-password/Shema'
+import { ForgotPasswordSchema } from '@/components/forms/forgot-password/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
