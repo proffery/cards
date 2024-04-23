@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { Layout, Page } from '@/components/layouts'
+import { ErrorPage } from '@/components/pages'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -70,7 +71,7 @@ const router = createBrowserRouter([
     ),
     errorElement: (
       <Layout>
-        <Page>Error404 page</Page>
+        <ErrorPage />
       </Layout>
     ),
   },
@@ -81,7 +82,7 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = false
+  const isAuthenticated = true
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />
 }
