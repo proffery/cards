@@ -1,12 +1,12 @@
 import { Layout } from '@/components/layouts'
-import { ForgotPasswordPage } from '@/components/pages/forgot-password-page/forgot-password-page'
+import { CreatePasswordPage } from '@/components/pages/create-password-page/create-password-page'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
-  component: ForgotPasswordPage,
+  component: CreatePasswordPage,
   tags: ['autodocs'],
-  title: 'Pages/ForgotPassword',
-} satisfies Meta<typeof ForgotPasswordPage>
+  title: 'Pages/CreatePasswordPage',
+} satisfies Meta<typeof CreatePasswordPage>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>
 export const ForgotPasswordDefault: Story = {
   render: () => (
     <Layout>
-      <ForgotPasswordPage />
+      <CreatePasswordPage />
     </Layout>
   ),
 }

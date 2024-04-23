@@ -26,7 +26,14 @@ export const SignIn = ({ onSubmit }: Props) => {
     formState: { errors },
     handleSubmit,
     register,
-  } = useForm<FormValues>({ resolver: zodResolver(schema) })
+  } = useForm<FormValues>({
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
+    resolver: zodResolver(schema),
+  })
   const onFormSubmit = (data: FormValues) => {
     onSubmit(data)
   }
