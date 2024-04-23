@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import Image404 from '@/assets/images/404.png'
+import { ROUTES } from '@/common/consts/routes'
 import { Button, Typography } from '@/components'
 import { Page } from '@/components/layouts'
 
@@ -12,7 +13,7 @@ export const ErrorPage = () => {
       <div className={s.content}>
         <img alt={'Error 404'} src={Image404} />
         <Typography.Body1>Sorry! Page not found!</Typography.Body1>
-        <Button as={Link} to={'/'}>
+        <Button as={Link} to={ROUTES.base}>
           Back to home page
         </Button>
       </div>
