@@ -1,4 +1,4 @@
-import { CheckEmail } from '@/components/pages'
+import { CheckEmail } from '@/components/forms'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
