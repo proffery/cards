@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { Layout, Page } from '@/components/layouts'
-import { ErrorPage } from '@/components/pages'
+import { CheckEmailPage, ErrorPage } from '@/components/pages'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -23,7 +23,7 @@ const publicRoutes: RouteObject[] = [
     path: '/forgot-password',
   },
   {
-    element: <Page>CheckEmail page</Page>,
+    element: <CheckEmailPage />,
     path: '/check-email',
   },
 ]
