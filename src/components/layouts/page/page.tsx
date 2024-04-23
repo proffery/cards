@@ -1,17 +1,17 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { CSSProperties, ComponentPropsWithoutRef } from 'react'
 
 import clsx from 'clsx'
 
 import s from './page.module.scss'
 
-type Props = ComponentPropsWithoutRef<'div'>
+type Props = { marginTop?: CSSProperties['marginTop'] } & ComponentPropsWithoutRef<'div'>
 
-export const Page = (props: Props) => {
-  const { children, className, ...rest } = props
-  const classes = clsx(className, s.conteiner)
+export const Page = ({ children, className, marginTop = '32px', style, ...rest }: Props) => {
+  const classes = clsx(className, s.container)
+  const styles = { marginTop }
 
   return (
-    <div {...rest} className={classes}>
+    <div className={classes} {...rest} style={styles}>
       {children}
     </div>
   )

@@ -19,9 +19,9 @@ export const Header = ({ avatarUrl, email, isLoggedIn, onLogout, userName }: Hea
         </Link>
         {isLoggedIn && (
           <div className={s.nameContainer}>
-            <Typography.Subtitle2 as={Link} className={s.name} to={'#'}>
+            <Typography.Subtitle1 as={Link} className={s.name} to={'/profile'}>
               {userName}
-            </Typography.Subtitle2>
+            </Typography.Subtitle1>
             <MenuProfile
               avatarUrl={avatarUrl}
               email={email}
@@ -31,7 +31,7 @@ export const Header = ({ avatarUrl, email, isLoggedIn, onLogout, userName }: Hea
           </div>
         )}
         {!isLoggedIn && (
-          <Button as={'a'} href={'/sign-in'} variant={'secondary'}>
+          <Button as={Link} to={'/sign-in'} variant={'secondary'}>
             Sign In
           </Button>
         )}

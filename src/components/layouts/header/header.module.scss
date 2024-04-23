@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
 
-  height: 60px;
+  height: var(--header-height);
 
   background-color: var(--color-dark-700);
   border-bottom: 1px solid var(--color-dark-500);
@@ -30,7 +30,7 @@
   display: flex;
   align-items: center;
   height: 100%;
-  max-height: 60px;
+  max-height: var(--header-height);
 }
 
 .nameContainer {
@@ -40,9 +40,6 @@
 }
 
 .name {
-  font-size: var(--font-size-m);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-m);
   color: inherit;
   text-decoration: dashed underline;
   text-decoration-color: inherit;
