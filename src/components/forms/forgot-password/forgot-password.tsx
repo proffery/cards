@@ -48,7 +48,7 @@ export const ForgotPassword = ({ onSubmit }: Props) => {
       <Typography.Body2 className={s.rememberPassword}>
         Did you remember your password?
       </Typography.Body2>
-      <Typography.Link3 className={classNames.signInButton} href={'/signin'}>
+      <Typography.Link3 className={classNames.signInButton} href={'/sign-in'}>
         Try logging in
       </Typography.Link3>
     </Card>
