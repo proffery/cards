@@ -1,5 +1,6 @@
 .root {
   position: fixed;
+  z-index: 9999;
   top: 0;
   right: 0;
   left: 0;
@@ -8,6 +9,9 @@
   align-items: center;
 
   height: 60px;
+
+  background-color: var(--color-dark-700);
+  border-bottom: 1px solid var(--color-dark-500);
 }
 
 .content {
@@ -16,7 +20,9 @@
   justify-content: space-between;
 
   width: 100%;
+  max-width: 1280px;
   height: 100%;
+  margin: 0 auto;
   padding: 0 136px;
 }
 
