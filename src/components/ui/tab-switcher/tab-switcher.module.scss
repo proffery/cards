@@ -1,4 +1,4 @@
-.tab {
+.tabItem {
   cursor: pointer;
 
   height: 36px;
@@ -9,6 +9,7 @@
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-m);
   color: var(--color-light-100);
+  white-space: nowrap;
 
   &:hover {
     color: var(--color-light-900);

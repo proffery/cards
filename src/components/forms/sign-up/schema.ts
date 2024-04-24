@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const logoutSchema = z
+export const signUpSchema = z
   .object({
     confirmPassword: z.string().min(3),
     email: z.string().email(),

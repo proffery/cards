@@ -1,0 +1,30 @@
+.root {
+  display: flex;
+  gap: 36px;
+  width: 100%;
+}
+
+.topContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: end;
+  justify-content: space-between;
+
+  width: 100%;
+}
+
+.slider {
+  min-width: 25%;
+}
+
+.tabSwitcher {
+  min-width: 20%;
+}

@@ -1,2 +1,5 @@
 export { CheckEmailPage } from '@/components/pages/check-email-page/check-email-page'
+export { CreatePasswordPage } from '@/components/pages/create-password-page/create-password-page'
 export { ErrorPage } from '@/components/pages/error-page/error-page'
+export { ForgotPasswordPage } from '@/components/pages/forgot-password-page/forgot-password-page'
+export { SignUpPage } from '@/components/pages/sign-up/sign-up-page'

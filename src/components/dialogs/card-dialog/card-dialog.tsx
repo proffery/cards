@@ -2,7 +2,8 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Image, Trash } from '@/assets/icons'
-import { Button, Dialog, DialogProps, Input, Typography } from '@/components'
+import { Button, Dialog, DialogProps, Typography } from '@/components'
+import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { convertUrlToFile } from '@/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -32,12 +33,7 @@ export const CardDialog = ({
   const [questionImage, setQuestionImage] = useState<File | null>(null)
   const [answerImage, setAnswerImage] = useState<File | null>(null)
 
-  const {
-    formState: { errors },
-    handleSubmit,
-    register,
-    reset,
-  } = useForm<FormFields>({
+  const { control, handleSubmit, register, reset } = useForm<FormFields>({
     defaultValues: {
       answer: defaultValues?.answer || '',
       question: defaultValues?.question || '',
@@ -86,12 +82,7 @@ export const CardDialog = ({
     >
       <form className={s.form} onSubmit={handleConfirm}>
         <Typography.Subtitle2>Question:</Typography.Subtitle2>
-        <Input
-          errorMessage={errors.question?.message}
-          fullWidth
-          label={'Question?'}
-          {...register('question')}
-        />
+        <ControlledInput control={control} fullWidth label={'Question?'} name={'question'} />
         {questionImage && <img alt={'Question cover'} src={URL.createObjectURL(questionImage)} />}
         <div className={s.buttons}>
           {questionImage && (
@@ -124,12 +115,7 @@ export const CardDialog = ({
           </Button>
         </div>
         <Typography.Subtitle2>Answer:</Typography.Subtitle2>
-        <Input
-          errorMessage={errors.answer?.message}
-          fullWidth
-          label={'Answer?'}
-          {...register('answer')}
-        />
+        <ControlledInput control={control} fullWidth label={'Answer?'} name={'answer'} />
         {answerImage && <img alt={'Answer cover'} src={URL.createObjectURL(answerImage)} />}
         <div className={s.buttons}>
           {answerImage && (

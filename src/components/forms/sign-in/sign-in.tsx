@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
+import { ROUTES } from '@/common/consts/routes'
 import { Button, Card, Typography } from '@/components'
 import { ControlledCheckbox } from '@/components/controlled/controlled-checkbox/controlled-checkbox'
 import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
@@ -11,7 +12,8 @@ import clsx from 'clsx'
 import s from '@/components/forms/forms.module.scss'
 
 const classNames = {
-  form: clsx(s.form),
+  form: clsx(s.form, s.topMargin),
+  inputsContainer: clsx(s.inputsContainer),
   root: clsx(s.root),
   signInButton: clsx(s.linkButton),
   submitButton: clsx(s.topMargin),
@@ -21,12 +23,7 @@ type Props = {
   onSubmit: (data: FormValues) => void
 }
 export const SignIn = ({ onSubmit }: Props) => {
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-    register,
-  } = useForm<FormValues>({
+  const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: {
       email: '',
       password: '',
@@ -42,24 +39,19 @@ export const SignIn = ({ onSubmit }: Props) => {
     <Card className={classNames.root}>
       <Typography.H1>Sign In</Typography.H1>
       <form className={classNames.form} onSubmit={handleSubmit(onFormSubmit)}>
-        <ControlledInput
-          control={control}
-          fullWidth
-          label={'Email'}
-          {...register('email')}
-          errorMessage={errors.email?.message}
-        />
-        <ControlledInput
-          fullWidth
-          label={'Password'}
-          type={'password'}
-          {...register('password')}
-          control={control}
-          errorMessage={errors.password?.message}
-        />
+        <div className={classNames.inputsContainer}>
+          <ControlledInput control={control} fullWidth label={'Email'} name={'email'} />
+          <ControlledInput
+            control={control}
+            fullWidth
+            label={'Password'}
+            name={'password'}
+            type={'password'}
+          />
+        </div>
         <ControlledCheckbox control={control} label={'Remember me'} name={'rememberMe'} />
         <div className={s.formLink}>
-          <Typography.Body2 as={Link} className={s.formLink} to={'/forgot-password'}>
+          <Typography.Body2 as={Link} className={s.formLink} to={ROUTES.forgotPassword}>
             Forgot Password?
           </Typography.Body2>
         </div>
@@ -68,7 +60,7 @@ export const SignIn = ({ onSubmit }: Props) => {
         </Button>
       </form>
       <Typography.Body2 className={s.text}>Don't have an account?</Typography.Body2>
-      <Typography.Link3 as={Link} className={classNames.signInButton} to={'/sign-up'}>
+      <Typography.Link3 as={Link} className={classNames.signInButton} to={ROUTES.signUp}>
         Sign Up
       </Typography.Link3>
     </Card>

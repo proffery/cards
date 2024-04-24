@@ -2,8 +2,9 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Image, Trash } from '@/assets/icons'
-import { Button, Dialog, DialogProps, Input } from '@/components'
+import { Button, Dialog, DialogProps } from '@/components'
 import { ControlledCheckbox } from '@/components/controlled/controlled-checkbox/controlled-checkbox'
+import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { convertUrlToFile } from '@/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -31,13 +32,7 @@ export const DeckDialog = ({
       convertUrlToFile(defaultValues?.cover).then(image => setCoverImage(image))
   }, [defaultValues?.cover])
 
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-    register,
-    reset,
-  } = useForm<FormFields>({
+  const { control, handleSubmit, register, reset } = useForm<FormFields>({
     defaultValues: {
       isPrivate: defaultValues?.isPrivate || false,
       name: defaultValues?.name || '',
@@ -72,12 +67,7 @@ export const DeckDialog = ({
       onCancel={handleCancel}
     >
       <form className={s.form} onSubmit={handleConfirm}>
-        <Input
-          errorMessage={errors.name?.message}
-          fullWidth
-          label={'Deck Name'}
-          {...register('name')}
-        />
+        <ControlledInput control={control} fullWidth label={'Deck Name'} name={'name'} />
         {coverImage && <img alt={'Deck cover'} src={URL.createObjectURL(coverImage)} />}
         <div className={s.buttons}>
           {coverImage && (

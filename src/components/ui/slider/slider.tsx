@@ -12,13 +12,13 @@ export type Props = {
 } & ComponentPropsWithoutRef<typeof SliderRadix.Root>
 
 export const Slider = (props: Props) => {
-  const { max, min, onValueChange, value, ...rest } = props
+  const { className, max, min, onValueChange, value, ...rest } = props
 
   const minValue = value?.[0] ?? min
   const maxValue = value?.[1] ?? max
 
   return (
-    <div className={s.slider}>
+    <div className={`${s.slider} ${className || ''}`}>
       <div className={s.value}>{minValue}</div>
       <SliderRadix.Root
         className={s.root}
