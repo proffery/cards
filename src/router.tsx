@@ -8,7 +8,14 @@ import {
 
 import { ROUTES } from '@/common/consts/routes'
 import { Layout, Page } from '@/components/layouts'
-import { CheckEmailPage, ErrorPage } from '@/components/pages'
+import {
+  CheckEmailPage,
+  CreatePasswordPage,
+  ErrorPage,
+  ForgotPasswordPage,
+  SignUpPage,
+} from '@/components/pages'
+import { DecksPage } from '@/components/pages/decks-page/decks-page'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -16,11 +23,11 @@ const publicRoutes: RouteObject[] = [
     path: ROUTES.signIn,
   },
   {
-    element: <Page>SignUp page</Page>,
+    element: <SignUpPage />,
     path: ROUTES.signUp,
   },
   {
-    element: <Page>ForgotPassword page</Page>,
+    element: <ForgotPasswordPage />,
     path: ROUTES.forgotPassword,
   },
   {
@@ -35,7 +42,7 @@ const privateRoutes: RouteObject[] = [
     path: ROUTES.base,
   },
   {
-    element: <Page>Decks page</Page>,
+    element: <DecksPage />,
     path: ROUTES.decks,
   },
   {
@@ -51,7 +58,7 @@ const privateRoutes: RouteObject[] = [
     path: ROUTES.profile,
   },
   {
-    element: <Page>CreateNewPassword page</Page>,
+    element: <CreatePasswordPage />,
     path: ROUTES.createPassword,
   },
 ]

@@ -6,6 +6,7 @@
 
   width: fit-content;
   min-width: 284px;
+  max-height: 36px;
 
   color: var(--color-dark-100);
 
@@ -23,6 +24,9 @@
 }
 
 .label {
+  position: absolute;
+  bottom: 100%;
+
   font-size: var(--font-size-s);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-m);

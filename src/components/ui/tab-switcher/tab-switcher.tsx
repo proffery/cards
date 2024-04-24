@@ -7,14 +7,15 @@ import s from './tab-switcher.module.scss'
 
 type TabGroupProps = {
   children?: ReactNode
+  className?: string
   label?: string
 } & ComponentPropsWithoutRef<typeof Tab.Group>
-export const TabGroup = ({ children, label }: TabGroupProps) => {
+export const TabGroup = ({ children, className, label }: TabGroupProps) => {
   return (
-    <>
+    <div className={`${s.group} ${className || ''}`}>
       {label && <Typography.Body2>{label}</Typography.Body2>}
       <Tab.Group>{children}</Tab.Group>
-    </>
+    </div>
   )
 }
 
@@ -32,7 +33,7 @@ export const TabItem = ({ children, disabled }: TabItemProps) => {
   return (
     <Tab as={Fragment}>
       {({ selected }) => (
-        <button className={`${s.tab} ${selected ? s.selected : s.default}`} disabled={disabled}>
+        <button className={`${s.tabItem} ${selected ? s.selected : s.default}`} disabled={disabled}>
           {children}
         </button>
       )}

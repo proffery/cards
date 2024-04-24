@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import cover from '@/assets/images/cover.png'
 import { Deck, SortDirection, TableDecks } from '@/components/tables'
-const decks: Deck[] = [
+export const decksMock: Deck[] = [
   {
     author: {
       id: '1',
@@ -50,7 +50,7 @@ type Story = StoryObj<typeof meta>
 
 export const DecksTable: Story = {
   args: {
-    decks: decks,
+    decks: decksMock,
     isOwner: true,
     onDeckDelete: itemId => {
       alert(`Delete button with id:${itemId} is pushed!`)

@@ -16,12 +16,7 @@ type Props = {
 }
 type FormFields = z.infer<typeof createPasswordSchema>
 export const CreatePassword = ({ onSubmit }: Props) => {
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-    register,
-  } = useForm<FormFields>({
+  const { control, handleSubmit } = useForm<FormFields>({
     defaultValues: {
       password: '',
     },
@@ -31,6 +26,7 @@ export const CreatePassword = ({ onSubmit }: Props) => {
   const classNames = {
     description: clsx(s.description),
     form: clsx(s.form, s.topMargin),
+    inputsContainer: clsx(s.topMargin),
     root: clsx(s.root),
     submitButton: clsx(s.topMargin),
   }
@@ -39,14 +35,15 @@ export const CreatePassword = ({ onSubmit }: Props) => {
     <Card className={classNames.root}>
       <Typography.H1>Create new password</Typography.H1>
       <form className={classNames.form} onSubmit={handleSubmit(data => onSubmit(data))}>
-        <ControlledInput
-          control={control}
-          errorMessage={errors.password?.message}
-          fullWidth
-          label={'Password'}
-          type={'password'}
-          {...register('password')}
-        />
+        <div className={classNames.inputsContainer}>
+          <ControlledInput
+            control={control}
+            fullWidth
+            label={'Password'}
+            name={'password'}
+            type={'password'}
+          />
+        </div>
         <Typography.Body2 className={classNames.description}>
           Create new password and we will send you further instructions to email
         </Typography.Body2>
