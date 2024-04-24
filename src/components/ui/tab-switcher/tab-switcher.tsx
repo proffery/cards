@@ -1,7 +1,7 @@
-import { ComponentPropsWithoutRef, Fragment, ReactNode } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef } from 'react'
 
 import { Typography } from '@/components'
-import { Tab } from '@headlessui/react'
+import * as Tabs from '@radix-ui/react-tabs'
 
 import s from './tab-switcher.module.scss'
 
@@ -9,48 +9,56 @@ type TabGroupProps = {
   children?: ReactNode
   className?: string
   label?: string
-} & ComponentPropsWithoutRef<typeof Tab.Group>
-export const TabGroup = ({ children, className, label }: TabGroupProps) => {
-  return (
-    <div className={`${s.group} ${className || ''}`}>
-      {label && <Typography.Body2>{label}</Typography.Body2>}
-      <Tab.Group>{children}</Tab.Group>
-    </div>
-  )
-}
+} & ComponentPropsWithoutRef<typeof Tabs.Root>
+export const TabGroup = forwardRef<ElementRef<typeof Tabs.Root>, TabGroupProps>(
+  ({ children, className, label, ...props }: TabGroupProps, ref) => {
+    return (
+      <div className={`${s.group} ${className || ''}`}>
+        {label && <Typography.Body2>{label}</Typography.Body2>}
+        <Tabs.Root ref={ref} {...props}>
+          {children}
+        </Tabs.Root>
+      </div>
+    )
+  }
+)
 
 type TabListProps = {
   children?: ReactNode
-} & ComponentPropsWithoutRef<typeof Tab.List>
-export const TabList = ({ children }: TabListProps) => {
-  return <Tab.List>{children}</Tab.List>
-}
+} & ComponentPropsWithoutRef<typeof Tabs.List>
+export const TabList = forwardRef<ElementRef<typeof Tabs.List>, TabListProps>(
+  ({ children, ...props }: TabListProps, ref) => {
+    return (
+      <Tabs.List ref={ref} {...props}>
+        {children}
+      </Tabs.List>
+    )
+  }
+)
 
 type TabItemProps = {
   children?: ReactNode
-} & ComponentPropsWithoutRef<'button'>
-export const TabItem = ({ children, disabled }: TabItemProps) => {
-  return (
-    <Tab as={Fragment}>
-      {({ selected }) => (
-        <button className={`${s.tabItem} ${selected ? s.selected : s.default}`} disabled={disabled}>
-          {children}
-        </button>
-      )}
-    </Tab>
-  )
-}
-
-type TabContentListProps = {
-  children?: ReactNode
-} & ComponentPropsWithoutRef<typeof Tab.Panels>
-export const TabContentList = ({ children }: TabContentListProps) => {
-  return <Tab.Panels>{children}</Tab.Panels>
-}
+  selected?: boolean
+} & ComponentPropsWithoutRef<typeof Tabs.Trigger>
+export const TabItem = forwardRef<ElementRef<typeof Tabs.Trigger>, TabItemProps>(
+  ({ children, selected, ...props }: TabItemProps, ref) => {
+    return (
+      <Tabs.Trigger className={`${s.tabItem} ${selected && s.selected}`} {...props} ref={ref}>
+        {children}
+      </Tabs.Trigger>
+    )
+  }
+)
 
 type TabContentItemProps = {
   children?: ReactNode
-} & ComponentPropsWithoutRef<typeof Tab.Panel>
-export const TabContentItem = ({ children }: TabContentItemProps) => {
-  return <Tab.Panel>{children}</Tab.Panel>
-}
+} & ComponentPropsWithoutRef<typeof Tabs.Content>
+export const TabContentItem = forwardRef<ElementRef<typeof Tabs.Content>, TabContentItemProps>(
+  ({ children, ...props }: TabContentItemProps, ref) => {
+    return (
+      <Tabs.Content {...props} ref={ref}>
+        {children}
+      </Tabs.Content>
+    )
+  }
+)

@@ -1,7 +1,7 @@
 .tabItem {
   cursor: pointer;
 
-  height: 36px;
+  max-height: 36px;
   padding: 6px 24px;
 
   font-family: inherit;
@@ -11,30 +11,33 @@
   color: var(--color-light-100);
   white-space: nowrap;
 
+  background-color: var(--color-dark-900);
+  outline: 1px solid var(--color-dark-300);
+
   &:hover {
     color: var(--color-light-900);
     background-color: var(--color-dark-300);
-    border: 1px solid var(--color-dark-100);
+    outline: 1px solid var(--color-dark-100);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-500);
   }
 
   &:disabled {
     cursor: initial;
     color: var(--color-dark-300);
     background-color: var(--color-dark-700);
-    border: 1px solid var(--color-dark-300);
-  }
+    outline: 1px solid var(--color-dark-300);
 
-  &:focus-visible {
-    outline: none !important;
+    &:focus-visible {
+      outline: none !important;
+    }
   }
 }
 
-.default {
-  background-color: var(--color-dark-900);
-  border: 1px solid var(--color-dark-300);
-}
-
-.selected {
+.selected,
+.selected:hover {
   background-color: var(--color-accent-500);
-  border: 1px solid var(--color-accent-500);
+  outline: 1px solid var(--color-accent-500);
 }
