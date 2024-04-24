@@ -22,7 +22,7 @@ export const decksMock: Deck[] = [
       id: '2',
       name: 'Mr. Anderson',
     },
-    cardsCount: 0,
+    cardsCount: 2,
     cover: cover,
     created: '2022-01-01',
     id: '2',
@@ -30,6 +30,20 @@ export const decksMock: Deck[] = [
     name: 'Deck 2',
     updated: '2022-01-01',
     userId: 'user2',
+  },
+  {
+    author: {
+      id: '3',
+      name: 'No',
+    },
+    cardsCount: 0,
+    cover: cover,
+    created: '2022-01-01',
+    id: '3',
+    isPrivate: false,
+    name: 'Deck 3',
+    updated: '2022-01-01',
+    userId: 'user3',
   },
 ]
 const meta = {
@@ -51,7 +65,6 @@ type Story = StoryObj<typeof meta>
 export const DecksTable: Story = {
   args: {
     decks: decksMock,
-    isOwner: true,
     onDeckDelete: itemId => {
       alert(`Delete button with id:${itemId} is pushed!`)
     },
