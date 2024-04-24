@@ -16,10 +16,11 @@ import {
   SignUpPage,
 } from '@/components/pages'
 import { DecksPage } from '@/components/pages/decks-page/decks-page'
+import { LogInPage } from '@/components/pages/log-in/log-in-page'
 
 const publicRoutes: RouteObject[] = [
   {
-    element: <Page>SignIn page</Page>,
+    element: <LogInPage />,
     path: ROUTES.signIn,
   },
   {
