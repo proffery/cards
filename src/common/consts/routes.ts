@@ -1,6 +1,6 @@
 export const ROUTES = {
   base: '/',
-  checkEmail: '/check-email',
+  checkEmail: '/check-email/:email',
   createPassword: '/create-password',
   decks: '/decks',
   forgotPassword: '/forgot-password',
