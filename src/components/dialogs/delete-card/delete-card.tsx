@@ -1,5 +1,6 @@
 import { Dialog, DialogProps, Typography } from '@/components'
 
+import s from './delete-card.module.scss'
 type Props = {
   onConfirm: () => void
 } & Omit<DialogProps, 'onConfirm'>
@@ -17,7 +18,9 @@ export const DeleteCard = ({ onConfirm, onOpenChange, ...rest }: Props) => {
       title={'Delete Card'}
       {...rest}
     >
-      <Typography.Body1>Do you really want to remove this card?</Typography.Body1>
+      <Typography.Body1 className={s.content}>
+        Do you really want to remove this card?
+      </Typography.Body1>
     </Dialog>
   )
 }

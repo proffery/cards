@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ReactNode } from 'react'
 
 import { Close } from '@/assets/icons'
 import { Typography } from '@/components'
@@ -11,56 +11,49 @@ export type ModalProps = {
   className?: string
   title?: string
   trigger?: ReactNode
-} & ComponentPropsWithoutRef<typeof ModalPrimitive.Root>
+} & ComponentPropsWithoutRef<typeof ModalPrimitive.Dialog>
 
-export const Modal = forwardRef<ElementRef<typeof ModalPrimitive.Root>, ModalProps>(
-  ({ children, className, title, trigger, ...props }: ModalProps, ref) => {
-    const classNames = {
-      close: clsx(s.close),
-      content: clsx(s.content, className),
-      overlay: clsx(s.overlay),
-      root: clsx(s.root),
-      title: clsx(s.title),
-    }
-
-    return (
-      <ModalPrimitive.Root {...props}>
-        {trigger}
-        <ModalPrimitive.Portal>
-          <ModalPrimitive.Overlay className={classNames.overlay} ref={ref}>
-            <div className={classNames.root}>
-              <Typography.H3 className={classNames.title}>
-                {title}
-                <ModalPrimitive.Close aria-label={'Close'} className={classNames.close}>
-                  <Close size={24} />
-                </ModalPrimitive.Close>
-              </Typography.H3>
-              <ModalPrimitive.Content className={classNames.content}>
-                {children}
-              </ModalPrimitive.Content>
-            </div>
-          </ModalPrimitive.Overlay>
-        </ModalPrimitive.Portal>
-      </ModalPrimitive.Root>
-    )
+export const Modal = ({ children, className, title, trigger, ...props }: ModalProps) => {
+  const classNames = {
+    close: clsx(s.close),
+    content: clsx(s.content, className),
+    overlay: clsx(s.overlay),
+    root: clsx(s.root),
+    title: clsx(s.title),
   }
-)
+
+  return (
+    <ModalPrimitive.Root {...props}>
+      {trigger}
+      <ModalPrimitive.Portal>
+        <ModalPrimitive.Overlay className={classNames.root}>
+          <ModalPrimitive.Content className={classNames.content}>
+            <div className={classNames.title}>
+              <Typography.H3 as={ModalPrimitive.Title}>{title}</Typography.H3>
+              <ModalPrimitive.Close aria-label={'Close'} className={classNames.close}>
+                <Close size={24} />
+              </ModalPrimitive.Close>
+            </div>
+            {children}
+          </ModalPrimitive.Content>
+        </ModalPrimitive.Overlay>
+      </ModalPrimitive.Portal>
+    </ModalPrimitive.Root>
+  )
+}
 
 type ModalTriggerProps = {
   children?: ReactNode
   className?: string
 } & ComponentPropsWithoutRef<typeof ModalPrimitive.Trigger>
-export const ModalTrigger = forwardRef<
-  ElementRef<typeof ModalPrimitive.Trigger>,
-  ModalTriggerProps
->(({ children, className }: ModalTriggerProps, ref) => {
+export const ModalTrigger = ({ children, className }: ModalTriggerProps) => {
   const classNames = {
     trigger: clsx(s.trigger, className),
   }
 
   return (
-    <ModalPrimitive.Trigger asChild className={classNames.trigger} ref={ref}>
+    <ModalPrimitive.Trigger asChild className={classNames.trigger}>
       {children}
     </ModalPrimitive.Trigger>
   )
-})
+}
