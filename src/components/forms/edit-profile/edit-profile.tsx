@@ -60,7 +60,13 @@ export const EditProfile = ({
         <>
           <Avatar className={classNames.avatar} name={name} size={'l'} url={avatarUrl} />
           <form className={classNames.form} onSubmit={handleSubmit(data => onSubmit(data))}>
-            <ControlledInput control={control} fullWidth label={'Nickname'} name={'name'} />
+            <ControlledInput
+              autoFocus
+              control={control}
+              fullWidth
+              label={'Nickname'}
+              name={'name'}
+            />
             <Button className={classNames.submitButton} fullWidth type={'submit'}>
               Save Changes
             </Button>
