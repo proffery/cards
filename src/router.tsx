@@ -11,6 +11,7 @@ import { Layout, Page } from '@/components/layouts'
 import {
   CheckEmailPage,
   CreatePasswordPage,
+  EditProfilePage,
   ErrorPage,
   ForgotPasswordPage,
   SignUpPage,
@@ -55,7 +56,7 @@ const privateRoutes: RouteObject[] = [
     path: `${ROUTES.decks}/:deckId/learn`,
   },
   {
-    element: <Page>Profile page</Page>,
+    element: <EditProfilePage avatarUrl={''} email={'bob@bob.bob'} name={'Bob'} />,
     path: ROUTES.profile,
   },
   {
