@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import logo from '@/assets/images/cover.png'
+import logo from '@/assets/images/LogoITI.svg'
 import { Button, Typography } from '@/components'
 import { MenuProfile, MenuProfileProps } from '@/components/menus'
 
@@ -15,7 +15,7 @@ export const Header = ({ avatarUrl, email, isLoggedIn, onLogout, userName }: Hea
     <header className={s.root}>
       <div className={s.content}>
         <Link className={s.banner} to={'/'}>
-          <img alt={'Logo'} src={logo} />
+          <img alt={'Logo'} height={36} src={logo} width={157} />
         </Link>
         {isLoggedIn && (
           <div className={s.nameContainer}>
