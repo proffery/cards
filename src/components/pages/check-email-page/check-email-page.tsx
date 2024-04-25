@@ -1,12 +1,14 @@
+import { useParams } from 'react-router-dom'
+
 import { CheckEmail } from '@/components/forms'
 import { Page } from '@/components/layouts'
 
 export const CheckEmailPage = () => {
-  const email = 'some@email.com' //need to change in future
+  const params = useParams<{ email: string }>()
 
   return (
     <Page>
-      <CheckEmail email={email} />
+      <CheckEmail email={params?.email} />
     </Page>
   )
 }
