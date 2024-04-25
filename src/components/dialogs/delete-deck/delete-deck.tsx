@@ -1,5 +1,6 @@
 import { Dialog, DialogProps, Typography } from '@/components'
 
+import s from './delete-deck.module.scss'
 type Props = {
   deckName: string
   onConfirm: () => void
@@ -18,7 +19,7 @@ export const DeleteDeck = ({ deckName, onConfirm, onOpenChange, ...rest }: Props
       title={'Delete Deck'}
       {...rest}
     >
-      <Typography.Body1>
+      <Typography.Body1 className={s.content}>
         Do you really want to remove{' '}
         <Typography.Subtitle1 as={'span'}>{deckName}</Typography.Subtitle1>?
       </Typography.Body1>

@@ -1,11 +1,9 @@
-.overlay {
+.root {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
 
-.root {
   display: flex;
   flex-direction: column;
 
@@ -14,6 +12,20 @@
 
   background-color: var(--color-dark-700);
   border: 1px solid var(--color-dark-500);
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    z-index: 99999;
+    top: 70px;
+    left: 0%;
+
+    width: 532px;
+    height: 1px;
+
+    background-color: var(--color-dark-500);
+  }
 }
 
 .content {
@@ -30,10 +42,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  padding: 18px 24px;
-
-  border-bottom: 1px solid var(--color-dark-500);
 }
 
 .close {
