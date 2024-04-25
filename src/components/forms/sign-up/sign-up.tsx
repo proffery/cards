@@ -32,6 +32,7 @@ export const SignUp = ({ onSubmit }: Props) => {
     root: clsx(s.root),
     signInButton: clsx(s.linkButton),
     submitButton: clsx(s.topMargin),
+    text: clsx(s.text),
   }
 
   return (
@@ -59,7 +60,7 @@ export const SignUp = ({ onSubmit }: Props) => {
           </Button>
         </div>
       </form>
-      <Typography.Body2>Already have an account?</Typography.Body2>
+      <Typography.Body2 className={classNames.text}>Already have an account?</Typography.Body2>
       <Typography.Link3 as={Link} className={classNames.signInButton} to={ROUTES.signIn}>
         Sign In
       </Typography.Link3>

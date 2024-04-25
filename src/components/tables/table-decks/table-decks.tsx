@@ -1,4 +1,7 @@
+import { Link } from 'react-router-dom'
+
 import { Edit, Play, Trash } from '@/assets/icons'
+import { ROUTES } from '@/common/consts/routes'
 import {
   Columns,
   Table,
@@ -8,6 +11,7 @@ import {
   TableHeadCell,
   TableRow,
   TableSortButton,
+  Typography,
 } from '@/components'
 import { localDate } from '@/utils'
 
@@ -43,10 +47,9 @@ const columns: Columns[] = [
 
 type DecksTableProps = {
   decks: Deck[]
-  isOwner: boolean
-  onDeckDelete: (itemId: string) => void
-  onDeckEdit: (itemId: string) => void
-  onDeckPlay: (itemId: string) => void
+  onDeckDelete: (deckId: string, deckName: string) => void
+  onDeckEdit: (deckId: string, cover: string, name: string, isPrivate: boolean) => void
+  onDeckPlay: (deckId: string) => void
   onDecksSort: (orderDirection: SortDirection, orderField: string) => void
   orderDirection: SortDirection
   orderField: string
@@ -70,7 +73,6 @@ export type Deck = {
 }
 export const TableDecks = ({
   decks,
-  isOwner,
   onDeckDelete,
   onDeckEdit,
   onDeckPlay,
@@ -108,38 +110,40 @@ export const TableDecks = ({
         </TableRow>
       </TableHead>
       <TableBody>
-        {decks?.map(item => (
-          <TableRow key={item.id}>
+        {decks?.map(deck => (
+          <TableRow key={deck.id}>
             <TableBodyCell className={s.contentContainer}>
-              {item.cover && <img className={s.cover} src={item.cover} />}
-              {item.name}
+              {deck.cover && <img className={s.cover} src={deck.cover} />}
+              <Typography.Body2 as={Link} to={`${ROUTES.decks}/${deck.id}`}>
+                {deck.name}
+              </Typography.Body2>
             </TableBodyCell>
-            <TableBodyCell>{item.cardsCount}</TableBodyCell>
-            <TableBodyCell>{localDate(item.updated)}</TableBodyCell>
-            <TableBodyCell>{item.author.name}</TableBodyCell>
+            <TableBodyCell>{deck.cardsCount}</TableBodyCell>
+            <TableBodyCell>{localDate(deck.updated)}</TableBodyCell>
+            <TableBodyCell>{deck.author.name}</TableBodyCell>
             <TableBodyCell>
               <div className={s.buttonsContainer}>
                 <button
                   className={s.actionButton}
-                  disabled={item.cardsCount === 0}
-                  onClick={() => onDeckPlay(item.id)}
+                  disabled={deck.cardsCount === 0}
+                  onClick={() => onDeckPlay(deck.id)}
                 >
                   <Play size={16} />
                 </button>
-                {isOwner && (
+                {deck.isPrivate && (
                   <button
                     className={s.actionButton}
-                    disabled={item.cardsCount === 0}
-                    onClick={() => onDeckEdit(item.id)}
+                    disabled={deck.cardsCount === 0}
+                    onClick={() => onDeckEdit(deck.id, deck.cover, deck.name, deck.isPrivate)}
                   >
                     <Edit size={16} />
                   </button>
                 )}
-                {isOwner && (
+                {deck.isPrivate && (
                   <button
                     className={s.actionButton}
-                    disabled={item.cardsCount === 0}
-                    onClick={() => onDeckDelete(item.id)}
+                    disabled={deck.cardsCount === 0}
+                    onClick={() => onDeckDelete(deck.id, deck.name)}
                   >
                     <Trash size={16} />
                   </button>

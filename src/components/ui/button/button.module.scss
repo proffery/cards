@@ -36,7 +36,7 @@
 
 .primary {
   background-color: var(--color-accent-500);
-  box-shadow: 0 4px 18px 0 var(--color-accent-500);
+  box-shadow: 0 4px 18px 0 rgb(140 97 255 / 50%);
 
   &:focus-visible {
     outline: 2px solid var(--color-info-500);

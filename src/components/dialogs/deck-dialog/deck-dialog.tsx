@@ -13,10 +13,10 @@ import s from './deck-dialog.module.scss'
 
 import { addDeckSchema } from './schema'
 
-type FormFields = z.infer<typeof addDeckSchema>
+export type AddDeckFormFields = z.infer<typeof addDeckSchema>
 type Props = {
-  defaultValues?: { cover: string; isPrivate: boolean; name: string }
-  onConfirm: (data: FormFields) => void
+  defaultValues?: AddDeckFormFields
+  onConfirm: (data: AddDeckFormFields) => void
 } & Omit<DialogProps, 'onConfirm'>
 export const DeckDialog = ({
   defaultValues,
@@ -32,7 +32,7 @@ export const DeckDialog = ({
       convertUrlToFile(defaultValues?.cover).then(image => setCoverImage(image))
   }, [defaultValues?.cover])
 
-  const { control, handleSubmit, register, reset } = useForm<FormFields>({
+  const { control, handleSubmit, register, reset } = useForm<AddDeckFormFields>({
     defaultValues: {
       isPrivate: defaultValues?.isPrivate || false,
       name: defaultValues?.name || '',
