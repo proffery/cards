@@ -28,8 +28,8 @@ export const DecksPage = () => {
 
   const navigate = useNavigate()
 
-  const [currentPage, setCurrentPage] = useState('1')
-  const [itemsPerPage, setItemsPerPage] = useState('5')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(5)
 
   const [requestedCardsRange, setRequestedCardsRange] = useState<number[]>([MIN_RANGE, MAX_RANGE])
   const [currentCardsRange, setCurrentCardsRange] = useState<number[]>([MIN_RANGE, MAX_RANGE])
@@ -110,7 +110,7 @@ export const DecksPage = () => {
   const onDecksSort = (orderDirection: SortDirection, orderField: string) => {
     setOrderDirection(orderDirection)
     setOrderField(orderField)
-    setCurrentPage('1')
+    setCurrentPage(1)
   }
 
   const onRangeChange = (value: number[]) => {
