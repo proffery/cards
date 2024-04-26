@@ -7,8 +7,8 @@ import { Button, Input, Pagination, TabGroup, TabItem, TabList, Typography } fro
 import { AddDeckFormFields, DeckDialog, DeleteDeck } from '@/components/dialogs'
 import { Page } from '@/components/layouts'
 import { SortDirection, TableDecks } from '@/components/tables'
-import { decksMock } from '@/components/tables/table-decks/table-decks.stories'
 import { Slider } from '@/components/ui/slider'
+import { useGetDecksQuery } from '@/services/decks/decks.service'
 import clsx from 'clsx'
 
 import s from './decks-page.module.scss'
@@ -21,14 +21,28 @@ export const DecksPage = () => {
     tabSwitcher: clsx(s.tabSwitcher),
     topContainer: clsx(s.topContainer),
   }
+  const MIN_RANGE = 0
+  const MAX_RANGE = 100
+  const DEFAULT_SORT_DIRECTION: SortDirection = 'asc'
+  const DEFAULT_SORT_FIELD = 'name'
+
   const navigate = useNavigate()
-  const [cardsValues, setCardsValues] = useState<number[]>([0, 50])
-  const [orderDirection, setOrderDirection] = useState<SortDirection>('asc')
-  const [orderField, setOrderField] = useState('name')
+
+  const [currentPage, setCurrentPage] = useState('1')
+  const [itemsPerPage, setItemsPerPage] = useState('5')
+
+  const [requestedCardsRange, setRequestedCardsRange] = useState<number[]>([MIN_RANGE, MAX_RANGE])
+  const [currentCardsRange, setCurrentCardsRange] = useState<number[]>([MIN_RANGE, MAX_RANGE])
+
+  const [orderDirection, setOrderDirection] = useState<SortDirection>(DEFAULT_SORT_DIRECTION)
+  const [orderField, setOrderField] = useState(DEFAULT_SORT_FIELD)
+
   const [tabValue, setTabValue] = useState('all')
-  const [search, setSearch] = useState('')
+  const [searchValue, setSearchValue] = useState('')
+
   const [deckName, setDeckName] = useState('')
   const [deckId, setDeckId] = useState('')
+
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [editOpen, setEditOpen] = useState(false)
   const [newOpen, setNewOpen] = useState(false)
@@ -38,16 +52,32 @@ export const DecksPage = () => {
     name: '',
   })
 
+  const authorId = tabValue === 'all' ? undefined : '45cb2738-63fc-4fba-a6ff-1a9c84aa6015'
+
+  const { currentData, data } = useGetDecksQuery({
+    authorId: authorId,
+    currentPage: +currentPage,
+    itemsPerPage: +itemsPerPage,
+    maxCardsCount: requestedCardsRange[1],
+    minCardsCount: requestedCardsRange[0],
+    name: searchValue,
+    orderBy: `${orderField}-${orderDirection}`,
+  })
+
+  const decks = currentData ?? data
+
   const onTabChange = (value: string) => {
     setTabValue(value)
-    alert(value)
   }
+
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.currentTarget.value)
+    setSearchValue(e.currentTarget.value)
   }
+
   const onSearchClean = () => {
-    setSearch('')
+    setSearchValue('')
   }
+
   const onDeleteOpen = (deckId: string, deckName: string) => {
     setDeleteOpen(true)
     setDeckName(deckName)
@@ -56,7 +86,8 @@ export const DecksPage = () => {
   const onDeleteConfirm = () => {
     alert('Delete deck by id: ' + deckId)
   }
-  const onEditOpen = (deckId: string, cover: string, name: string, isPrivate: boolean) => {
+
+  const onEditOpen = (deckId: string, cover: null | string, name: string, isPrivate: boolean) => {
     setDefaultValues({ cover, isPrivate, name })
     setEditOpen(true)
     setDeckId(deckId)
@@ -64,29 +95,34 @@ export const DecksPage = () => {
   const onEditConfirm = (data: AddDeckFormFields) => {
     alert(`Edit deck with id:${deckId}, data:${JSON.stringify(data)}`)
   }
+
   const onNewOpen = () => {
     setNewOpen(true)
   }
   const onNewConfirm = (data: AddDeckFormFields) => {
     alert(`Create new deck ${JSON.stringify(data)}`)
   }
+
   const onDeckPlay = (deckId: string) => {
     navigate(`${ROUTES.decks}/${deckId}/learn`)
   }
+
   const onDecksSort = (orderDirection: SortDirection, orderField: string) => {
     setOrderDirection(orderDirection)
     setOrderField(orderField)
+    setCurrentPage('1')
   }
-  const onValueChange = (value: number[]) => {
-    setCardsValues(value)
-    alert(`Cards values will be changed: ${JSON.stringify(value)}`)
+
+  const onRangeChange = (value: number[]) => {
+    setRequestedCardsRange(value)
   }
 
   const resetFilters = () => {
-    setSearch('')
-    setCardsValues([0, 50])
-    setOrderDirection('asc')
-    setOrderField('name')
+    setSearchValue('')
+    setRequestedCardsRange([MIN_RANGE, MAX_RANGE])
+    setCurrentCardsRange([MIN_RANGE, MAX_RANGE])
+    setOrderDirection(DEFAULT_SORT_DIRECTION)
+    setOrderField(DEFAULT_SORT_FIELD)
   }
 
   return (
@@ -120,7 +156,7 @@ export const DecksPage = () => {
         <Input
           cleanSearch={onSearchClean}
           onChange={onSearchChange}
-          value={search}
+          value={searchValue}
           variant={'search'}
         />
         <TabGroup
@@ -139,11 +175,11 @@ export const DecksPage = () => {
         </TabGroup>
         <Slider
           className={classNames.slider}
-          max={50}
-          min={0}
-          onValueChange={setCardsValues}
-          onValueCommit={onValueChange}
-          value={cardsValues}
+          max={MAX_RANGE}
+          min={MIN_RANGE}
+          onValueChange={setCurrentCardsRange}
+          onValueCommit={onRangeChange}
+          value={currentCardsRange}
         />
         <Button onClick={resetFilters} variant={'secondary'}>
           <Trash size={16} />
@@ -151,7 +187,7 @@ export const DecksPage = () => {
         </Button>
       </div>
       <TableDecks
-        decks={decksMock}
+        decks={decks?.items}
         onDeckDelete={onDeleteOpen}
         onDeckEdit={onEditOpen}
         onDeckPlay={onDeckPlay}
@@ -159,14 +195,16 @@ export const DecksPage = () => {
         orderDirection={orderDirection}
         orderField={orderField}
       />
-      <Pagination
-        currentPage={1}
-        itemsPerPage={10}
-        onItemsPerPageChange={() => {}}
-        onPageChange={() => {}}
-        totalItems={100}
-        totalPages={10}
-      />
+      {decks && decks.pagination?.totalPages > 1 && (
+        <Pagination
+          currentPage={decks?.pagination.currentPage}
+          itemsPerPage={decks?.pagination.itemsPerPage}
+          onItemsPerPageChange={setItemsPerPage}
+          onPageChange={setCurrentPage}
+          totalItems={decks?.pagination.totalItems}
+          totalPages={decks?.pagination.totalPages}
+        />
+      )}
     </Page>
   )
 }

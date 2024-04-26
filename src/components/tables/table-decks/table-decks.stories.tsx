@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import cover from '@/assets/images/cover.png'
-import { Deck, SortDirection, TableDecks } from '@/components/tables'
+import { SortDirection, TableDecks } from '@/components/tables'
+import { Deck } from '@/services/decks/decks.types'
 export const decksMock: Deck[] = [
   {
     author: {

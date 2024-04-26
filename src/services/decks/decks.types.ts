@@ -6,6 +6,7 @@ export type DeckAuthor = {
 }
 
 export type Deck = {
+  author: DeckAuthor
   cardsCount: number
   cover: null | string
   /** @format date-time */
@@ -35,6 +36,7 @@ export type MinMaxCards = {
 }
 
 export type DecksParams = {
+  authorId?: string
   currentPage?: number
   itemsPerPage?: number
   maxCardsCount?: number
