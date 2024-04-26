@@ -15,10 +15,9 @@
 }
 
 .content {
-  overflow-x: hidden;
   position: relative;
 
-  overflow-y: auto;
+  overflow: hidden auto;
   display: flex;
   flex-direction: column;
   gap: 24px;
