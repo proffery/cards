@@ -10,7 +10,7 @@ type Props = {
   children?: ReactNode
   disabled?: boolean
   label?: string
-  placeholder: string
+  placeholder?: string
 } & ComponentPropsWithoutRef<typeof SelectRadix.Root>
 
 export const Select = (props: Props) => {
@@ -31,7 +31,7 @@ export const Select = (props: Props) => {
           <ArrowDropDown className={s.icon} />
         </SelectRadix.Trigger>
         <SelectRadix.Portal>
-          <SelectRadix.Content avoidCollisions={false} className={s.content} position={'popper'}>
+          <SelectRadix.Content className={s.content} position={'popper'}>
             <SelectRadix.Viewport>{children}</SelectRadix.Viewport>
           </SelectRadix.Content>
         </SelectRadix.Portal>

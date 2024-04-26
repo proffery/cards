@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Logout } from '@/assets/icons'
 import { Button } from '@/components'
+import { fn } from '@storybook/test'
 
 const meta = {
   argTypes: {
@@ -13,6 +14,9 @@ const meta = {
       control: { type: 'radio' },
       options: ['primary', 'secondary'],
     },
+  },
+  args: {
+    onClick: fn(),
   },
   component: Button,
   tags: ['autodocs'],

@@ -11,18 +11,13 @@ type Props = {
   itemsPerPage?: number
   onItemsPerPageChange: (itemsNumber: number) => void
   onPageChange: (pageNumber: number) => void
+  paginationOptions?: number[]
   totalItems?: number
   totalPages?: number
 }
 
 const START_END_PAGES_NUMBER = 5
 const MIDDLE_PAGES_NUMBER = 3
-const PAGE_SELECT_OPTIONS = [
-  { label: '5', value: 5 },
-  { label: '10', value: 10 },
-  { label: '15', value: 15 },
-  { label: '20', value: 20 },
-]
 
 export const Pagination = ({
   className,
@@ -30,6 +25,7 @@ export const Pagination = ({
   itemsPerPage = 5,
   onItemsPerPageChange,
   onPageChange,
+  paginationOptions = [5, 10, 15, 20],
   totalItems = 1,
   totalPages = 1,
 }: Props) => {
@@ -173,12 +169,12 @@ export const Pagination = ({
         Show
         <Select
           onValueChange={value => onItemsPerPageChange(+value)}
-          placeholder={PAGE_SELECT_OPTIONS[0].label}
+          value={itemsPerPage.toString()}
         >
-          {PAGE_SELECT_OPTIONS.map(option => (
-            <Typography.Body2 as={'div'} key={option.value}>
-              <SelectItem className={s.item} value={option.value.toString()}>
-                {option.label}
+          {paginationOptions.map(i => (
+            <Typography.Body2 as={'div'} key={i}>
+              <SelectItem className={s.item} value={i.toString()}>
+                {i}
               </SelectItem>
             </Typography.Body2>
           ))}
