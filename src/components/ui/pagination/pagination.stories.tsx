@@ -18,10 +18,10 @@ export const Default: Story = {
   args: {
     currentPage: 1,
     itemsPerPage: 10,
-    onItemsPerPageChange: (itemsNumber: string) => {
+    onItemsPerPageChange: (itemsNumber: number) => {
       alert(`Items per page changed to: ${itemsNumber}`)
     },
-    onPageChange: (pageNumber: string) => {
+    onPageChange: (pageNumber: number) => {
       alert(`Page number changed to: ${pageNumber}`)
     },
     totalItems: 1000,
@@ -30,8 +30,8 @@ export const Default: Story = {
 }
 
 const PaginationComponent = () => {
-  const [currentPage, setCurrentPage] = useState('1')
-  const [itemsPerPage, setItemsPerPage] = useState('10')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(10)
 
   return (
     <Pagination
@@ -49,10 +49,10 @@ export const Interactive: Story = {
   args: {
     currentPage: 1,
     itemsPerPage: 10,
-    onItemsPerPageChange: (itemsNumber: string) => {
+    onItemsPerPageChange: (itemsNumber: number) => {
       alert(`Items per page changed to: ${itemsNumber}`)
     },
-    onPageChange: (pageNumber: string) => {
+    onPageChange: (pageNumber: number) => {
       alert(`Page number changed to: ${pageNumber}`)
     },
     totalItems: 1000,
