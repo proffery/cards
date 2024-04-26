@@ -7,32 +7,27 @@ import s from './pagination.module.scss'
 
 type Props = {
   className?: string
-  currentPage: number
-  itemsPerPage: number
-  onItemsPerPageChange: (itemsNumber: string) => void
-  onPageChange: (pageNumber: string) => void
-  totalItems: number
-  totalPages: number
+  currentPage?: number
+  itemsPerPage?: number
+  onItemsPerPageChange: (itemsNumber: number) => void
+  onPageChange: (pageNumber: number) => void
+  paginationOptions?: number[]
+  totalItems?: number
+  totalPages?: number
 }
 
 const START_END_PAGES_NUMBER = 5
 const MIDDLE_PAGES_NUMBER = 3
-const PAGE_SELECT_OPTIONS = [
-  { label: '10', value: 10 },
-  { label: '20', value: 20 },
-  { label: '30', value: 30 },
-  { label: '50', value: 50 },
-  { label: '100', value: 100 },
-]
 
 export const Pagination = ({
   className,
-  currentPage,
-  itemsPerPage,
+  currentPage = 1,
+  itemsPerPage = 5,
   onItemsPerPageChange,
   onPageChange,
-  totalItems,
-  totalPages,
+  paginationOptions = [5, 10, 15, 20],
+  totalItems = 1,
+  totalPages = 1,
 }: Props) => {
   const isPageActive = (page: number) => currentPage === page
   const isBackArrowDisabled = currentPage === 1
@@ -44,7 +39,7 @@ export const Pagination = ({
   const startRangeCondition = currentPage <= startEndPagesNumber
   const middleRangeCondition =
     currentPage > startEndPagesNumber && currentPage <= totalPages - startEndPagesNumber
-  const endRangeCondition = currentPage > totalPages - startEndPagesNumber
+  const endRangeCondition = !startRangeCondition && !middleRangeCondition
 
   // Generate Array of number for pages
   const pagesArray = Array.from({ length: totalPages }, (_, i) => i + 1)
@@ -96,15 +91,15 @@ export const Pagination = ({
   // Set current page to 1 if props change
   useEffect(() => {
     if (currentPage !== 1) {
-      onPageChange('1')
+      onPageChange(1)
     }
   }, [itemsPerPage, totalItems])
 
   const onForwardArrowClick = () => {
-    onPageChange((currentPage + 1).toString())
+    onPageChange(currentPage + 1)
   }
   const onBackArrowClick = () => {
-    onPageChange((currentPage - 1).toString())
+    onPageChange(currentPage - 1)
   }
 
   const pageButton = (page: number) => (
@@ -112,7 +107,7 @@ export const Pagination = ({
       className={`${s.page} ${isPageActive(page) ? s.active : ''}`}
       disabled={isPageActive(page)}
       key={page}
-      onClick={() => onPageChange(page.toString())}
+      onClick={() => onPageChange(page)}
     >
       {page}
     </button>
@@ -121,21 +116,40 @@ export const Pagination = ({
   const startRangeFilter = (
     <>
       {pagesArray.map(page => page <= startEndPagesNumber && pageButton(page))}
-      <span>...</span> {pageButton(pagesArray[pagesArray.length - 1])}
+      {totalPages > START_END_PAGES_NUMBER && (
+        <>
+          <span>...</span>
+        </>
+      )}
+      {totalPages > START_END_PAGES_NUMBER && pageButton(pagesArray[pagesArray.length - 1])}
     </>
   )
+
   const middleRangeFilter = (
     <>
-      {pageButton(pagesArray[0])}
-      <span>...</span>
+      {totalPages > START_END_PAGES_NUMBER && (
+        <>
+          {pageButton(pagesArray[0])}
+          <span>...</span>
+        </>
+      )}
       {pagesArray.map(page => page > minPageIndex && page <= maxPageIndex && pageButton(page))}
-      <span>...</span> {pageButton(pagesArray[pagesArray.length - 1])}
+      {totalPages > START_END_PAGES_NUMBER && (
+        <>
+          <span>...</span> {pageButton(pagesArray[pagesArray.length - 1])}
+        </>
+      )}
     </>
   )
+
   const endRangeFilter = (
     <>
       {pageButton(pagesArray[0])}
-      <span>...</span>
+      {(totalPages > START_END_PAGES_NUMBER || totalPages > startEndPagesNumber) && (
+        <>
+          <span>...</span>
+        </>
+      )}
       {pagesArray.map(page => page > totalPages - startEndPagesNumber && pageButton(page))}
     </>
   )
@@ -153,11 +167,14 @@ export const Pagination = ({
       </button>
       <div className={s.selectContainer}>
         Show
-        <Select onValueChange={onItemsPerPageChange} placeholder={PAGE_SELECT_OPTIONS[0].label}>
-          {PAGE_SELECT_OPTIONS.map(option => (
-            <Typography.Body2 as={'div'} key={option.value}>
-              <SelectItem className={s.item} value={option.value.toString()}>
-                {option.label}
+        <Select
+          onValueChange={value => onItemsPerPageChange(+value)}
+          value={itemsPerPage.toString()}
+        >
+          {paginationOptions.map(i => (
+            <Typography.Body2 as={'div'} key={i}>
+              <SelectItem className={s.item} value={i.toString()}>
+                {i}
               </SelectItem>
             </Typography.Body2>
           ))}

@@ -13,6 +13,7 @@ import {
   TableSortButton,
   Typography,
 } from '@/components'
+import { Deck } from '@/services/decks/decks.types'
 import { localDate } from '@/utils'
 
 import s from '../tables.module.scss'
@@ -46,9 +47,9 @@ const columns: Columns[] = [
 ]
 
 type DecksTableProps = {
-  decks: Deck[]
+  decks?: Deck[]
   onDeckDelete: (deckId: string, deckName: string) => void
-  onDeckEdit: (deckId: string, cover: string, name: string, isPrivate: boolean) => void
+  onDeckEdit: (deckId: string, cover: null | string, name: string, isPrivate: boolean) => void
   onDeckPlay: (deckId: string) => void
   onDecksSort: (orderDirection: SortDirection, orderField: string) => void
   orderDirection: SortDirection
@@ -56,21 +57,6 @@ type DecksTableProps = {
 }
 export type SortDirection = 'asc' | 'desc'
 
-export type Author = {
-  id: string
-  name: string
-}
-export type Deck = {
-  author: Author
-  cardsCount: number
-  cover: string
-  created: string
-  id: string
-  isPrivate: boolean
-  name: string
-  updated: string
-  userId: string
-}
 export const TableDecks = ({
   decks,
   onDeckDelete,
@@ -90,7 +76,9 @@ export const TableDecks = ({
     }
   }
 
-  return (
+  return !decks || decks.length === 0 ? (
+    <Typography.Body1>No results found with these parameters.</Typography.Body1>
+  ) : (
     <Table>
       <TableHead>
         <TableRow>

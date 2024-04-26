@@ -12,24 +12,12 @@
 
   background-color: var(--color-dark-700);
   border: 1px solid var(--color-dark-500);
-
-  &::before {
-    content: '';
-
-    position: absolute;
-    z-index: 99999;
-    top: 70px;
-    left: 0%;
-
-    width: 532px;
-    height: 1px;
-
-    background-color: var(--color-dark-500);
-  }
 }
 
 .content {
-  overflow-y: auto;
+  position: relative;
+
+  overflow: hidden auto;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -42,6 +30,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    top: 70px;
+    left: 0;
+
+    width: 532px;
+    height: 1px;
+
+    background-color: var(--color-dark-500);
+  }
 }
 
 .close {

@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import cover from '@/assets/images/cover.png'
-import { Deck, SortDirection, TableDecks } from '@/components/tables'
+import { TableDecks } from '@/components/tables'
+import { Deck } from '@/services/decks/decks.types'
+import { fn } from '@storybook/test'
 export const decksMock: Deck[] = [
   {
     author: {
@@ -53,6 +55,12 @@ const meta = {
       options: ['name', 'cardsCount', 'updated', 'author.name'],
     },
   },
+  args: {
+    onDeckDelete: fn(),
+    onDeckEdit: fn(),
+    onDeckPlay: fn(),
+    onDecksSort: fn(),
+  },
   component: TableDecks,
   tags: ['autodocs'],
   title: 'Tables/DecksTable',
@@ -65,18 +73,6 @@ type Story = StoryObj<typeof meta>
 export const DecksTable: Story = {
   args: {
     decks: decksMock,
-    onDeckDelete: itemId => {
-      alert(`Delete button with id:${itemId} is pushed!`)
-    },
-    onDeckEdit: itemId => {
-      alert(`Edit button with id:${itemId} is pushed!`)
-    },
-    onDeckPlay: itemId => {
-      alert(`Play button with id:${itemId} is pushed!`)
-    },
-    onDecksSort: (orderDirection: SortDirection, orderField: string) => {
-      alert(`Table must be sorted: Field name: ${orderField}, Direction: ${orderDirection}`)
-    },
     orderDirection: 'asc',
     orderField: 'name',
   },
