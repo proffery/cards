@@ -26,10 +26,28 @@
 
   cursor: pointer;
 
+  position: relative;
+
   display: flex;
   align-items: center;
 
   padding: 0;
+
+  &:hover::after {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 24px;
+    height: 24px;
+
+    background-color: var(--color-dark-300);
+    border-radius: 50%;
+  }
 
   svg {
     place-self: center;
@@ -40,5 +58,9 @@
   &:disabled {
     cursor: initial;
     color: var(--color-light-900);
+
+    &:hover::after {
+      background-color: transparent;
+    }
   }
 }

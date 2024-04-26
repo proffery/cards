@@ -22,7 +22,7 @@ export const DecksPage = () => {
     topContainer: clsx(s.topContainer),
   }
   const MIN_RANGE = 0
-  const MAX_RANGE = 100
+  const MAX_RANGE = 99
   const DEFAULT_SORT_DIRECTION: SortDirection = 'asc'
   const DEFAULT_SORT_FIELD = 'name'
 
