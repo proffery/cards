@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Select } from './select'
-import { SelectItem } from './select-item'
+import { Select, SelectItem } from './select'
 
 const meta: Meta<typeof Select> = {
   component: Select,
@@ -23,7 +22,7 @@ const options = [
 export const Defaul: SelectStory = {
   args: {
     label: 'Select box',
-    placeholder: 'Choose option...',
+    placeholder: 'Select an option',
   },
   render: args => (
     <Select {...args}>
@@ -40,7 +39,7 @@ export const Disabled: SelectStory = {
   args: {
     disabled: true,
     label: 'Select box',
-    placeholder: 'Choose option...',
+    placeholder: 'Select an option',
   },
   render: args => (
     <Select {...args}>
