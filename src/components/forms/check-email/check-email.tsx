@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 import { Email } from '@/assets/icons'
 import { ROUTES } from '@/common/consts/routes'
-import { Button, Card, Typography } from '@/components'
+import { Button, Card, Typography } from '@/components/ui'
 
 import s from './check-email.module.scss'
 

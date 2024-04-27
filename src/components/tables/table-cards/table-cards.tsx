@@ -1,4 +1,5 @@
 import { Edit, Trash } from '@/assets/icons'
+import { SortDirection } from '@/components/tables'
 import {
   Columns,
   GradeIcons,
@@ -9,8 +10,7 @@ import {
   TableHeadCell,
   TableRow,
   TableSortButton,
-} from '@/components'
-import { SortDirection } from '@/components/tables'
+} from '@/components/ui'
 import { localDate } from '@/utils'
 
 import s from '../tables.module.scss'

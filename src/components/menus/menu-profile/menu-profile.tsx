@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import { Logout, Person } from '@/assets/icons'
-import { Avatar, Typography } from '@/components'
+import { Avatar, Typography } from '@/components/ui'
 
 import s from './menu-profile.module.scss'
 

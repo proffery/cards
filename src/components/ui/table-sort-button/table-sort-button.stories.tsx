@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Table, TableHead, TableHeadCell, TableRow, TableSortButton } from '@/components'
+import { Table, TableHead, TableHeadCell, TableRow, TableSortButton } from '@/components/ui'
 
 const meta = {
   argTypes: {

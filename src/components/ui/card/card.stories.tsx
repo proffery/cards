@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import cover from '@/assets/images/cover.png'
-import { Button, Card, Typography } from '@/components'
+import { Button, Card, Typography } from '@/components/ui'
 
 const meta = {
   component: Card,

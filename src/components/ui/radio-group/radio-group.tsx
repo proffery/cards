@@ -1,40 +1,40 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef, useId } from 'react'
 
+import { Label } from '@radix-ui/react-label'
 import * as RadioGroupRadix from '@radix-ui/react-radio-group'
 
 import s from './radio-group.module.scss'
 
-type Option = {
-  disabled?: boolean
-  label: string
-  required?: boolean
-  value: string
-}
 export type RadioGroupProps = {
-  options: Option[]
+  className?: string
 } & ComponentPropsWithoutRef<typeof RadioGroupRadix.Root>
 
 export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, RadioGroupProps>(
-  ({ options, ...rest }, ref) => {
+  (props, ref) => (
+    <RadioGroupRadix.Root {...props} className={`${s.root} ${props.className}`} ref={ref} />
+  )
+)
+
+type RadioGroupItemProps = {
+  children: ReactNode
+  disabled?: boolean
+  required?: boolean
+  value: string
+} & ComponentPropsWithoutRef<typeof RadioGroupRadix.Item>
+
+export const RadioGroupItem = forwardRef<HTMLButtonElement, RadioGroupItemProps>(
+  ({ children, value, ...rest }, ref) => {
+    const id = useId()
+
     return (
-      <RadioGroupRadix.Root className={s.root} {...rest} ref={ref}>
-        {options.map(option => (
-          <div className={s.item} key={option.value}>
-            <RadioGroupRadix.Item
-              className={s.radio}
-              disabled={option.disabled}
-              id={`${option.value}`}
-              required={option.required}
-              value={option.value}
-            >
-              <RadioGroupRadix.Indicator className={s.indicator} />
-            </RadioGroupRadix.Item>
-            <label className={s.label} htmlFor={`${option.value}`}>
-              {option.label}
-            </label>
-          </div>
-        ))}
-      </RadioGroupRadix.Root>
+      <div className={s.item}>
+        <RadioGroupRadix.Item {...rest} className={s.radio} id={id} ref={ref} value={value}>
+          <RadioGroupRadix.Indicator className={s.indicator} />
+        </RadioGroupRadix.Item>
+        <Label className={s.label} htmlFor={id}>
+          {children}
+        </Label>
+      </div>
     )
   }
 )

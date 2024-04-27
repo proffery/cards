@@ -1,21 +1,46 @@
+// controlled-radio-group.tsx
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
 
-import { RadioGroup, RadioGroupProps } from '@/components'
+import { RadioGroup, RadioGroupItem, RadioGroupProps } from '@/components/ui'
+
+type Option = {
+  disabled?: boolean
+  label: string
+  required?: boolean
+  value: string
+}
 
 export type ControlledRadioGroupProps<T extends FieldValues> = {
   control: Control<T>
   name: FieldPath<T>
-} & Omit<RadioGroupProps, 'id' | 'onChange' | 'value'>
+  options: Option[]
+} & Omit<RadioGroupProps, 'onChange' | 'value'>
 
-export const ControlledRadioGroup = <T extends FieldValues>(
-  props: ControlledRadioGroupProps<T>
-) => {
+export const ControlledRadioGroup = <T extends FieldValues>({
+  control,
+  name,
+  options,
+  ...rest
+}: ControlledRadioGroupProps<T>) => {
   const {
     field: { onChange, ...field },
   } = useController({
-    control: props.control,
-    name: props.name,
+    control,
+    name,
   })
 
-  return <RadioGroup {...props} {...field} id={props.name} onValueChange={onChange} />
+  return (
+    <RadioGroup {...rest} {...field} id={name} onValueChange={onChange}>
+      {options.map(option => (
+        <RadioGroupItem
+          disabled={option.disabled}
+          key={option.value}
+          required={option.required}
+          value={option.value}
+        >
+          {option.label}
+        </RadioGroupItem>
+      ))}
+    </RadioGroup>
+  )
 }

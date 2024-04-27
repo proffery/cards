@@ -1,7 +1,7 @@
 import { useId, useState } from 'react'
 
-import { Button } from '@/components'
 import { DeleteCard } from '@/components/dialogs'
+import { Button } from '@/components/ui'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {

@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, ReactNode } from 'react'
 
 import { Close } from '@/assets/icons'
-import { Typography } from '@/components'
+import { Typography } from '@/components/ui'
 import * as ModalPrimitive from '@radix-ui/react-dialog'
 import clsx from 'clsx'
 

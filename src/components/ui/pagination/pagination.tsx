@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { ArrowBack, ArrowForward } from '@/assets/icons'
-import { Select, SelectItem, Typography } from '@/components'
+import { Select, SelectItem, Typography } from '@/components/ui'
 
 import s from './pagination.module.scss'
 

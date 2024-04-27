@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 import defaultImage from '@/assets/images/cover.png'
-import { Button } from '@/components'
 import { CardDialog } from '@/components/dialogs'
+import { Button } from '@/components/ui'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {

@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 
 import logo from '@/assets/images/LogoITI.svg'
-import { Button, Typography } from '@/components'
 import { MenuProfile, MenuProfileProps } from '@/components/menus'
+import { Button, Typography } from '@/components/ui'
 
 import s from './header.module.scss'
 

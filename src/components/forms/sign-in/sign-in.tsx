@@ -2,10 +2,10 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
 import { ROUTES } from '@/common/consts/routes'
-import { Button, Card, Typography } from '@/components'
 import { ControlledCheckbox } from '@/components/controlled/controlled-checkbox/controlled-checkbox'
 import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { FormValues, schema } from '@/components/forms/sign-in/schema'
+import { Button, Card, Typography } from '@/components/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 

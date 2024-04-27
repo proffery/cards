@@ -12,7 +12,7 @@ import {
   TableRow,
   TableSortButton,
   Typography,
-} from '@/components'
+} from '@/components/ui'
 import { Deck } from '@/services/decks/decks.types'
 import { localDate } from '@/utils'
 

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, Dialog } from '@/components'
+import { Button, Dialog } from '@/components/ui'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
