@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import { Logout, Person } from '@/assets/icons'
+import { ROUTES } from '@/common/consts/routes'
 import { Avatar, DropdownItem, DropdownMenu, DropdownSeparator, Typography } from '@/components/ui'
 
 import s from './menu-profile.module.scss'
@@ -9,13 +10,17 @@ export type MenuProfileProps = {
   avatarUrl?: string
   email?: string
   onLogout: () => void
+  triangleRight?: string
   userName?: string
 }
 
-export const MenuProfile = ({ avatarUrl, email, onLogout, userName }: MenuProfileProps) => {
+export const MenuProfile = (props: MenuProfileProps) => {
+  const { avatarUrl, email, onLogout, triangleRight = '10px', userName } = props
+
   return (
     <DropdownMenu
-      ariaLabel={'Menu user profile'}
+      ariaLabel={userName}
+      triangleRight={triangleRight}
       trigger={<Avatar name={userName} size={'s'} url={avatarUrl} />}
     >
       <DropdownItem asChild>
@@ -29,7 +34,7 @@ export const MenuProfile = ({ avatarUrl, email, onLogout, userName }: MenuProfil
       </DropdownItem>
       <DropdownSeparator />
       <DropdownItem asChild>
-        <Link to={'/profile'}>
+        <Link to={ROUTES.profile}>
           <Person />
           My Profile
         </Link>

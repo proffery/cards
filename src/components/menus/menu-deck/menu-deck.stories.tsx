@@ -22,7 +22,17 @@ export const Default: MenuDeckStory = {
     onEdit: () => alert(`Open "Edit Deck dialog`),
     onLearn: () => alert(`Open "Learn Deck page`),
   },
-  render: args => <MenuDeck {...args} />,
+  render: args => (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+      }}
+    >
+      <MenuDeck {...args} />
+    </div>
+  ),
 }
 
 export const UsageExample: MenuDeckStory = {
@@ -56,7 +66,13 @@ export const UsageExample: MenuDeckStory = {
     }
 
     return (
-      <>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          width: '100%',
+        }}
+      >
         <MenuDeck onDelete={handleMenuDelete} onEdit={handleMenuEdit} onLearn={handleMenuLearn} />
         <DeckDialog
           defaultValues={{ cover: '', isPrivate: false, name: 'Deck Name' }}
@@ -73,7 +89,7 @@ export const UsageExample: MenuDeckStory = {
           onOpenChange={setDeleteOpen}
           open={deleteOpen}
         />
-      </>
+      </div>
     )
   },
 }

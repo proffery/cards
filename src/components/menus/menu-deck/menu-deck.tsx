@@ -5,12 +5,19 @@ type MenuDeckProps = {
   onDelete: () => void
   onEdit: () => void
   onLearn: () => void
+  triangleRight?: string
 }
 
-export const MenuDeck = ({ onDelete, onEdit, onLearn }: MenuDeckProps) => {
+export const MenuDeck = (props: MenuDeckProps) => {
+  const { onDelete, onEdit, onLearn, triangleRight = '4px' } = props
+
   return (
     <div>
-      <DropdownMenu ariaLabel={'Menu deck'} trigger={<MoreVertical />}>
+      <DropdownMenu
+        ariaLabel={'Menu deck'}
+        triangleRight={triangleRight}
+        trigger={<MoreVertical />}
+      >
         <DropdownItem asChild>
           <button onClick={onLearn}>
             <Play />

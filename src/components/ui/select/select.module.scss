@@ -16,7 +16,6 @@ $width: 210px;
   font-family: inherit;
   color: inherit;
 
-  background-color: transparent;
   outline: none;
 
   &[data-state='open'] {
@@ -55,6 +54,10 @@ button {
       transform: rotate(180deg);
     }
   }
+
+  .content {
+    max-width: $width;
+  }
 }
 
 .content {
@@ -62,8 +65,6 @@ button {
 
   display: flex;
   flex-direction: row;
-
-  width: $width;
 
   background-color: var(--color-dark-900);
   border: $border-width solid var(--color-dark-300);

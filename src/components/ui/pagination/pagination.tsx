@@ -173,7 +173,7 @@ export const Pagination = ({
         >
           {paginationOptions.map(i => (
             <Typography.Body2 as={'div'} key={i}>
-              <SelectItem className={s.item} value={i.toString()}>
+              <SelectItem className={s.selectItem} value={i.toString()}>
                 {i}
               </SelectItem>
             </Typography.Body2>

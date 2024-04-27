@@ -20,5 +20,15 @@ export const Default: MenuProfileStory = {
     onLogout: () => alert('Logged out'),
     userName: 'John Doe',
   },
-  render: args => <MenuProfile {...args} />,
+  render: args => (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+      }}
+    >
+      <MenuProfile {...args} />
+    </div>
+  ),
 }

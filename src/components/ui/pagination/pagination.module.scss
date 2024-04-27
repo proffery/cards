@@ -69,7 +69,6 @@
 
   & button {
     gap: 4px;
-    align-items: center;
 
     max-width: 60px;
     max-height: 24px;
@@ -82,8 +81,9 @@
 }
 
 // select items container
-.container > div[dir='ltr'] {
+.selectItem {
   max-width: 60px;
-  padding: 0;
+  height: auto;
+  padding: 0 4px;
   border-radius: 2px;
 }

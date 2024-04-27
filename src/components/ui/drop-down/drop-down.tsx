@@ -8,11 +8,12 @@ import s from './drop-down.module.scss'
 type DropdownMenuProps = {
   align?: 'center' | 'end' | 'start'
   ariaLabel?: string
+  triangleRight?: string
   trigger: ReactNode
 } & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Root>
 
 export const DropdownMenu = (props: DropdownMenuProps) => {
-  const { align = 'end', ariaLabel, children, trigger } = props
+  const { align = 'end', ariaLabel, children, triangleRight = '10px', trigger } = props
 
   return (
     <DropdownMenuRadix.Root>
@@ -21,7 +22,12 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
       </DropdownMenuRadix.Trigger>
 
       <DropdownMenuRadix.Portal>
-        <DropdownMenuRadix.Content align={align} className={s.content} sideOffset={12}>
+        <DropdownMenuRadix.Content
+          align={align}
+          className={s.content}
+          sideOffset={12}
+          style={{ ['--triangle-right' as string]: triangleRight }}
+        >
           {children}
         </DropdownMenuRadix.Content>
       </DropdownMenuRadix.Portal>
