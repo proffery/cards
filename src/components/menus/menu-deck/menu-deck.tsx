@@ -1,6 +1,5 @@
 import { Edit, MoreVertical, Play, Trash } from '@/assets/icons'
-
-import { DropdownItem, DropdownMenu, DropdownSeparator } from '../../ui/drop-down'
+import { DropdownItem, DropdownMenu, DropdownSeparator } from '@/components/ui'
 
 type MenuDeckProps = {
   onDelete: () => void

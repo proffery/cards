@@ -1,11 +1,9 @@
 import { Link } from 'react-router-dom'
 
 import { Logout, Person } from '@/assets/icons'
-import { Avatar, Typography } from '@/components/ui'
+import { Avatar, DropdownItem, DropdownMenu, DropdownSeparator, Typography } from '@/components/ui'
 
 import s from './menu-profile.module.scss'
-
-import { DropdownItem, DropdownMenu, DropdownSeparator } from '../../ui/drop-down'
 
 export type MenuProfileProps = {
   avatarUrl?: string
