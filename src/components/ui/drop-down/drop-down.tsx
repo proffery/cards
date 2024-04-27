@@ -25,6 +25,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
         <DropdownMenuRadix.Content
           align={align}
           className={s.content}
+          loop
           sideOffset={12}
           style={{ ['--triangle-right' as string]: triangleRight }}
         >
@@ -46,6 +47,20 @@ export const DropdownItem = (props: DropdownItemProps) => {
     <DropdownMenuRadix.Item {...rest} className={clsx(s.item, className)}>
       {children}
     </DropdownMenuRadix.Item>
+  )
+}
+
+type DropdownLabelProps = { children: ReactNode; className?: string } & ComponentPropsWithoutRef<
+  typeof DropdownMenuRadix.Label
+>
+
+export const DropdownLabel = (props: DropdownLabelProps) => {
+  const { children, className, ...rest } = props
+
+  return (
+    <DropdownMenuRadix.Label {...rest} className={clsx(s.item, className)}>
+      {children}
+    </DropdownMenuRadix.Label>
   )
 }
 

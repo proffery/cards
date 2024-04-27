@@ -1,8 +1,16 @@
+import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Logout, Person } from '@/assets/icons'
 import { ROUTES } from '@/common/consts/routes'
-import { Avatar, DropdownItem, DropdownMenu, DropdownSeparator, Typography } from '@/components/ui'
+import {
+  Avatar,
+  DropdownItem,
+  DropdownLabel,
+  DropdownMenu,
+  DropdownSeparator,
+  Typography,
+} from '@/components/ui'
 
 import s from './menu-profile.module.scss'
 
@@ -11,27 +19,30 @@ export type MenuProfileProps = {
   email?: string
   onLogout: () => void
   triangleRight?: string
+  triggerMenu?: ReactNode
   userName?: string
 }
 
 export const MenuProfile = (props: MenuProfileProps) => {
-  const { avatarUrl, email, onLogout, triangleRight = '10px', userName } = props
+  const { avatarUrl, email, onLogout, triangleRight = '10px', triggerMenu, userName } = props
+
+  const triggerElement = <Avatar name={userName} size={'s'} url={avatarUrl} />
 
   return (
     <DropdownMenu
       ariaLabel={userName}
       triangleRight={triangleRight}
-      trigger={<Avatar name={userName} size={'s'} url={avatarUrl} />}
+      trigger={triggerMenu || triggerElement}
     >
-      <DropdownItem asChild>
+      <DropdownLabel asChild>
         <div className={s.userWrapper}>
-          <Avatar name={userName} size={'s'} url={avatarUrl} />
+          {triggerElement}
           <div className={s.userData}>
             <Typography.Subtitle2>{userName}</Typography.Subtitle2>
             <Typography.Caption className={s.userEmail}>{email}</Typography.Caption>
           </div>
         </div>
-      </DropdownItem>
+      </DropdownLabel>
       <DropdownSeparator />
       <DropdownItem asChild>
         <Link to={ROUTES.profile}>
