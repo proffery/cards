@@ -1,8 +1,8 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding-top: 12px;
+  gap: 48px;
+  padding-top: 36px;
 }
 
 .fileInput {
@@ -18,4 +18,10 @@
     width: 16px;
     height: 16px;
   }
+}
+
+.formItem {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
