@@ -1,8 +1,9 @@
-import { useId, useState } from 'react'
+import { useState } from 'react'
 
 import { DeleteDeck } from '@/components/dialogs'
 import { Button } from '@/components/ui'
 import { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
 
 const meta = {
   component: DeleteDeck,
@@ -16,23 +17,16 @@ type Story = StoryObj<typeof meta>
 export const DeleteDeckDialog: Story = {
   args: {
     deckName: 'Deck Name',
-    onConfirm: () => {},
-    onOpenChange: () => {},
+    onConfirm: fn(),
+    onOpenChange: fn(),
   },
   render: args => {
     const [open, setOpen] = useState(false)
-    const id = useId()
 
     return (
       <>
         <Button onClick={() => setOpen(true)}>Open</Button>
-        <DeleteDeck
-          {...args}
-          onCancel={() => setOpen(false)}
-          onConfirm={() => alert(`Confirm deletion deck by id=${id}`)}
-          onOpenChange={setOpen}
-          open={open}
-        />
+        <DeleteDeck {...args} onCancel={() => setOpen(false)} open={open} />
       </>
     )
   },

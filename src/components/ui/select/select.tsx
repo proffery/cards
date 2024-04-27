@@ -1,9 +1,9 @@
-import { ComponentPropsWithoutRef, ReactNode, forwardRef, useId, useState } from 'react'
+import { ComponentPropsWithoutRef, ReactNode, forwardRef, useId } from 'react'
 
 import { ArrowDropDown } from '@/assets/icons'
 import { Label } from '@radix-ui/react-label'
 import * as SelectRadix from '@radix-ui/react-select'
-// import clsx from 'clsx'
+import clsx from 'clsx'
 
 import s from './select.module.scss'
 
@@ -18,8 +18,6 @@ export const Select = (props: SelectProps) => {
   const { children, disabled, label, placeholder, ...rest } = props
   const id = useId()
 
-  const [open, setOpen] = useState(true)
-
   return (
     <>
       {label && (
@@ -27,7 +25,7 @@ export const Select = (props: SelectProps) => {
           {label}
         </Label>
       )}
-      <SelectRadix.Root {...rest} onOpenChange={() => setOpen(true)} open={open}>
+      <SelectRadix.Root {...rest}>
         <SelectRadix.Trigger aria-label={label} className={s.trigger} disabled={disabled} id={id}>
           <SelectRadix.Value placeholder={placeholder} />
           <ArrowDropDown className={s.icon} />
@@ -51,7 +49,7 @@ export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>((props, re
   const { children, className, ...rest } = props
 
   return (
-    <SelectRadix.Item {...rest} className={`${className || ''} ${s.item}`} ref={ref}>
+    <SelectRadix.Item {...rest} className={clsx(s.item, className)} ref={ref}>
       <SelectRadix.ItemText>{children}</SelectRadix.ItemText>
     </SelectRadix.Item>
   )

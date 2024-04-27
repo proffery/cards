@@ -4,6 +4,7 @@ import defaultImage from '@/assets/images/cover.png'
 import { DeckDialog } from '@/components/dialogs'
 import { Button } from '@/components/ui'
 import { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
 
 const meta = {
   component: DeckDialog,
@@ -16,8 +17,8 @@ type Story = StoryObj<typeof meta>
 
 export const AddDeck: Story = {
   args: {
-    onConfirm: () => {},
-    onOpenChange: () => {},
+    onConfirm: fn(),
+    onOpenChange: fn(),
   },
   render: args => {
     const [open, setOpen] = useState(false)
@@ -25,13 +26,7 @@ export const AddDeck: Story = {
     return (
       <>
         <Button onClick={() => setOpen(true)}>Open</Button>
-        <DeckDialog
-          {...args}
-          onCancel={() => setOpen(false)}
-          onConfirm={data => alert(`Confirm: ${JSON.stringify(data)}`)}
-          onOpenChange={setOpen}
-          open={open}
-        />
+        <DeckDialog {...args} onCancel={() => setOpen(false)} open={open} />
       </>
     )
   },
@@ -43,8 +38,8 @@ export const EditDeck: Story = {
       isPrivate: true,
       name: 'Default Name',
     },
-    onConfirm: () => {},
-    onOpenChange: () => {},
+    onConfirm: fn(),
+    onOpenChange: fn(),
   },
   render: args => {
     const [open, setOpen] = useState(false)
@@ -52,13 +47,7 @@ export const EditDeck: Story = {
     return (
       <>
         <Button onClick={() => setOpen(true)}>Open</Button>
-        <DeckDialog
-          {...args}
-          onCancel={() => setOpen(false)}
-          onConfirm={data => alert(`Confirm: ${JSON.stringify(data)}`)}
-          onOpenChange={setOpen}
-          open={open}
-        />
+        <DeckDialog {...args} onCancel={() => setOpen(false)} open={open} />
       </>
     )
   },

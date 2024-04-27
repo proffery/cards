@@ -1,5 +1,6 @@
 import { EditProfile } from '@/components/forms'
 import { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
 
 const meta = {
   component: EditProfile,
@@ -15,14 +16,8 @@ export const EditProfileForm: Story = {
     avatarUrl: '',
     email: 'john@doe.com',
     name: 'John Doe',
-    onAvatarChange: data => {
-      alert(JSON.stringify(data))
-    },
-    onLogout: () => {
-      alert('Logged out')
-    },
-    onSubmit: data => {
-      alert(JSON.stringify(data))
-    },
+    onAvatarChange: fn(),
+    onLogout: fn(),
+    onSubmit: fn(),
   },
 }

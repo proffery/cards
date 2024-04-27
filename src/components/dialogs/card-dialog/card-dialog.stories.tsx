@@ -27,14 +27,7 @@ export const AddNewCard: Story = {
     return (
       <>
         <Button onClick={() => setOpen(true)}>Open</Button>
-        <CardDialog
-          {...args}
-          onCancel={() => setOpen(false)}
-          onConfirm={data => alert(`Confirm: ${JSON.stringify(data)}`)}
-          onOpenChange={setOpen}
-          open={open}
-          title={'Add New Card'}
-        />
+        <CardDialog {...args} onCancel={() => setOpen(false)} open={open} title={'Add New Card'} />
       </>
     )
   },
@@ -42,8 +35,8 @@ export const AddNewCard: Story = {
 
 export const EditCard: Story = {
   args: {
-    onConfirm: () => {},
-    onOpenChange: () => {},
+    onConfirm: fn(),
+    onOpenChange: fn(),
   },
   render: args => {
     const [open, setOpen] = useState(false)
@@ -60,7 +53,6 @@ export const EditCard: Story = {
             questionImg: defaultImage,
           }}
           onCancel={() => setOpen(false)}
-          onConfirm={data => alert(`Confirm: ${JSON.stringify(data)}`)}
           onOpenChange={setOpen}
           open={open}
           title={'Edit Card'}

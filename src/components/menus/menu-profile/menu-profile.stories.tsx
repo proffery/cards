@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import avatarImage from '@/assets/images/user-profile.png'
 import { MenuProfile } from '@/components/menus'
+import { fn } from '@storybook/test'
 
 const meta: Meta<typeof MenuProfile> = {
   component: MenuProfile,
@@ -17,18 +18,7 @@ export const Default: MenuProfileStory = {
   args: {
     avatarUrl: avatarImage,
     email: 'john@example.com',
-    onLogout: () => alert('Logged out'),
+    onLogout: fn(),
     userName: 'John Doe',
   },
-  render: args => (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        width: '100%',
-      }}
-    >
-      <MenuProfile {...args} />
-    </div>
-  ),
 }

@@ -1,5 +1,6 @@
 import { Header } from '@/components/layouts/header/header'
 import { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
 
 const meta = {
   component: Header,
@@ -15,9 +16,7 @@ export const HeaderLogged: Story = {
     avatarUrl: '',
     email: 'john@doe.com',
     isLoggedIn: true,
-    onLogout: () => {
-      alert('Logged out')
-    },
+    onLogout: fn(),
     userName: 'John Doe',
   },
 }
@@ -27,9 +26,7 @@ export const HeaderNotLogged: Story = {
     avatarUrl: '',
     email: 'john@doe.com',
     isLoggedIn: false,
-    onLogout: () => {
-      alert('Logged out')
-    },
+    onLogout: fn(),
     userName: 'John Doe',
   },
 }
