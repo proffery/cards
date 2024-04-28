@@ -26,17 +26,16 @@ export const Modal = ({ children, className, title, trigger, ...props }: ModalPr
     <ModalPrimitive.Root {...props}>
       {trigger}
       <ModalPrimitive.Portal>
-        <ModalPrimitive.Overlay className={classNames.root}>
-          <ModalPrimitive.Content className={classNames.content}>
-            <div className={classNames.title}>
-              <Typography.H3 as={ModalPrimitive.Title}>{title}</Typography.H3>
-              <ModalPrimitive.Close aria-label={'Close'} className={classNames.close}>
-                <Close size={24} />
-              </ModalPrimitive.Close>
-            </div>
-            {children}
-          </ModalPrimitive.Content>
-        </ModalPrimitive.Overlay>
+        <ModalPrimitive.Overlay className={classNames.overlay} />
+        <ModalPrimitive.Content className={classNames.content}>
+          <div className={classNames.title}>
+            <Typography.H3 as={ModalPrimitive.Title}>{title}</Typography.H3>
+            <ModalPrimitive.Close aria-label={'Close'} className={classNames.close}>
+              <Close size={24} />
+            </ModalPrimitive.Close>
+          </div>
+          {children}
+        </ModalPrimitive.Content>
       </ModalPrimitive.Portal>
     </ModalPrimitive.Root>
   )
