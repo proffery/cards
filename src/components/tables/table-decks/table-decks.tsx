@@ -100,12 +100,16 @@ export const TableDecks = ({
       <TableBody>
         {decks?.map(deck => (
           <TableRow key={deck.id}>
-            <Typography.Body2 as={Link} to={`${ROUTES.decks}/${deck.id}`}>
-              <TableBodyCell className={s.contentContainer}>
+            <TableBodyCell className={s.contentContainer}>
+              <Typography.Body2
+                as={Link}
+                className={s.buttonsContainer}
+                to={`${ROUTES.decks}/${deck.id}`}
+              >
                 {deck.cover && <img alt={deck.name} className={s.cover} src={deck.cover} />}
                 {deck.name}
-              </TableBodyCell>
-            </Typography.Body2>
+              </Typography.Body2>
+            </TableBodyCell>
             <TableBodyCell>{deck.cardsCount}</TableBodyCell>
             <TableBodyCell>{localDate(deck.updated)}</TableBodyCell>
             <TableBodyCell>{deck.author.name}</TableBodyCell>
