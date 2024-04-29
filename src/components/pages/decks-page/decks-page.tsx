@@ -221,16 +221,14 @@ export const DecksPage = () => {
         orderDirection={orderDirection}
         orderField={orderField}
       />
-      {decks && decks.pagination?.totalPages > 1 && (
-        <Pagination
-          currentPage={decks?.pagination.currentPage}
-          itemsPerPage={decks?.pagination.itemsPerPage}
-          onItemsPerPageChange={setItemsPerPage}
-          onPageChange={setCurrentPage}
-          totalItems={decks?.pagination.totalItems}
-          totalPages={decks?.pagination.totalPages}
-        />
-      )}
+      <Pagination
+        currentPage={decks?.pagination.currentPage}
+        itemsPerPage={decks?.pagination.itemsPerPage}
+        onItemsPerPageChange={setItemsPerPage}
+        onPageChange={setCurrentPage}
+        totalItems={decks?.pagination.totalItems}
+        totalPages={decks?.pagination.totalPages}
+      />
     </Page>
   )
 }
