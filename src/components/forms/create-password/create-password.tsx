@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
 
 import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { Button, Card, Typography } from '@/components/ui'
@@ -47,7 +46,7 @@ export const CreatePassword = ({ onSubmit }: Props) => {
         <Typography.Body2 className={classNames.description}>
           Create new password and we will send you further instructions to email
         </Typography.Body2>
-        <Button as={Link} className={classNames.submitButton} fullWidth to={'#'}>
+        <Button className={classNames.submitButton} fullWidth>
           Create New Password
         </Button>
       </form>
