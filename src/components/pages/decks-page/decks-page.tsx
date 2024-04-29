@@ -16,6 +16,7 @@ import {
   TabList,
   Typography,
 } from '@/components/ui'
+import { Loader } from '@/components/ui/loader/loader'
 import { useGetDecksQuery } from '@/services/decks/decks.service'
 import clsx from 'clsx'
 
@@ -62,7 +63,12 @@ export const DecksPage = () => {
 
   const authorId = tabValue === 'all' ? undefined : '45cb2738-63fc-4fba-a6ff-1a9c84aa6015'
 
-  const { currentData, data } = useGetDecksQuery({
+  const {
+    currentData,
+    data,
+    isFetching: isDecksFetching,
+    isLoading: isDecksLoading,
+  } = useGetDecksQuery({
     authorId: authorId,
     currentPage: +currentPage,
     itemsPerPage: +itemsPerPage,
@@ -135,6 +141,7 @@ export const DecksPage = () => {
 
   return (
     <Page className={classNames.root}>
+      {(isDecksFetching || isDecksLoading) && <Loader />}
       <DeleteDeck
         deckName={deckName}
         onCancel={() => setDeleteOpen(false)}
