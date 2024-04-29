@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { ForgotPassword } from '@/components/forms/forgot-password/forgot-password'
+import { fn } from '@storybook/test'
 
 const meta = {
   component: ForgotPassword,
@@ -13,8 +14,6 @@ type Story = StoryObj<typeof meta>
 
 export const ForgotPasswordForm: Story = {
   args: {
-    onSubmit: data => {
-      alert(JSON.stringify(data))
-    },
+    onSubmit: fn(),
   },
 }

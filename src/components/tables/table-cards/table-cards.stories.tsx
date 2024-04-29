@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import cover from '@/assets/images/cover.png'
-import { CardType, SortDirection, TableCards } from '@/components/tables'
+import { CardType, TableCards } from '@/components/tables'
+import { fn } from '@storybook/test'
 
 const cardsExample: CardType[] = [
   {
@@ -71,15 +72,9 @@ export const CardsTable: Story = {
   args: {
     cards: cardsExample,
     isOwner: true,
-    onCardDelete: itemId => {
-      alert(`Delete button with id:${itemId} is pushed!`)
-    },
-    onCardEdit: itemId => {
-      alert(`Edit button with id:${itemId} is pushed!`)
-    },
-    onCardsSort: (orderDirection: SortDirection, orderField: string) => {
-      alert(`Table must be sorted: Field name: ${orderField}, Direction: ${orderDirection}`)
-    },
+    onCardDelete: fn(),
+    onCardEdit: fn(),
+    onCardsSort: fn(),
     orderDirection: 'asc',
     orderField: 'updated',
   },

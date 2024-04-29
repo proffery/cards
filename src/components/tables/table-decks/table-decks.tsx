@@ -12,7 +12,7 @@ import {
   TableRow,
   TableSortButton,
   Typography,
-} from '@/components'
+} from '@/components/ui'
 import { Deck } from '@/services/decks/decks.types'
 import { localDate } from '@/utils'
 
@@ -101,7 +101,7 @@ export const TableDecks = ({
         {decks?.map(deck => (
           <TableRow key={deck.id}>
             <TableBodyCell className={s.contentContainer}>
-              {deck.cover && <img className={s.cover} src={deck.cover} />}
+              {deck.cover && <img alt={deck.name} className={s.cover} src={deck.cover} />}
               <Typography.Body2 as={Link} to={`${ROUTES.decks}/${deck.id}`}>
                 {deck.name}
               </Typography.Body2>

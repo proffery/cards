@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { useState } from 'react'
 
-import { Pagination } from '@/components'
+import { Pagination } from '@/components/ui'
+import { fn } from '@storybook/test'
 
 const meta = {
   component: Pagination,
@@ -18,12 +19,8 @@ export const Default: Story = {
   args: {
     currentPage: 1,
     itemsPerPage: 10,
-    onItemsPerPageChange: (itemsNumber: number) => {
-      alert(`Items per page changed to: ${itemsNumber}`)
-    },
-    onPageChange: (pageNumber: number) => {
-      alert(`Page number changed to: ${pageNumber}`)
-    },
+    onItemsPerPageChange: fn(),
+    onPageChange: fn(),
     totalItems: 1000,
     totalPages: 100,
   },
@@ -49,12 +46,8 @@ export const Interactive: Story = {
   args: {
     currentPage: 1,
     itemsPerPage: 10,
-    onItemsPerPageChange: (itemsNumber: number) => {
-      alert(`Items per page changed to: ${itemsNumber}`)
-    },
-    onPageChange: (pageNumber: number) => {
-      alert(`Page number changed to: ${pageNumber}`)
-    },
+    onItemsPerPageChange: fn(),
+    onPageChange: fn(),
     totalItems: 1000,
     totalPages: 100,
   },

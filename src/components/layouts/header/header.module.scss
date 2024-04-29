@@ -1,6 +1,6 @@
 .root {
   position: fixed;
-  z-index: 9999;
+  z-index: 10;
   top: 0;
   right: 0;
   left: 0;
@@ -29,7 +29,7 @@
 .banner {
   display: flex;
   align-items: center;
-  height: 100%;
+  height: fit-content;
   max-height: var(--header-height);
 }
 
@@ -41,6 +41,6 @@
 
 .name {
   color: inherit;
-  text-decoration: dashed underline;
   text-decoration-color: inherit;
+  border-bottom: 1px dashed;
 }

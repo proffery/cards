@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 
-import { ArrowBack, ArrowForward } from '@/assets/icons'
-import { Select, SelectItem, Typography } from '@/components'
-
+/* eslint-disable */
 import s from './pagination.module.scss'
+
+import { ArrowBack, ArrowForward } from '@/assets/icons'
+import { Select, SelectItem, Typography } from '@/components/ui'
+import clsx from 'clsx'
 
 type Props = {
   className?: string
@@ -155,7 +157,7 @@ export const Pagination = ({
   )
 
   return (
-    <Typography.Body2 as={'div'} className={`${className || ''} ${s.container}`}>
+    <Typography.Body2 as={'div'} className={clsx(s.container, className)}>
       <button className={s.arrow} disabled={isBackArrowDisabled} onClick={onBackArrowClick}>
         <ArrowBack size={16} />
       </button>
@@ -173,7 +175,7 @@ export const Pagination = ({
         >
           {paginationOptions.map(i => (
             <Typography.Body2 as={'div'} key={i}>
-              <SelectItem className={s.item} value={i.toString()}>
+              <SelectItem className={s.selectItem} value={i.toString()}>
                 {i}
               </SelectItem>
             </Typography.Body2>

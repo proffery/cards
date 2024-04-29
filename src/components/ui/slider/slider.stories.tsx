@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Meta, StoryObj } from '@storybook/react'
 
-import { Props, Slider } from './' // Make sure this path is correct
+import { Props, Slider } from './slider' // Make sure this path is correct
 
 const meta: Meta<typeof Slider> = {
   component: Slider,

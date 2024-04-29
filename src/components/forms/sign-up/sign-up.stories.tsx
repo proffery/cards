@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { SignUp } from '@/components/forms/'
+import { fn } from '@storybook/test'
 
 const meta = {
   component: SignUp,
@@ -13,8 +14,6 @@ type Story = StoryObj<typeof meta>
 
 export const SignUpForm: Story = {
   args: {
-    onSubmit: data => {
-      alert(JSON.stringify(data))
-    },
+    onSubmit: fn(),
   },
 }

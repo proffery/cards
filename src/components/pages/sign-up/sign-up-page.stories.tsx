@@ -2,6 +2,7 @@ import { SignUp } from '@/components/forms'
 import { Layout, Page } from '@/components/layouts'
 import { SignUpPage } from '@/components/pages/sign-up/sign-up-page'
 import { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
 
 const meta = {
   component: SignUpPage,
@@ -16,7 +17,7 @@ export const SignUpPageDefault: Story = {
   render: () => (
     <Layout>
       <Page>
-        <SignUp onSubmit={() => {}} />
+        <SignUp onSubmit={fn()} />
       </Page>
     </Layout>
   ),

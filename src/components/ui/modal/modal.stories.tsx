@@ -11,7 +11,7 @@ import {
   Select,
   SelectItem,
   Typography,
-} from '@/components'
+} from '@/components/ui'
 
 const meta = {
   args: {

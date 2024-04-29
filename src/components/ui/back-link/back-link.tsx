@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
 import { ArrowBack } from '@/assets/icons'
-import { Typography } from '@/components'
+import { Typography } from '@/components/ui'
 
 import s from './back-link.module.scss'
 

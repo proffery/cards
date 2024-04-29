@@ -1,4 +1,4 @@
-import { Button, Modal, ModalProps } from '@/components'
+import { Button, Modal, ModalProps } from '@/components/ui'
 
 import s from './dialog.module.scss'
 

@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 
-import { Button, Option } from '@/components'
 import { ControlledRadioGroup } from '@/components/controlled/controlled-radio-button/controlled-radio-button'
+import { Button, Option } from '@/components/ui'
 
 import s from '../learn-page.module.scss'
 

@@ -1,6 +1,7 @@
 import { SignIn } from '@/components/forms/sign-in/sign-in'
 import { Layout, Page } from '@/components/layouts'
 import { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
 
 import { LogInPage } from './log-in-page'
 
@@ -17,7 +18,7 @@ export const LogInPageDefault: Story = {
   render: () => (
     <Layout>
       <Page>
-        <SignIn onSubmit={() => {}} />
+        <SignIn onSubmit={fn()} />
       </Page>
     </Layout>
   ),

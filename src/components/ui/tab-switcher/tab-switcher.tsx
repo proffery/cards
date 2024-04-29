@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef } from 'react'
 
-import { Typography } from '@/components'
+import { Typography } from '@/components/ui'
 import * as Tabs from '@radix-ui/react-tabs'
 
 import s from './tab-switcher.module.scss'

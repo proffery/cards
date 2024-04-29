@@ -1,7 +1,8 @@
 import { useState } from 'react'
 
-import { Button, Dialog } from '@/components'
+import { Button, Dialog } from '@/components/ui'
 import { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
 
 const meta = {
   component: Dialog,
@@ -14,7 +15,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    onOpenChange: () => {},
+    onOpenChange: fn(),
   },
   render: args => {
     const [open, setOpen] = useState(false)
@@ -25,7 +26,6 @@ export const Default: Story = {
         <Dialog
           {...args}
           onCancel={() => setOpen(false)}
-          onConfirm={() => alert(`Confirm`)}
           onOpenChange={setOpen}
           open={open}
           title={'Title'}

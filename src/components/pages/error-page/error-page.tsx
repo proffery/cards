@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 
 import Image404 from '@/assets/images/404.png'
 import { ROUTES } from '@/common/consts/routes'
-import { Button, Typography } from '@/components'
 import { Page } from '@/components/layouts'
+import { Button, Typography } from '@/components/ui'
 
 import s from './error-page.module.scss'
 

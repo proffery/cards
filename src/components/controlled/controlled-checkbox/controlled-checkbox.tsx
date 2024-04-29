@@ -1,6 +1,6 @@
 import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
 
-import { Checkbox } from '@/components'
+import { Checkbox } from '@/components/ui'
 import { CheckboxProps } from '@radix-ui/react-checkbox'
 
 type Props<T extends FieldValues> = UseControllerProps<T> &

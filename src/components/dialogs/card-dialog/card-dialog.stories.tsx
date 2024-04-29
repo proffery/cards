@@ -1,9 +1,11 @@
 import { useState } from 'react'
 
 import defaultImage from '@/assets/images/cover.png'
-import { Button } from '@/components'
-import { CardDialog } from '@/components/dialogs'
+import { Button } from '@/components/ui'
 import { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
+
+import { CardDialog } from './card-dialog'
 
 const meta = {
   component: CardDialog,
@@ -16,8 +18,8 @@ type Story = StoryObj<typeof meta>
 
 export const AddNewCard: Story = {
   args: {
-    onConfirm: () => {},
-    onOpenChange: () => {},
+    onConfirm: fn(),
+    onOpenChange: fn(),
   },
   render: args => {
     const [open, setOpen] = useState(false)
@@ -25,14 +27,7 @@ export const AddNewCard: Story = {
     return (
       <>
         <Button onClick={() => setOpen(true)}>Open</Button>
-        <CardDialog
-          {...args}
-          onCancel={() => setOpen(false)}
-          onConfirm={data => alert(`Confirm: ${JSON.stringify(data)}`)}
-          onOpenChange={setOpen}
-          open={open}
-          title={'Add New Card'}
-        />
+        <CardDialog {...args} onCancel={() => setOpen(false)} open={open} title={'Add New Card'} />
       </>
     )
   },
@@ -40,8 +35,8 @@ export const AddNewCard: Story = {
 
 export const EditCard: Story = {
   args: {
-    onConfirm: () => {},
-    onOpenChange: () => {},
+    onConfirm: fn(),
+    onOpenChange: fn(),
   },
   render: args => {
     const [open, setOpen] = useState(false)
@@ -58,7 +53,6 @@ export const EditCard: Story = {
             questionImg: defaultImage,
           }}
           onCancel={() => setOpen(false)}
-          onConfirm={data => alert(`Confirm: ${JSON.stringify(data)}`)}
           onOpenChange={setOpen}
           open={open}
           title={'Edit Card'}

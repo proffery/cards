@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Table, TableHead, TableHeadCell, TableRow, TableSortButton } from '@/components'
+import { Table, TableHead, TableHeadCell, TableRow, TableSortButton } from '@/components/ui'
+import { fn } from '@storybook/test'
 
 const meta = {
   argTypes: {
@@ -22,6 +23,7 @@ export const Default: Story = {
   args: {
     disabled: false,
     fieldKey: 'name',
+    onClick: fn(),
     orderDirection: 'asc',
     orderField: 'name',
   },
@@ -32,13 +34,13 @@ export const Default: Story = {
           <TableHeadCell>
             <TableSortButton
               {...args}
-              onClick={() =>
-                alert(
-                  `Table must be sorted: Field name: ${args.fieldKey}, Field direction: ${
-                    args.orderDirection === 'asc' ? 'desc' : 'asc'
-                  }`
-                )
-              }
+              // onClick={() =>
+              //   alert(
+              //     `Table must be sorted: Field name: ${args.fieldKey}, Field direction: ${
+              //       args.orderDirection === 'asc' ? 'desc' : 'asc'
+              //     }`
+              //   )
+              // }
             >
               Name
             </TableSortButton>

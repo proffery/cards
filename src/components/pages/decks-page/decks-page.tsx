@@ -3,11 +3,19 @@ import { useNavigate } from 'react-router-dom'
 
 import { Trash } from '@/assets/icons'
 import { ROUTES } from '@/common/consts/routes'
-import { Button, Input, Pagination, TabGroup, TabItem, TabList, Typography } from '@/components'
 import { AddDeckFormFields, DeckDialog, DeleteDeck } from '@/components/dialogs'
 import { Page } from '@/components/layouts'
 import { SortDirection, TableDecks } from '@/components/tables'
-import { Slider } from '@/components/ui/slider'
+import {
+  Button,
+  Input,
+  Pagination,
+  Slider,
+  TabGroup,
+  TabItem,
+  TabList,
+  Typography,
+} from '@/components/ui'
 import { useGetDecksQuery } from '@/services/decks/decks.service'
 import clsx from 'clsx'
 

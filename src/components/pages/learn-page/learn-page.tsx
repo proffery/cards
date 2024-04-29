@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { BackLink, Button, Card, Typography } from '@/components'
 import { RateCardRadioGroup } from '@/components/pages/learn-page/rate-card/rate-card-radio-group'
+import { BackLink, Button, Card, Typography } from '@/components/ui'
 
 import s from './learn-page.module.scss'
 

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { useState } from 'react'
 
-import { TabContentItem, TabGroup, TabItem, TabList } from '@/components'
+import { TabContentItem, TabGroup, TabItem, TabList } from '@/components/ui'
 
 const meta = {
   component: TabGroup,

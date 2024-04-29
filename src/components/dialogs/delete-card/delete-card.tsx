@@ -1,4 +1,4 @@
-import { Dialog, DialogProps, Typography } from '@/components'
+import { Dialog, DialogProps, Typography } from '@/components/ui'
 
 import s from './delete-card.module.scss'
 type Props = {
