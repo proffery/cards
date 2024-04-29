@@ -4,7 +4,7 @@ import cover from '@/assets/images/cover.png'
 import { TableDecks } from '@/components/tables'
 import { Deck } from '@/services/decks/decks.types'
 import { fn } from '@storybook/test'
-export const decksMock: Deck[] = [
+const decksMock: Deck[] = [
   {
     author: {
       id: '1',
