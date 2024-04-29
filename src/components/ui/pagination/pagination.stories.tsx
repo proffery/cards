@@ -37,7 +37,7 @@ const PaginationComponent = () => {
       onItemsPerPageChange={setItemsPerPage}
       onPageChange={setCurrentPage}
       totalItems={5}
-      totalPages={1}
+      totalPages={100}
     />
   )
 }

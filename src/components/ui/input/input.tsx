@@ -66,19 +66,29 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           type={typeIsPassword && !showPassword ? 'password' : 'text'}
         />
         {errorMessage && <div className={classNames.errorMessage}>{errorMessage}</div>}
-        {typeIsPassword && (
-          <button
-            className={classNames.inputButton}
-            disabled={disabled}
-            onMouseDown={() => setShowPassword(true)}
-            onMouseUp={() => setShowPassword(false)}
-            title={'Show password'}
-          >
-            {showPassword
-              ? value && <EyeOutline className={classNames.inputIcon} size={20} />
-              : value && <EyeOffOutline className={classNames.inputIcon} size={20} />}
-          </button>
-        )}
+        {typeIsPassword &&
+          value &&
+          (showPassword ? (
+            <button
+              className={classNames.inputButton}
+              disabled={disabled}
+              onMouseDown={() => setShowPassword(true)}
+              onMouseUp={() => setShowPassword(false)}
+              title={'Show password'}
+            >
+              <EyeOutline className={classNames.inputIcon} size={20} />
+            </button>
+          ) : (
+            <button
+              className={classNames.inputButton}
+              disabled={disabled}
+              onMouseDown={() => setShowPassword(true)}
+              onMouseUp={() => setShowPassword(false)}
+              title={'Show password'}
+            >
+              <EyeOffOutline className={classNames.inputIcon} size={20} />
+            </button>
+          ))}
         {variantIsSearch && (
           <div className={classNames.searchContainer}>
             <Search className={classNames.inputIcon} size={20} />

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { ROUTES } from '@/common/consts/routes'
 import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
-import { ForgotPasswordSchema } from '@/components/forms/forgot-password/schema'
+import { forgotPasswordSchema } from '@/components/forms/forgot-password/schema'
 import { Button, Card, Typography } from '@/components/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
@@ -29,7 +29,7 @@ export const ForgotPassword = ({ onSubmit }: Props) => {
     defaultValues: {
       email: '',
     },
-    resolver: zodResolver(ForgotPasswordSchema),
+    resolver: zodResolver(forgotPasswordSchema),
   })
 
   return (
