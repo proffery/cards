@@ -2,25 +2,25 @@
 import { baseApi } from '@/services/base-api'
 
 import {
-  EmailVerificationRequest,
-  LoginRequest,
-  LoginResponse,
-  RecoverPasswordRequest,
-  RegistrationRequest,
-  ResendVerificationEmailRequest,
-  ResetPasswordRequest,
-  UpdateUserRequest,
-  User,
+  EmailVerification,
+  GetUser,
+  LoginReq,
+  LoginRes,
+  RecoverPassword,
+  Registration,
+  ResendVerificationEmail,
+  ResetPassword,
+  UpdateUser,
 } from './auth.types'
 
 export const authService = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getMe: builder.query<User, void>({
+    getMe: builder.query<GetUser, void>({
       providesTags: ['Auth'],
       query: () => '/v1/auth/me',
     }),
 
-    login: builder.mutation<LoginResponse, LoginRequest>({
+    login: builder.mutation<LoginRes, LoginReq>({
       invalidatesTags: ['Auth'],
       query: body => ({
         body,
@@ -37,7 +37,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    recoverPassword: builder.mutation<void, RecoverPasswordRequest>({
+    recoverPassword: builder.mutation<void, RecoverPassword>({
       invalidatesTags: ['Auth'],
       query: body => ({
         body,
@@ -54,7 +54,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    resendVerificationEmail: builder.mutation<void, ResendVerificationEmailRequest>({
+    resendVerificationEmail: builder.mutation<void, ResendVerificationEmail>({
       invalidatesTags: ['Auth'],
       query: body => ({
         body,
@@ -63,7 +63,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    resetPassword: builder.mutation<void, { data: ResetPasswordRequest; token: string }>({
+    resetPassword: builder.mutation<void, { data: ResetPassword; token: string }>({
       invalidatesTags: ['Auth'],
       query: ({ data, token }) => ({
         body: data,
@@ -72,7 +72,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    signUp: builder.mutation<User, RegistrationRequest>({
+    signUp: builder.mutation<GetUser, Registration>({
       invalidatesTags: ['Auth'],
       query: body => ({
         body,
@@ -81,7 +81,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    updateUser: builder.mutation<User, UpdateUserRequest>({
+    updateUser: builder.mutation<GetUser, UpdateUser>({
       invalidatesTags: ['Auth'],
       query: body => ({
         body,
@@ -90,7 +90,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    verifyEmail: builder.mutation<void, EmailVerificationRequest>({
+    verifyEmail: builder.mutation<void, EmailVerification>({
       invalidatesTags: ['Auth'],
       query: body => ({
         body,
