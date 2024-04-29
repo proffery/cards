@@ -10,6 +10,7 @@ import {
   Registration,
   ResendVerificationEmail,
   ResetPassword,
+  ResetPasswordArgs,
   UpdateUser,
 } from './auth.types'
 
@@ -63,12 +64,12 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    resetPassword: builder.mutation<void, { data: ResetPassword; token: string }>({
+    resetPassword: builder.mutation<void, { data: ResetPassword; params: ResetPasswordArgs }>({
       invalidatesTags: ['Auth'],
-      query: ({ data, token }) => ({
+      query: ({ data, params }) => ({
         body: data,
         method: 'POST',
-        url: `/v1/auth/reset-password/${token}`,
+        url: `/v1/auth/reset-password/${params.token}`,
       }),
     }),
 
