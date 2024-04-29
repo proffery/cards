@@ -1,8 +1,26 @@
 $border-width: 1px;
 $width: 210px;
+$small-width: 50px;
 
 @mixin common {
   cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+
+  &[data-state='open'] {
+    border: $border-width solid var(--color-dark-100);
+  }
+}
+
+@mixin small {
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+.trigger {
+  @include common;
+
+  all: unset;
 
   display: flex;
   align-items: center;
@@ -10,26 +28,7 @@ $width: 210px;
 
   box-sizing: border-box;
   width: $width;
-
-  //height: 36px;
   padding: 6px 12px;
-
-  font-family: inherit;
-  color: inherit;
-
-  outline: none;
-
-  &[data-state='open'] {
-    border: $border-width solid var(--color-dark-100);
-  }
-}
-
-button {
-  all: unset;
-}
-
-.trigger {
-  @include common;
 
   background-color: var(--color-dark-900);
   border: $border-width solid var(--color-dark-300);
@@ -55,34 +54,48 @@ button {
       transform: rotate(180deg);
     }
   }
-
-  .content {
-    max-width: $width;
-  }
 }
 
 .content {
-  transform: translate(0, -$border-width);
-
-  display: flex;
-  flex-direction: row;
-
+  width: $width;
   background-color: var(--color-dark-900);
-  border: $border-width solid var(--color-dark-300);
-
-  &[data-state='open'] {
-    border: $border-width solid var(--color-dark-100);
-  }
+  border: $border-width solid var(--color-dark-100);
 }
 
 .item {
   @include common;
 
+  user-select: none;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  padding: 6px 12px;
+
   &:hover,
   &:focus {
     color: var(--color-accent-300);
     background-color: var(--color-accent-900);
+    outline: none;
   }
+}
+
+.smallTrigger {
+  @include small;
+
+  gap: 4px;
+  width: $small-width;
+  text-align: center;
+}
+
+.smallContent {
+  width: $small-width;
+}
+
+.smallItem {
+  @include small;
 }
 
 .icon {

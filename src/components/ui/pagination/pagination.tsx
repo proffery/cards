@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
 
-/* eslint-disable */
-import s from './pagination.module.scss'
-
 import { ArrowBack, ArrowForward } from '@/assets/icons'
 import { Select, SelectItem, Typography } from '@/components/ui'
 import clsx from 'clsx'
+
+import s from './pagination.module.scss'
 
 type Props = {
   className?: string
@@ -172,14 +171,15 @@ export const Pagination = ({
         <Select
           onValueChange={value => onItemsPerPageChange(+value)}
           value={itemsPerPage.toString()}
+          variant={'small'}
         >
-          {paginationOptions.map(i => (
-            <Typography.Body2 as={'div'} key={i}>
-              <SelectItem className={s.selectItem} value={i.toString()}>
+          <Typography.Body2 as={'div'}>
+            {paginationOptions.map(i => (
+              <SelectItem key={i} value={i.toString()} variant={'small'}>
                 {i}
               </SelectItem>
-            </Typography.Body2>
-          ))}
+            ))}
+          </Typography.Body2>
         </Select>
         on the page
       </div>

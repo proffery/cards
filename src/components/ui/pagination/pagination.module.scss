@@ -66,22 +66,4 @@
   gap: 10px;
   align-items: center;
   white-space: nowrap;
-
-  & button {
-    gap: 4px;
-
-    max-width: 60px;
-    max-height: 24px;
-    padding: 0 4px;
-
-    text-align: center;
-
-    border-radius: 2px;
-  }
-}
-
-.selectItem {
-  max-width: 60px;
-  padding: 0 4px;
-  border-radius: 2px;
 }
