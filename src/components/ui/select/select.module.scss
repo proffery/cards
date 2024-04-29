@@ -30,7 +30,7 @@ $small-width: 50px;
   width: $width;
   padding: 6px 12px;
 
-  background-color: var(--color-dark-900);
+  background-color: var(--color-dark-700);
   border: $border-width solid var(--color-dark-300);
 
   &:hover {
@@ -57,8 +57,9 @@ $small-width: 50px;
 }
 
 .content {
+  z-index: 9999;
   width: $width;
-  background-color: var(--color-dark-900);
+  background-color: var(--color-dark-700);
   border: $border-width solid var(--color-dark-100);
 }
 
@@ -73,6 +74,8 @@ $small-width: 50px;
   align-items: center;
 
   padding: 6px 12px;
+
+  background-color: var(--color-dark-700);
 
   &:hover,
   &:focus {
