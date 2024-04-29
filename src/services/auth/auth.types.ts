@@ -1,29 +1,19 @@
-export type User = {
-  avatar: null | string
-  created: string
-  email: string
-  id: string
-  isEmailVerified: boolean
-  name: string
-  updated: string
-}
+import { components } from '@/services/schema'
 
-export type LoginArgs = {
-  email: string
-  password: string
-  rememberMe?: boolean
-}
+export type User = components['schemas']['User']
 
-export type SignUnArgs = {
-  email: string
-  password: string
-}
-export type RecoverPasswordArgs = {
-  email: string
-  html: string
-}
+export type LoginRequest = components['schemas']['LoginRequest']
 
-export type UpdateUserDataArgs = {
-  avatar?: string
-  name?: string
-}
+export type LoginResponse = components['schemas']['LoginResponse']
+
+export type RegistrationRequest = components['schemas']['RegistrationRequest']
+
+export type EmailVerificationRequest = components['schemas']['EmailVerificationRequest']
+
+export type ResendVerificationEmailRequest = components['schemas']['ResendVerificationEmailRequest']
+
+export type RecoverPasswordRequest = components['schemas']['RecoverPasswordRequest']
+
+export type ResetPasswordRequest = components['schemas']['ResetPasswordRequest']
+
+export type UpdateUserRequest = components['schemas']['UpdateUserRequest']
