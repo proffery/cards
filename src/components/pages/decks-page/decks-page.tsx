@@ -5,7 +5,6 @@ import { Trash } from '@/assets/icons'
 import { ROUTES } from '@/common/consts/routes'
 import { AddDeckFormFields, DeckDialog, DeleteDeck } from '@/components/dialogs'
 import { Page } from '@/components/layouts'
-import { useDecksFilters } from '@/components/pages/decks-page/useDecksFilters'
 import { SortDirection, TableDecks } from '@/components/tables'
 import {
   Button,
@@ -22,6 +21,8 @@ import { useGetDecksQuery } from '@/services/decks/decks.service'
 import clsx from 'clsx'
 
 import s from './decks-page.module.scss'
+
+import { useDecksFilters } from './useDecksFilters'
 
 export const DecksPage = () => {
   const classNames = {
