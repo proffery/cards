@@ -18,6 +18,7 @@ import {
 } from '@/components/ui'
 import { Loader } from '@/components/ui/loader/loader'
 import { useGetDecksQuery } from '@/services/decks/decks.service'
+import { useDebounce } from '@/utils'
 import clsx from 'clsx'
 
 import s from './decks-page.module.scss'
@@ -48,6 +49,7 @@ export const DecksPage = () => {
 
   const [tabValue, setTabValue] = useState('all')
   const [searchValue, setSearchValue] = useState('')
+  const debouncedSearch = useDebounce(searchValue, 1000)
 
   const [deckName, setDeckName] = useState('')
   const [deckId, setDeckId] = useState('')
@@ -74,22 +76,21 @@ export const DecksPage = () => {
     itemsPerPage: +itemsPerPage,
     maxCardsCount: requestedCardsRange[1],
     minCardsCount: requestedCardsRange[0],
-    name: searchValue,
+    name: debouncedSearch,
     orderBy: `${orderField}-${orderDirection}`,
   })
 
   const decks = currentData ?? data
 
-  const onTabChange = (value: string) => {
-    setTabValue(value)
-  }
-
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.currentTarget.value)
   }
-
   const onSearchClean = () => {
     setSearchValue('')
+  }
+
+  const onTabChange = (value: string) => {
+    setTabValue(value)
   }
 
   const onDeleteOpen = (deckId: string, deckName: string) => {
