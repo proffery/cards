@@ -47,7 +47,9 @@ const columns: Columns[] = [
 ]
 
 type DecksTableProps = {
+  authId: string
   decks?: Deck[]
+  disabled?: boolean
   onDeckDelete: (deckId: string, deckName: string) => void
   onDeckEdit: (deckId: string, cover: null | string, name: string, isPrivate: boolean) => void
   onDeckPlay: (deckId: string) => void
@@ -58,7 +60,9 @@ type DecksTableProps = {
 export type SortDirection = 'asc' | 'desc'
 
 export const TableDecks = ({
+  authId,
   decks,
+  disabled = false,
   onDeckDelete,
   onDeckEdit,
   onDeckPlay,
@@ -85,7 +89,7 @@ export const TableDecks = ({
           {columns.map(column => (
             <TableHeadCell className={s.columnButton} key={column.key}>
               <TableSortButton
-                disabled={!column.isClickable}
+                disabled={!column.isClickable || disabled}
                 fieldKey={column.key}
                 onClick={() => onSortHandler(column.key)}
                 orderDirection={orderDirection}
@@ -117,24 +121,24 @@ export const TableDecks = ({
               <div className={s.buttonsContainer}>
                 <button
                   className={s.actionButton}
-                  disabled={deck.cardsCount === 0}
+                  disabled={deck.cardsCount === 0 || disabled}
                   onClick={() => onDeckPlay(deck.id)}
                 >
                   <Play size={16} />
                 </button>
-                {deck.isPrivate && (
+                {deck.author.id === authId && (
                   <button
                     className={s.actionButton}
-                    disabled={deck.cardsCount === 0}
+                    disabled={disabled}
                     onClick={() => onDeckEdit(deck.id, deck.cover, deck.name, deck.isPrivate)}
                   >
                     <Edit size={16} />
                   </button>
                 )}
-                {deck.isPrivate && (
+                {deck.author.id === authId && (
                   <button
                     className={s.actionButton}
-                    disabled={deck.cardsCount === 0}
+                    disabled={disabled}
                     onClick={() => onDeckDelete(deck.id, deck.name)}
                   >
                     <Trash size={16} />

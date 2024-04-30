@@ -9,6 +9,7 @@ import s from './pagination.module.scss'
 type Props = {
   className?: string
   currentPage?: number
+  disabled?: boolean
   itemsPerPage?: number
   onItemsPerPageChange: (itemsNumber: number) => void
   onPageChange: (pageNumber: number) => void
@@ -23,6 +24,7 @@ const MIDDLE_PAGES_NUMBER = 3
 export const Pagination = ({
   className,
   currentPage = 1,
+  disabled = false,
   itemsPerPage = 5,
   onItemsPerPageChange,
   onPageChange,
@@ -106,7 +108,7 @@ export const Pagination = ({
   const pageButton = (page: number) => (
     <button
       className={`${s.page} ${isPageActive(page) ? s.active : ''}`}
-      disabled={isPageActive(page)}
+      disabled={isPageActive(page) || disabled}
       key={page}
       onClick={() => onPageChange(page)}
     >
@@ -157,18 +159,27 @@ export const Pagination = ({
 
   return (
     <Typography.Body2 as={'div'} className={clsx(s.container, className)}>
-      <button className={s.arrow} disabled={isBackArrowDisabled} onClick={onBackArrowClick}>
+      <button
+        className={s.arrow}
+        disabled={isBackArrowDisabled ?? disabled}
+        onClick={onBackArrowClick}
+      >
         <ArrowBack size={16} />
       </button>
       {startRangeCondition && startRangeFilter}
       {middleRangeCondition && middleRangeFilter}
       {endRangeCondition && endRangeFilter}
-      <button className={s.arrow} disabled={isForwardArrowDisabled} onClick={onForwardArrowClick}>
+      <button
+        className={s.arrow}
+        disabled={isForwardArrowDisabled ?? disabled}
+        onClick={onForwardArrowClick}
+      >
         <ArrowForward size={16} />
       </button>
       <div className={s.selectContainer}>
         Show
         <Select
+          disabled={disabled}
           onValueChange={value => onItemsPerPageChange(+value)}
           value={itemsPerPage.toString()}
           variant={'small'}
