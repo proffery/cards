@@ -4,6 +4,7 @@ import {
   Deck,
   DecksParams,
   DecksResponse,
+  DeleteDeckArgs,
   MinMaxCards,
   UpdateDeckArgs,
 } from '@/services/decks/decks.types'
@@ -18,9 +19,9 @@ const decksService = baseApi.injectEndpoints({
         url: `v1/decks`,
       }),
     }),
-    deleteDeck: builder.mutation<Deck, string>({
+    deleteDeck: builder.mutation<Deck, DeleteDeckArgs>({
       invalidatesTags: ['Decks'],
-      query: deckId => ({
+      query: ({ deckId }) => ({
         method: 'DELETE',
         url: `v1/decks/${deckId}`,
       }),
@@ -40,8 +41,8 @@ const decksService = baseApi.injectEndpoints({
     }),
     updateDeck: builder.mutation<Deck, UpdateDeckArgs>({
       invalidatesTags: ['Decks'],
-      query: ({ cover, deckId, isPrivate, name }) => ({
-        body: { cover, isPrivate, name },
+      query: ({ deckId, ...args }) => ({
+        body: args,
         method: 'PATCH',
         url: `/v1/decks/${deckId}`,
       }),
