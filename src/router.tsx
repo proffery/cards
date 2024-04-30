@@ -17,7 +17,7 @@ import {
   SignUpPage,
 } from '@/components/pages'
 import { LogInPage } from '@/components/pages/log-in/log-in-page'
-import { DecksPage } from '@/features/decks/decks-page/decks-page'
+import { DecksPage } from '@/features/decks/decks/decks-page/decks-page'
 
 const publicRoutes: RouteObject[] = [
   {

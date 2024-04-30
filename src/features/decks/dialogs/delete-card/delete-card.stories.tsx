@@ -1,22 +1,22 @@
 import { useState } from 'react'
 
-import { DeleteDeck } from '@/components/dialogs'
 import { Button } from '@/components/ui'
 import { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
 
+import { DeleteCard } from './delete-card'
+
 const meta = {
-  component: DeleteDeck,
+  component: DeleteCard,
   tags: ['autodocs'],
-  title: 'Dialogs/DeleteDeck',
-} satisfies Meta<typeof DeleteDeck>
+  title: 'Dialogs/DeleteCard',
+} satisfies Meta<typeof DeleteCard>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const DeleteDeckDialog: Story = {
+export const DeleteCardDialog: Story = {
   args: {
-    deckName: 'Deck Name',
     onConfirm: fn(),
     onOpenChange: fn(),
   },
@@ -26,7 +26,7 @@ export const DeleteDeckDialog: Story = {
     return (
       <>
         <Button onClick={() => setOpen(true)}>Open</Button>
-        <DeleteDeck {...args} onCancel={() => setOpen(false)} open={open} />
+        <DeleteCard {...args} onCancel={() => setOpen(false)} open={open} />
       </>
     )
   },

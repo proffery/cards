@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 
 import { Trash } from '@/assets/icons'
 import { ROUTES } from '@/common/consts/routes'
-import { AddDeckFormFields, DeckDialog, DeleteDeck } from '@/components/dialogs'
 import { Page } from '@/components/layouts'
 import {
   Button,
@@ -16,6 +15,7 @@ import {
   TabList,
   Typography,
 } from '@/components/ui'
+import { AddDeckFormFields, DeckDialog, DeleteDeck } from '@/features/decks/dialogs'
 import { SortDirection, TableDecks } from '@/features/decks/tables'
 import {
   useCreateDeckMutation,
