@@ -10,11 +10,18 @@ import {
 const decksService = baseApi.injectEndpoints({
   endpoints: builder => ({
     createDeck: builder.mutation<Deck, CreateDeckParams>({
+      invalidatesTags: ['Decks'],
       query: args => ({
         body: args,
-        invalidatesTags: ['Decks'],
         method: 'POST',
         url: `v1/decks`,
+      }),
+    }),
+    deleteDeck: builder.mutation<Deck, string>({
+      invalidatesTags: ['Decks'],
+      query: deckId => ({
+        method: 'DELETE',
+        url: `v1/decks/${deckId}`,
       }),
     }),
     getDecks: builder.query<DecksResponse, DecksParams | void>({
@@ -33,4 +40,5 @@ const decksService = baseApi.injectEndpoints({
   }),
 })
 
-export const { useCreateDeckMutation, useGetDecksQuery, useGetMinMaxQuery } = decksService
+export const { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery, useGetMinMaxQuery } =
+  decksService

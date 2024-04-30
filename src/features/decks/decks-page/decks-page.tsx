@@ -19,6 +19,7 @@ import {
 } from '@/components/ui'
 import {
   useCreateDeckMutation,
+  useDeleteDeckMutation,
   useGetDecksQuery,
   useGetMinMaxQuery,
 } from '@/services/decks/decks.service'
@@ -104,6 +105,8 @@ export const DecksPage = () => {
 
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
 
+  const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
+
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.currentTarget.value)
   }
@@ -119,11 +122,11 @@ export const DecksPage = () => {
   const onDeleteOpen = (deckId: string, deckName: string) => {
     setDeleteIsOpen(true)
     setOpenedName(deckName)
-    setOpenedCover(deckId)
+    setOpenedId(deckId)
   }
 
   const onDeleteConfirm = () => {
-    alert('Delete deck by id: ' + openedId)
+    deleteDeck(openedId)
     clearOpenedValues()
   }
 
@@ -178,7 +181,9 @@ export const DecksPage = () => {
 
   return (
     <Page className={classNames.root}>
-      {(isDecksFetching || isDecksLoading || isDeckBeingCreated) && <Loader />}
+      {(isDecksFetching || isDecksLoading || isDeckBeingCreated || isDeckBeingDeleted) && (
+        <Loader />
+      )}
       <DeleteDeck
         deckName={openedName}
         onCancel={() => setDeleteIsOpen(false)}
@@ -243,7 +248,7 @@ export const DecksPage = () => {
       <TableDecks
         authId={AUTH_ID}
         decks={decks?.items}
-        disabled={isDeckBeingCreated}
+        disabled={isDeckBeingCreated || isDeckBeingDeleted}
         onDeckDelete={onDeleteOpen}
         onDeckEdit={onEditOpen}
         onDeckPlay={onDeckPlay}
@@ -253,7 +258,7 @@ export const DecksPage = () => {
       />
       <Pagination
         currentPage={decks?.pagination.currentPage}
-        disabled={isDeckBeingCreated || isDecksLoading || isDecksFetching}
+        disabled={isDeckBeingCreated || isDecksLoading || isDecksFetching || isDeckBeingDeleted}
         itemsPerPage={decks?.pagination.itemsPerPage}
         onItemsPerPageChange={setItemsPerPage}
         onPageChange={setCurrentPage}
