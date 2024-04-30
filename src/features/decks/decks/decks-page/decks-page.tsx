@@ -1,11 +1,9 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Trash } from '@/assets/icons'
 import { ROUTES } from '@/common/consts/routes'
-import { AddDeckFormFields, DeckDialog, DeleteDeck } from '@/components/dialogs'
 import { Page } from '@/components/layouts'
-import { SortDirection, TableDecks } from '@/components/tables'
 import {
   Button,
   Input,
@@ -17,7 +15,15 @@ import {
   TabList,
   Typography,
 } from '@/components/ui'
-import { useGetDecksQuery } from '@/services/decks/decks.service'
+import { AddDeckFormFields, DeckDialog, DeleteDeck } from '@/features/decks/dialogs'
+import { SortDirection, TableDecks } from '@/features/decks/tables'
+import {
+  useCreateDeckMutation,
+  useDeleteDeckMutation,
+  useGetDecksQuery,
+  useGetMinMaxQuery,
+  useUpdateDeckMutation,
+} from '@/services/decks/decks.service'
 import clsx from 'clsx'
 
 import s from './decks-page.module.scss'
@@ -44,9 +50,11 @@ export const DecksPage = () => {
   const [editIsOpen, setEditIsOpen] = useState(false)
   const [newIsOpen, setNewIsOpen] = useState(false)
 
+  const [minMaxCardsCount, setMinMaxCardsCount] = useState<number[]>([0, 99])
+
   const {
-    MAX_RANGE,
-    MIN_RANGE,
+    DEFAULT_SORT_DIRECTION,
+    DEFAULT_SORT_FIELD,
     currentCardsRange,
     currentPage,
     debouncedSearch,
@@ -54,7 +62,6 @@ export const DecksPage = () => {
     orderDirection,
     orderField,
     requestedCardsRange,
-    resetFilters,
     searchValue,
     setCurrentCardsRange,
     setCurrentPage,
@@ -67,11 +74,22 @@ export const DecksPage = () => {
     tabValue,
   } = useDecksFilters()
 
-  const authorId = tabValue === 'all' ? undefined : '45cb2738-63fc-4fba-a6ff-1a9c84aa6015'
+  const { data: minMaxData } = useGetMinMaxQuery()
+
+  useEffect(() => {
+    if (minMaxData) {
+      setMinMaxCardsCount([minMaxData.min, minMaxData.max])
+      setCurrentCardsRange([minMaxData.min, minMaxData.max])
+      setRequestedCardsRange([minMaxData.min, minMaxData.max])
+    }
+  }, [minMaxData?.max])
+
+  const AUTH_ID = 'f2be95b9-4d07-4751-a775-bd612fc9553a'
+  const authorId = tabValue === 'all' ? undefined : AUTH_ID
 
   const {
-    currentData,
-    data,
+    currentData: currentDecksData,
+    data: decksData,
     isFetching: isDecksFetching,
     isLoading: isDecksLoading,
   } = useGetDecksQuery({
@@ -84,7 +102,13 @@ export const DecksPage = () => {
     orderBy: `${orderField}-${orderDirection}`,
   })
 
-  const decks = currentData ?? data
+  const decks = currentDecksData ?? decksData
+
+  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
+
+  const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
+
+  const [updateDeck, { isLoading: isDeckBeingUpdated }] = useUpdateDeckMutation()
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.currentTarget.value)
@@ -101,11 +125,11 @@ export const DecksPage = () => {
   const onDeleteOpen = (deckId: string, deckName: string) => {
     setDeleteIsOpen(true)
     setOpenedName(deckName)
-    setOpenedCover(deckId)
+    setOpenedId(deckId)
   }
 
   const onDeleteConfirm = () => {
-    alert('Delete deck by id: ' + openedId)
+    deleteDeck({ deckId: openedId })
     clearOpenedValues()
   }
 
@@ -118,7 +142,7 @@ export const DecksPage = () => {
   }
 
   const onEditConfirm = (data: AddDeckFormFields) => {
-    alert(`Edit deck with id:${openedId}, data:${JSON.stringify(data)}`)
+    updateDeck({ ...data, deckId: openedId })
     clearOpenedValues()
   }
 
@@ -127,7 +151,7 @@ export const DecksPage = () => {
   }
 
   const onNewConfirm = (data: AddDeckFormFields) => {
-    alert(`Create new deck ${JSON.stringify(data)}`)
+    createDeck(data)
   }
 
   const onDeckPlay = (deckId: string) => {
@@ -150,18 +174,31 @@ export const DecksPage = () => {
     setOpenedIsPrivate(false)
   }
 
+  const resetFilters = () => {
+    setSearchValue('')
+    setRequestedCardsRange(minMaxCardsCount)
+    setCurrentCardsRange(minMaxCardsCount)
+    setOrderDirection(DEFAULT_SORT_DIRECTION)
+    setOrderField(DEFAULT_SORT_FIELD)
+  }
+
   return (
     <Page className={classNames.root}>
-      {(isDecksFetching || isDecksLoading) && <Loader />}
+      {(isDecksFetching || isDecksLoading || isDeckBeingCreated || isDeckBeingDeleted) && (
+        <Loader />
+      )}
       <DeleteDeck
         deckName={openedName}
+        key={openedId + 'delete'}
         onCancel={() => setDeleteIsOpen(false)}
         onConfirm={onDeleteConfirm}
         onOpenChange={setDeleteIsOpen}
         open={deleteIsOpen}
       />
       <DeckDialog
+        confirmText={'Update deck'}
         defaultValues={{ cover: openedCover, isPrivate: openedIsPrivate, name: openedName }}
+        key={openedId + 'edit'}
         onCancel={() => setEditIsOpen(false)}
         onConfirm={onEditConfirm}
         onOpenChange={setEditIsOpen}
@@ -169,6 +206,7 @@ export const DecksPage = () => {
         title={`Edit deck ${openedName}`}
       />
       <DeckDialog
+        key={openedId + 'new'}
         onCancel={() => setNewIsOpen(false)}
         onConfirm={onNewConfirm}
         onOpenChange={setNewIsOpen}
@@ -176,7 +214,9 @@ export const DecksPage = () => {
       />
       <div className={classNames.topContainer}>
         <Typography.H1>Decks list</Typography.H1>
-        <Button onClick={onNewOpen}>Add New Deck</Button>
+        <Button disabled={isDeckBeingCreated} onClick={onNewOpen}>
+          Add New Deck
+        </Button>
       </div>
       <div className={classNames.filters}>
         <Input
@@ -201,8 +241,8 @@ export const DecksPage = () => {
         </TabGroup>
         <Slider
           className={classNames.slider}
-          max={MAX_RANGE}
-          min={MIN_RANGE}
+          max={minMaxCardsCount[1]}
+          min={minMaxCardsCount[0]}
           onValueChange={setCurrentCardsRange}
           onValueCommit={onRangeChange}
           value={currentCardsRange}
@@ -213,7 +253,9 @@ export const DecksPage = () => {
         </Button>
       </div>
       <TableDecks
+        authId={AUTH_ID}
         decks={decks?.items}
+        disabled={isDeckBeingCreated || isDeckBeingDeleted || isDeckBeingUpdated}
         onDeckDelete={onDeleteOpen}
         onDeckEdit={onEditOpen}
         onDeckPlay={onDeckPlay}
@@ -223,6 +265,13 @@ export const DecksPage = () => {
       />
       <Pagination
         currentPage={decks?.pagination.currentPage}
+        disabled={
+          isDeckBeingCreated ||
+          isDecksLoading ||
+          isDecksFetching ||
+          isDeckBeingDeleted ||
+          isDeckBeingUpdated
+        }
         itemsPerPage={decks?.pagination.itemsPerPage}
         onItemsPerPageChange={setItemsPerPage}
         onPageChange={setCurrentPage}

@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react'
 
 import { ArrowDropDown, ArrowDropUp } from '@/assets/icons'
-import { SortDirection } from '@/components/tables'
+import { SortDirection } from '@/features/decks/tables'
 
 import s from './table-sort-button.module.scss'
 
@@ -27,12 +27,12 @@ export const TableSortButton = ({
     return orderDirection === 'asc' ? (
       <button className={s.button} {...rest}>
         {children}
-        <ArrowDropDown size={16} />
+        <ArrowDropUp size={16} />
       </button>
     ) : (
       <button className={s.button} {...rest}>
         {children}
-        <ArrowDropUp size={16} />
+        <ArrowDropDown size={16} />
       </button>
     )
   } else {

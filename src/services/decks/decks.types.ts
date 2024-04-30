@@ -4,7 +4,6 @@ export type DeckAuthor = {
   id: string
   name: string
 }
-
 export type Deck = {
   author: DeckAuthor
   cardsCount: number
@@ -29,12 +28,10 @@ export type DecksResponse = {
   maxCardsCount: number
   pagination: Pagination
 }
-
 export type MinMaxCards = {
   max: number
   min: number
 }
-
 export type DecksParams = {
   authorId?: string
   currentPage?: number
@@ -45,6 +42,7 @@ export type DecksParams = {
   orderBy?: null | string
 }
 
+export type DeleteDeckArgs = { deckId: string }
 export type CreateDeckParams = {
   /**
    * Cover image (has to be sent inside FormData, does NOT accept base64)
@@ -67,7 +65,7 @@ export type UpdateDeckParams = {
   cover?: File
   isPrivate?: boolean
   name?: string
-}
+} & { deckId: string }
 
 export type CardsResponse = {
   items: Card[]

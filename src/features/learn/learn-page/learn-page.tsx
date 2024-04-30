@@ -1,9 +1,10 @@
 import { useState } from 'react'
 
-import { RateCardRadioGroup } from '@/components/pages/learn-page/rate-card/rate-card-radio-group'
 import { BackLink, Button, Card, Typography } from '@/components/ui'
 
 import s from './learn-page.module.scss'
+
+import { RateCardRadioGroup } from '../learn-page/rate-card/rate-card-radio-group'
 
 type CardType = {
   answerImg?: string | undefined
@@ -22,7 +23,7 @@ export const LearnPage = ({ card }: LearnPageType) => {
         <Card className={s.content}>
           <Typography.H1>Learn “Deck Name”</Typography.H1>
 
-          <Typography.Body1>Question: How "This" works in JavaScript?</Typography.Body1>
+          <Typography.Body1>Question: How This" works in JavaScript?</Typography.Body1>
 
           {card?.questionImg && (
             <div className={s.image}>

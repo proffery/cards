@@ -1,11 +1,10 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Image, Trash } from '@/assets/icons'
 import { ControlledCheckbox } from '@/components/controlled/controlled-checkbox/controlled-checkbox'
 import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { Button, Dialog, DialogProps } from '@/components/ui'
-import { convertUrlToFile } from '@/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -27,15 +26,10 @@ export const DeckDialog = ({
 }: Props) => {
   const [coverImage, setCoverImage] = useState<File | null>(null)
 
-  useEffect(() => {
-    defaultValues?.cover &&
-      convertUrlToFile(defaultValues?.cover).then(image => setCoverImage(image))
-  }, [defaultValues?.cover])
-
   const { control, handleSubmit, register, reset } = useForm<AddDeckFormFields>({
     defaultValues: {
-      isPrivate: defaultValues?.isPrivate || false,
-      name: defaultValues?.name || '',
+      isPrivate: defaultValues?.isPrivate,
+      name: defaultValues?.name,
     },
     resolver: zodResolver(addDeckSchema),
   })
@@ -47,7 +41,7 @@ export const DeckDialog = ({
   }
 
   const handleConfirm = handleSubmit(data => {
-    onConfirm(data)
+    onConfirm({ ...data, cover: coverImage })
     onOpenChange?.(false)
     setCoverImage(null)
     reset()
@@ -68,7 +62,11 @@ export const DeckDialog = ({
     >
       <form className={s.form} onSubmit={handleConfirm}>
         <ControlledInput control={control} fullWidth label={'Deck Name'} name={'name'} />
-        {coverImage && <img alt={'Deck cover'} src={URL.createObjectURL(coverImage)} />}
+        {coverImage ? (
+          <img alt={'Deck cover'} src={URL.createObjectURL(coverImage)} />
+        ) : (
+          defaultValues?.cover && <img alt={'Deck cover'} src={defaultValues?.cover} />
+        )}
         <div className={s.buttons}>
           {coverImage && (
             <Button

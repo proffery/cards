@@ -1,10 +1,11 @@
 import { useState } from 'react'
 
 import defaultImage from '@/assets/images/cover.png'
-import { DeckDialog } from '@/components/dialogs'
 import { Button } from '@/components/ui'
 import { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
+
+import { DeckDialog } from './deck-dialog'
 
 const meta = {
   component: DeckDialog,

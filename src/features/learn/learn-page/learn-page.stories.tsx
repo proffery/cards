@@ -1,6 +1,7 @@
 import { Layout, Page } from '@/components/layouts'
-import { LearnPage } from '@/components/pages/learn-page/learn-page'
 import { Meta, StoryObj } from '@storybook/react'
+
+import { LearnPage } from '../learn-page/learn-page'
 
 const meta = {
   component: LearnPage,
