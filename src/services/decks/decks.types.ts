@@ -41,7 +41,7 @@ export type DecksParams = {
   name?: string
   orderBy?: null | string
 }
-export type UpdateDeckArgs = CreateDeckParams & { deckId: string }
+
 export type DeleteDeckArgs = { deckId: string }
 export type CreateDeckParams = {
   /**
@@ -65,7 +65,8 @@ export type UpdateDeckParams = {
   cover?: File
   isPrivate?: boolean
   name?: string
-}
+} & { deckId: string }
+
 export type CardsResponse = {
   items: Card[]
   pagination: Pagination

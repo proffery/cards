@@ -129,7 +129,7 @@ export const DecksPage = () => {
   }
 
   const onDeleteConfirm = () => {
-    deleteDeck(openedId)
+    deleteDeck({ deckId: openedId })
     clearOpenedValues()
   }
 
@@ -189,6 +189,7 @@ export const DecksPage = () => {
       )}
       <DeleteDeck
         deckName={openedName}
+        key={openedId + 'delete'}
         onCancel={() => setDeleteIsOpen(false)}
         onConfirm={onDeleteConfirm}
         onOpenChange={setDeleteIsOpen}
@@ -197,6 +198,7 @@ export const DecksPage = () => {
       <DeckDialog
         confirmText={'Update deck'}
         defaultValues={{ cover: openedCover, isPrivate: openedIsPrivate, name: openedName }}
+        key={openedId + 'edit'}
         onCancel={() => setEditIsOpen(false)}
         onConfirm={onEditConfirm}
         onOpenChange={setEditIsOpen}
@@ -204,6 +206,7 @@ export const DecksPage = () => {
         title={`Edit deck ${openedName}`}
       />
       <DeckDialog
+        key={openedId + 'new'}
         onCancel={() => setNewIsOpen(false)}
         onConfirm={onNewConfirm}
         onOpenChange={setNewIsOpen}
