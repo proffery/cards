@@ -22,6 +22,7 @@ import {
   useDeleteDeckMutation,
   useGetDecksQuery,
   useGetMinMaxQuery,
+  useUpdateDeckMutation,
 } from '@/services/decks/decks.service'
 import clsx from 'clsx'
 
@@ -107,6 +108,8 @@ export const DecksPage = () => {
 
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
 
+  const [updateDeck, { isLoading: isDeckBeingUpdated }] = useUpdateDeckMutation()
+
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.currentTarget.value)
   }
@@ -139,7 +142,7 @@ export const DecksPage = () => {
   }
 
   const onEditConfirm = (data: AddDeckFormFields) => {
-    alert(`Edit deck with id:${openedId}, data:${JSON.stringify(data)}`)
+    updateDeck({ ...data, deckId: openedId })
     clearOpenedValues()
   }
 
@@ -192,6 +195,7 @@ export const DecksPage = () => {
         open={deleteIsOpen}
       />
       <DeckDialog
+        confirmText={'Update deck'}
         defaultValues={{ cover: openedCover, isPrivate: openedIsPrivate, name: openedName }}
         onCancel={() => setEditIsOpen(false)}
         onConfirm={onEditConfirm}
@@ -248,7 +252,7 @@ export const DecksPage = () => {
       <TableDecks
         authId={AUTH_ID}
         decks={decks?.items}
-        disabled={isDeckBeingCreated || isDeckBeingDeleted}
+        disabled={isDeckBeingCreated || isDeckBeingDeleted || isDeckBeingUpdated}
         onDeckDelete={onDeleteOpen}
         onDeckEdit={onEditOpen}
         onDeckPlay={onDeckPlay}
@@ -258,7 +262,13 @@ export const DecksPage = () => {
       />
       <Pagination
         currentPage={decks?.pagination.currentPage}
-        disabled={isDeckBeingCreated || isDecksLoading || isDecksFetching || isDeckBeingDeleted}
+        disabled={
+          isDeckBeingCreated ||
+          isDecksLoading ||
+          isDecksFetching ||
+          isDeckBeingDeleted ||
+          isDeckBeingUpdated
+        }
         itemsPerPage={decks?.pagination.itemsPerPage}
         onItemsPerPageChange={setItemsPerPage}
         onPageChange={setCurrentPage}

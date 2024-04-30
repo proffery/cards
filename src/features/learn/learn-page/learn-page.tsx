@@ -23,7 +23,7 @@ export const LearnPage = ({ card }: LearnPageType) => {
         <Card className={s.content}>
           <Typography.H1>Learn “Deck Name”</Typography.H1>
 
-          <Typography.Body1>Question: How "This" works in JavaScript?</Typography.Body1>
+          <Typography.Body1>Question: How This" works in JavaScript?</Typography.Body1>
 
           {card?.questionImg && (
             <div className={s.image}>

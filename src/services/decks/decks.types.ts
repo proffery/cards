@@ -45,6 +45,8 @@ export type DecksParams = {
   orderBy?: null | string
 }
 
+export type UpdateDeckArgs = CreateDeckParams & { deckId: string }
+
 export type CreateDeckParams = {
   /**
    * Cover image (has to be sent inside FormData, does NOT accept base64)
