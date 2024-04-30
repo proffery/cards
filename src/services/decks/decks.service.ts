@@ -1,5 +1,5 @@
 import { baseApi } from '@/services/base-api'
-import { DecksParams, DecksResponse } from '@/services/decks/decks.types'
+import { DecksParams, DecksResponse, MinMaxCards } from '@/services/decks/decks.types'
 
 const decksService = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -12,7 +12,11 @@ const decksService = baseApi.injectEndpoints({
         }
       },
     }),
+    getMinMax: builder.query<MinMaxCards, void>({
+      providesTags: ['Decks'],
+      query: () => `/v2/decks/min-max-cards`,
+    }),
   }),
 })
 
-export const { useGetDecksQuery } = decksService
+export const { useGetDecksQuery, useGetMinMaxQuery } = decksService

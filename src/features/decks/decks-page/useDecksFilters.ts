@@ -4,13 +4,11 @@ import { SortDirection } from '@/components/tables'
 import { useDebounce } from '@/utils'
 
 export const useDecksFilters = () => {
-  const MIN_RANGE = 0
-  const MAX_RANGE = 99
-  const [requestedCardsRange, setRequestedCardsRange] = useState<number[]>([MIN_RANGE, MAX_RANGE])
-  const [currentCardsRange, setCurrentCardsRange] = useState<number[]>([MIN_RANGE, MAX_RANGE])
+  const [requestedCardsRange, setRequestedCardsRange] = useState<number[]>([0, 99])
+  const [currentCardsRange, setCurrentCardsRange] = useState<number[]>([0, 99])
 
-  const DEFAULT_SORT_DIRECTION: SortDirection = 'asc'
-  const DEFAULT_SORT_FIELD = 'name'
+  const DEFAULT_SORT_DIRECTION: SortDirection = 'desc'
+  const DEFAULT_SORT_FIELD = 'updated'
   const [orderDirection, setOrderDirection] = useState<SortDirection>(DEFAULT_SORT_DIRECTION)
   const [orderField, setOrderField] = useState(DEFAULT_SORT_FIELD)
 
@@ -22,19 +20,9 @@ export const useDecksFilters = () => {
 
   const [tabValue, setTabValue] = useState('all')
 
-  const resetFilters = () => {
-    setSearchValue('')
-    setRequestedCardsRange([MIN_RANGE, MAX_RANGE])
-    setCurrentCardsRange([MIN_RANGE, MAX_RANGE])
-    setOrderDirection(DEFAULT_SORT_DIRECTION)
-    setOrderField(DEFAULT_SORT_FIELD)
-  }
-
   return {
     DEFAULT_SORT_DIRECTION,
     DEFAULT_SORT_FIELD,
-    MAX_RANGE,
-    MIN_RANGE,
     currentCardsRange,
     currentPage,
     debouncedSearch,
@@ -42,7 +30,6 @@ export const useDecksFilters = () => {
     orderDirection,
     orderField,
     requestedCardsRange,
-    resetFilters,
     searchValue,
     setCurrentCardsRange,
     setCurrentPage,

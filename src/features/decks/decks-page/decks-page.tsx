@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Trash } from '@/assets/icons'
@@ -17,7 +17,7 @@ import {
   TabList,
   Typography,
 } from '@/components/ui'
-import { useGetDecksQuery } from '@/services/decks/decks.service'
+import { useGetDecksQuery, useGetMinMaxQuery } from '@/services/decks/decks.service'
 import clsx from 'clsx'
 
 import s from './decks-page.module.scss'
@@ -44,9 +44,11 @@ export const DecksPage = () => {
   const [editIsOpen, setEditIsOpen] = useState(false)
   const [newIsOpen, setNewIsOpen] = useState(false)
 
+  const [minMaxCardsCount, setMinMaxCardsCount] = useState<number[]>([0, 99])
+
   const {
-    MAX_RANGE,
-    MIN_RANGE,
+    DEFAULT_SORT_DIRECTION,
+    DEFAULT_SORT_FIELD,
     currentCardsRange,
     currentPage,
     debouncedSearch,
@@ -54,7 +56,6 @@ export const DecksPage = () => {
     orderDirection,
     orderField,
     requestedCardsRange,
-    resetFilters,
     searchValue,
     setCurrentCardsRange,
     setCurrentPage,
@@ -67,11 +68,21 @@ export const DecksPage = () => {
     tabValue,
   } = useDecksFilters()
 
+  const { data: minMaxData } = useGetMinMaxQuery()
+
+  useEffect(() => {
+    if (minMaxData) {
+      setMinMaxCardsCount([minMaxData.min, minMaxData.max])
+      setCurrentCardsRange([minMaxData.min, minMaxData.max])
+      setRequestedCardsRange([minMaxData.min, minMaxData.max])
+    }
+  }, [minMaxData?.max])
+
   const authorId = tabValue === 'all' ? undefined : '45cb2738-63fc-4fba-a6ff-1a9c84aa6015'
 
   const {
-    currentData,
-    data,
+    currentData: currentDecksData,
+    data: decksData,
     isFetching: isDecksFetching,
     isLoading: isDecksLoading,
   } = useGetDecksQuery({
@@ -84,7 +95,7 @@ export const DecksPage = () => {
     orderBy: `${orderField}-${orderDirection}`,
   })
 
-  const decks = currentData ?? data
+  const decks = currentDecksData ?? decksData
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.currentTarget.value)
@@ -150,6 +161,14 @@ export const DecksPage = () => {
     setOpenedIsPrivate(false)
   }
 
+  const resetFilters = () => {
+    setSearchValue('')
+    setRequestedCardsRange(minMaxCardsCount)
+    setCurrentCardsRange(minMaxCardsCount)
+    setOrderDirection(DEFAULT_SORT_DIRECTION)
+    setOrderField(DEFAULT_SORT_FIELD)
+  }
+
   return (
     <Page className={classNames.root}>
       {(isDecksFetching || isDecksLoading) && <Loader />}
@@ -201,8 +220,8 @@ export const DecksPage = () => {
         </TabGroup>
         <Slider
           className={classNames.slider}
-          max={MAX_RANGE}
-          min={MIN_RANGE}
+          max={minMaxCardsCount[1]}
+          min={minMaxCardsCount[0]}
           onValueChange={setCurrentCardsRange}
           onValueCommit={onRangeChange}
           value={currentCardsRange}

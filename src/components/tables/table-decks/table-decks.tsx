@@ -64,7 +64,7 @@ export const TableDecks = ({
   onDeckPlay,
   onDecksSort,
   orderDirection = 'asc',
-  orderField = 'name',
+  orderField = 'updated',
 }: DecksTableProps) => {
   const toggleDirection = orderDirection === 'asc' ? 'desc' : 'asc'
 
