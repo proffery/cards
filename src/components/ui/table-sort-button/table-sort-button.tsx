@@ -27,12 +27,12 @@ export const TableSortButton = ({
     return orderDirection === 'asc' ? (
       <button className={s.button} {...rest}>
         {children}
-        <ArrowDropDown size={16} />
+        <ArrowDropUp size={16} />
       </button>
     ) : (
       <button className={s.button} {...rest}>
         {children}
-        <ArrowDropUp size={16} />
+        <ArrowDropDown size={16} />
       </button>
     )
   } else {
