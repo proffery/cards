@@ -1,8 +1,22 @@
 import { baseApi } from '@/services/base-api'
-import { DecksParams, DecksResponse, MinMaxCards } from '@/services/decks/decks.types'
+import {
+  CreateDeckParams,
+  Deck,
+  DecksParams,
+  DecksResponse,
+  MinMaxCards,
+} from '@/services/decks/decks.types'
 
 const decksService = baseApi.injectEndpoints({
   endpoints: builder => ({
+    createDeck: builder.mutation<Deck, CreateDeckParams>({
+      query: args => ({
+        body: args,
+        invalidatesTags: ['Decks'],
+        method: 'POST',
+        url: `v1/decks`,
+      }),
+    }),
     getDecks: builder.query<DecksResponse, DecksParams | void>({
       providesTags: ['Decks'],
       query: params => {
@@ -19,4 +33,4 @@ const decksService = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetDecksQuery, useGetMinMaxQuery } = decksService
+export const { useCreateDeckMutation, useGetDecksQuery, useGetMinMaxQuery } = decksService

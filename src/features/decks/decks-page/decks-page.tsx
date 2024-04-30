@@ -17,7 +17,11 @@ import {
   TabList,
   Typography,
 } from '@/components/ui'
-import { useGetDecksQuery, useGetMinMaxQuery } from '@/services/decks/decks.service'
+import {
+  useCreateDeckMutation,
+  useGetDecksQuery,
+  useGetMinMaxQuery,
+} from '@/services/decks/decks.service'
 import clsx from 'clsx'
 
 import s from './decks-page.module.scss'
@@ -78,7 +82,8 @@ export const DecksPage = () => {
     }
   }, [minMaxData?.max])
 
-  const authorId = tabValue === 'all' ? undefined : '45cb2738-63fc-4fba-a6ff-1a9c84aa6015'
+  const AUTH_ID = 'f2be95b9-4d07-4751-a775-bd612fc9553a'
+  const authorId = tabValue === 'all' ? undefined : AUTH_ID
 
   const {
     currentData: currentDecksData,
@@ -96,6 +101,8 @@ export const DecksPage = () => {
   })
 
   const decks = currentDecksData ?? decksData
+
+  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.currentTarget.value)
@@ -138,7 +145,7 @@ export const DecksPage = () => {
   }
 
   const onNewConfirm = (data: AddDeckFormFields) => {
-    alert(`Create new deck ${JSON.stringify(data)}`)
+    createDeck(data)
   }
 
   const onDeckPlay = (deckId: string) => {
@@ -171,7 +178,7 @@ export const DecksPage = () => {
 
   return (
     <Page className={classNames.root}>
-      {(isDecksFetching || isDecksLoading) && <Loader />}
+      {(isDecksFetching || isDecksLoading || isDeckBeingCreated) && <Loader />}
       <DeleteDeck
         deckName={openedName}
         onCancel={() => setDeleteIsOpen(false)}
@@ -195,7 +202,9 @@ export const DecksPage = () => {
       />
       <div className={classNames.topContainer}>
         <Typography.H1>Decks list</Typography.H1>
-        <Button onClick={onNewOpen}>Add New Deck</Button>
+        <Button disabled={isDeckBeingCreated} onClick={onNewOpen}>
+          Add New Deck
+        </Button>
       </div>
       <div className={classNames.filters}>
         <Input
@@ -232,7 +241,9 @@ export const DecksPage = () => {
         </Button>
       </div>
       <TableDecks
+        authId={AUTH_ID}
         decks={decks?.items}
+        disabled={isDeckBeingCreated}
         onDeckDelete={onDeleteOpen}
         onDeckEdit={onEditOpen}
         onDeckPlay={onDeckPlay}
@@ -242,6 +253,7 @@ export const DecksPage = () => {
       />
       <Pagination
         currentPage={decks?.pagination.currentPage}
+        disabled={isDeckBeingCreated || isDecksLoading || isDecksFetching}
         itemsPerPage={decks?.pagination.itemsPerPage}
         onItemsPerPageChange={setItemsPerPage}
         onPageChange={setCurrentPage}
