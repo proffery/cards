@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { SortDirection } from '@/components/tables'
+import { SortDirection } from '@/features/decks/tables'
 import { useDebounce } from '@/utils'
 
 export const useDecksFilters = () => {

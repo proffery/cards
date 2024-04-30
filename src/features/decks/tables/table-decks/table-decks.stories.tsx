@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import cover from '@/assets/images/cover.png'
-import { TableDecks } from '@/components/tables'
+import { TableDecks } from '@/features/decks/tables'
 import { Deck } from '@/services/decks/decks.types'
 import { fn } from '@storybook/test'
 const decksMock: Deck[] = [
@@ -72,6 +72,7 @@ type Story = StoryObj<typeof meta>
 
 export const DecksTable: Story = {
   args: {
+    authId: '1',
     decks: decksMock,
     orderDirection: 'asc',
     orderField: 'name',

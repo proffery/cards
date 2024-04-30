@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import cover from '@/assets/images/cover.png'
-import { CardType, TableCards } from '@/components/tables'
+import { CardType, TableCards } from '@/features/decks/tables'
 import { fn } from '@storybook/test'
 
 const cardsExample: CardType[] = [

@@ -5,7 +5,6 @@ import { Trash } from '@/assets/icons'
 import { ROUTES } from '@/common/consts/routes'
 import { AddDeckFormFields, DeckDialog, DeleteDeck } from '@/components/dialogs'
 import { Page } from '@/components/layouts'
-import { SortDirection, TableDecks } from '@/components/tables'
 import {
   Button,
   Input,
@@ -17,6 +16,7 @@ import {
   TabList,
   Typography,
 } from '@/components/ui'
+import { SortDirection, TableDecks } from '@/features/decks/tables'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
