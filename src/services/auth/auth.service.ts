@@ -47,14 +47,6 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    refreshToken: builder.mutation<void, void>({
-      invalidatesTags: ['Auth'],
-      query: () => ({
-        method: 'POST',
-        url: '/v2/auth/refresh-token',
-      }),
-    }),
-
     resendVerificationEmail: builder.mutation<void, ResendVerificationEmail>({
       invalidatesTags: ['Auth'],
       query: body => ({
@@ -107,7 +99,6 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useRecoverPasswordMutation,
-  useRefreshTokenMutation,
   useResendVerificationEmailMutation,
   useResetPasswordMutation,
   useSignUpMutation,
