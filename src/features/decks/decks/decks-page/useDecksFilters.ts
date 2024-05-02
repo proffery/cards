@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { SortDirection } from '@/features/decks/tables'
+import { SortDirection } from '@/features/decks/'
 import { useDebounce, useQueryParam } from '@/utils'
 
 export const useDecksFilters = () => {
