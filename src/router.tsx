@@ -34,7 +34,7 @@ const publicRoutes: RouteObject[] = [
   },
   {
     element: <CheckEmailPage />,
-    path: ROUTES.checkEmail,
+    path: `${ROUTES.checkEmail}/:email`,
   },
 ]
 
@@ -53,7 +53,7 @@ const privateRoutes: RouteObject[] = [
   },
   {
     element: <Page>Learn Deck page</Page>,
-    path: `${ROUTES.decks}/:deckId/learn`,
+    path: `${ROUTES.decks}/:deckId${ROUTES.learn}`,
   },
   {
     element: <EditProfilePage avatarUrl={''} email={'bob@bob.bob'} name={'Bob'} />,
@@ -61,7 +61,7 @@ const privateRoutes: RouteObject[] = [
   },
   {
     element: <CreatePasswordPage />,
-    path: ROUTES.createPassword,
+    path: `${ROUTES.createPassword}/:token`,
   },
 ]
 
