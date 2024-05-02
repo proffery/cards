@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { ArrowBack } from '@/assets/icons'
 import { Typography } from '@/components/ui'
@@ -19,7 +19,7 @@ export const BackLink = (props: Props) => {
   }
 
   return (
-    <Typography.Link1 className={s.backLink} onClick={handlerBackLink}>
+    <Typography.Link1 as={Link} className={s.backLink} onClick={handlerBackLink}>
       <ArrowBack />
       <Typography.Body1>{text}</Typography.Body1>
     </Typography.Link1>

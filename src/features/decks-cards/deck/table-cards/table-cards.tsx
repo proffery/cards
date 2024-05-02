@@ -10,10 +10,10 @@ import {
   TableRow,
   TableSortButton,
 } from '@/components/ui'
-import { SortDirection } from '@/features/decks/tables'
+import { SortDirection } from '@/features/decks-cards'
 import { localDate } from '@/utils'
 
-import s from '../tables.module.scss'
+import s from './tables.module.scss'
 
 const columns: Columns[] = [
   {
@@ -112,13 +112,17 @@ export const TableCards = ({
           <TableRow key={item.id}>
             <TableBodyCell>
               <div className={s.contentContainer}>
-                {item.questionImg && <img className={s.cover} src={item.questionImg} />}
+                {item.questionImg && (
+                  <img alt={'Question image'} className={s.cover} src={item.questionImg} />
+                )}
                 {item.question}
               </div>
             </TableBodyCell>
             <TableBodyCell>
               <div className={s.contentContainer}>
-                {item.answerImg && <img className={s.cover} src={item.answerImg} />}
+                {item.answerImg && (
+                  <img alt={'Answer image'} className={s.cover} src={item.answerImg} />
+                )}
                 {item.answer}
               </div>
             </TableBodyCell>

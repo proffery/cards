@@ -32,6 +32,7 @@
     "react-hook-form": "^7.51.3",
     "react-redux": "^9.1.1",
     "react-router-dom": "^6.22.3",
+    "remeda": "^1.61.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
