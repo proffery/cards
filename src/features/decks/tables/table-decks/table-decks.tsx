@@ -54,8 +54,8 @@ type DecksTableProps = {
   onDeckEdit: (deckId: string, cover: null | string, name: string, isPrivate: boolean) => void
   onDeckPlay: (deckId: string) => void
   onDecksSort: (orderDirection: SortDirection, orderField: string) => void
-  orderDirection: SortDirection
-  orderField: string
+  orderDirection: SortDirection | null
+  orderField: null | string
 }
 export type SortDirection = 'asc' | 'desc'
 

@@ -53,19 +53,19 @@ export const DecksPage = () => {
   const [minMaxCardsCount, setMinMaxCardsCount] = useState<number[]>([0, 99])
 
   const {
-    DEFAULT_SORT_DIRECTION,
-    DEFAULT_SORT_FIELD,
-    currentCardsRange,
     currentPage,
     debouncedSearch,
     itemsPerPage,
+    maxCardsCount,
+    minCardsCount,
     orderDirection,
     orderField,
     requestedCardsRange,
     searchValue,
-    setCurrentCardsRange,
     setCurrentPage,
     setItemsPerPage,
+    setMaxCardsCount,
+    setMinCardsCount,
     setOrderDirection,
     setOrderField,
     setRequestedCardsRange,
@@ -79,7 +79,8 @@ export const DecksPage = () => {
   useEffect(() => {
     if (minMaxData) {
       setMinMaxCardsCount([minMaxData.min, minMaxData.max])
-      setCurrentCardsRange([minMaxData.min, minMaxData.max])
+      setMaxCardsCount(minMaxData.max)
+      setMinCardsCount(minMaxData.min)
       setRequestedCardsRange([minMaxData.min, minMaxData.max])
     }
   }, [minMaxData?.max])
@@ -94,11 +95,11 @@ export const DecksPage = () => {
     isLoading: isDecksLoading,
   } = useGetDecksQuery({
     authorId: authorId,
-    currentPage: +currentPage,
+    currentPage: currentPage ?? 1,
     itemsPerPage: +itemsPerPage,
-    maxCardsCount: requestedCardsRange[1],
-    minCardsCount: requestedCardsRange[0],
-    name: debouncedSearch,
+    maxCardsCount: maxCardsCount ?? 99,
+    minCardsCount: minCardsCount ?? 0,
+    name: debouncedSearch ?? undefined,
     orderBy: `${orderField}-${orderDirection}`,
   })
 
@@ -165,7 +166,8 @@ export const DecksPage = () => {
   }
 
   const onRangeChange = (value: number[]) => {
-    setRequestedCardsRange(value)
+    setMaxCardsCount(value[1])
+    setMinCardsCount(value[0])
   }
 
   const clearOpenedValues = () => {
@@ -177,9 +179,10 @@ export const DecksPage = () => {
   const resetFilters = () => {
     setSearchValue('')
     setRequestedCardsRange(minMaxCardsCount)
-    setCurrentCardsRange(minMaxCardsCount)
-    setOrderDirection(DEFAULT_SORT_DIRECTION)
-    setOrderField(DEFAULT_SORT_FIELD)
+    setMaxCardsCount(minMaxCardsCount[1])
+    setMinCardsCount(minMaxCardsCount[0])
+    setOrderDirection(null)
+    setOrderField(null)
   }
 
   return (
@@ -222,7 +225,7 @@ export const DecksPage = () => {
         <Input
           cleanSearch={onSearchClean}
           onChange={onSearchChange}
-          value={searchValue}
+          value={searchValue ?? undefined}
           variant={'search'}
         />
         <TabGroup
@@ -243,9 +246,9 @@ export const DecksPage = () => {
           className={classNames.slider}
           max={minMaxCardsCount[1]}
           min={minMaxCardsCount[0]}
-          onValueChange={setCurrentCardsRange}
+          onValueChange={setRequestedCardsRange}
           onValueCommit={onRangeChange}
-          value={currentCardsRange}
+          value={requestedCardsRange}
         />
         <Button onClick={resetFilters} variant={'secondary'}>
           <Trash size={16} />

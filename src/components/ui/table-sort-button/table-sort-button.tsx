@@ -8,8 +8,8 @@ import s from './table-sort-button.module.scss'
 type Props = {
   disabled: boolean
   fieldKey: string
-  orderDirection: SortDirection
-  orderField: string
+  orderDirection: SortDirection | null
+  orderField: null | string
 } & ComponentPropsWithoutRef<'button'>
 export type Columns = {
   isClickable: boolean
