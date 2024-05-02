@@ -1,6 +1,0 @@
-export * from './delete-card/delete-card'
-export * from './delete-deck/delete-deck'
-export * from './card-dialog/card-dialog'
-export * from './card-dialog/schema'
-export * from './deck-dialog/deck-dialog'
-export * from './deck-dialog/schema'

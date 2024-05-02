@@ -15,8 +15,13 @@ import {
   TabList,
   Typography,
 } from '@/components/ui'
-import { AddDeckFormFields, DeckDialog, DeleteDeck } from '@/features/decks/dialogs'
-import { SortDirection, TableDecks } from '@/features/decks/tables'
+import {
+  AddDeckFormFields,
+  DeckDialog,
+  DeleteDeck,
+  SortDirection,
+  TableDecks,
+} from '@/features/decks/'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,

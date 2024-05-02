@@ -1,9 +1,10 @@
 import { useState } from 'react'
 
 import { Button } from '@/components/ui'
-import { DeleteDeck } from '@/features/decks/dialogs'
 import { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
+
+import { DeleteDeck } from './delete-deck'
 
 const meta = {
   component: DeleteDeck,

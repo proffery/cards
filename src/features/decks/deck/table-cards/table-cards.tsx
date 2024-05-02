@@ -10,10 +10,10 @@ import {
   TableRow,
   TableSortButton,
 } from '@/components/ui'
-import { SortDirection } from '@/features/decks/tables'
+import { SortDirection } from '@/features/decks'
 import { localDate } from '@/utils'
 
-import s from '../tables.module.scss'
+import s from './tables.module.scss'
 
 const columns: Columns[] = [
   {
