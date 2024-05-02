@@ -21,7 +21,7 @@ import {
   DeleteDeck,
   SortDirection,
   TableDecks,
-} from '@/features/decks/'
+} from '@/features/decks-cards/'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
