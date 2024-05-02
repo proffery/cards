@@ -100,11 +100,11 @@ export const DecksPage = () => {
     isLoading: isDecksLoading,
   } = useGetDecksQuery({
     authorId: authorId,
-    currentPage: currentPage ?? 1,
+    currentPage: currentPage ?? undefined,
     itemsPerPage: +itemsPerPage,
-    maxCardsCount: maxCardsCount ?? 99,
-    minCardsCount: minCardsCount ?? 0,
-    name: debouncedSearch ?? undefined,
+    maxCardsCount: maxCardsCount ?? undefined,
+    minCardsCount: minCardsCount ?? undefined,
+    name: debouncedSearch ?? '',
     orderBy: `${orderField}-${orderDirection}`,
   })
 
@@ -230,7 +230,7 @@ export const DecksPage = () => {
         <Input
           cleanSearch={onSearchClean}
           onChange={onSearchChange}
-          value={searchValue ?? undefined}
+          value={searchValue ?? ''}
           variant={'search'}
         />
         <TabGroup
