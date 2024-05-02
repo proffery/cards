@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
@@ -14,10 +15,11 @@ import { signUpSchema } from './schema'
 
 type Props = {
   onSubmit: (data: Omit<FormFields, 'confirmPassword'>) => void
+  serverError?: string
 }
 type FormFields = z.infer<typeof signUpSchema>
-export const SignUp = ({ onSubmit }: Props) => {
-  const { control, handleSubmit } = useForm<FormFields>({
+export const SignUp = ({ onSubmit, serverError }: Props) => {
+  const { clearErrors, control, handleSubmit, setError } = useForm<FormFields>({
     defaultValues: {
       confirmPassword: '',
       email: '',
@@ -25,6 +27,14 @@ export const SignUp = ({ onSubmit }: Props) => {
     },
     resolver: zodResolver(signUpSchema),
   })
+
+  useEffect(() => {
+    if (serverError) {
+      setError('email', { message: serverError, type: 'server' })
+    } else {
+      clearErrors('email')
+    }
+  }, [serverError, setError, clearErrors])
 
   const classNames = {
     form: clsx(s.form, s.topMargin),
@@ -35,13 +45,26 @@ export const SignUp = ({ onSubmit }: Props) => {
     text: clsx(s.text),
   }
 
+  const submitHandler = (data: FormFields) => {
+    const { confirmPassword, ...submitData } = data
+
+    onSubmit(submitData)
+  }
+
   return (
     <Card className={classNames.root}>
       <Typography.H1>Sign Up</Typography.H1>
-      <form className={classNames.form} onSubmit={handleSubmit(data => onSubmit(data))}>
+      <form className={classNames.form} onSubmit={handleSubmit(submitHandler)}>
         <div className={classNames.inputsContainer}>
-          <ControlledInput control={control} fullWidth label={'Email'} name={'email'} />
           <ControlledInput
+            autoComplete={'email'}
+            control={control}
+            fullWidth
+            label={'Email'}
+            name={'email'}
+          />
+          <ControlledInput
+            autoComplete={'password'}
             control={control}
             fullWidth
             label={'Password'}
@@ -49,6 +72,7 @@ export const SignUp = ({ onSubmit }: Props) => {
             type={'password'}
           />
           <ControlledInput
+            autoComplete={'confirmPassword'}
             control={control}
             fullWidth
             label={'Confirm Password'}

@@ -2,25 +2,26 @@
 import { baseApi } from '@/services/base-api'
 
 import {
-  EmailVerificationRequest,
-  LoginRequest,
-  LoginResponse,
-  RecoverPasswordRequest,
-  RegistrationRequest,
-  ResendVerificationEmailRequest,
-  ResetPasswordRequest,
-  UpdateUserRequest,
-  User,
+  EmailVerification,
+  GetUser,
+  LoginReq,
+  LoginRes,
+  RecoverPassword,
+  Registration,
+  ResendVerificationEmail,
+  ResetPassword,
+  ResetPasswordArgs,
+  UpdateUser,
 } from './auth.types'
 
 export const authService = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getMe: builder.query<User, void>({
+    getMe: builder.query<GetUser, void>({
       providesTags: ['Auth'],
       query: () => '/v1/auth/me',
     }),
 
-    login: builder.mutation<LoginResponse, LoginRequest>({
+    login: builder.mutation<LoginRes, LoginReq>({
       invalidatesTags: ['Auth'],
       query: body => ({
         body,
@@ -37,7 +38,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    recoverPassword: builder.mutation<void, RecoverPasswordRequest>({
+    recoverPassword: builder.mutation<void, RecoverPassword>({
       invalidatesTags: ['Auth'],
       query: body => ({
         body,
@@ -46,15 +47,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    refreshToken: builder.mutation<void, void>({
-      invalidatesTags: ['Auth'],
-      query: () => ({
-        method: 'POST',
-        url: '/v2/auth/refresh-token',
-      }),
-    }),
-
-    resendVerificationEmail: builder.mutation<void, ResendVerificationEmailRequest>({
+    resendVerificationEmail: builder.mutation<void, ResendVerificationEmail>({
       invalidatesTags: ['Auth'],
       query: body => ({
         body,
@@ -63,16 +56,16 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    resetPassword: builder.mutation<void, { data: ResetPasswordRequest; token: string }>({
+    resetPassword: builder.mutation<void, { data: ResetPassword; params: ResetPasswordArgs }>({
       invalidatesTags: ['Auth'],
-      query: ({ data, token }) => ({
+      query: ({ data, params }) => ({
         body: data,
         method: 'POST',
-        url: `/v1/auth/reset-password/${token}`,
+        url: `/v1/auth/reset-password/${params.token}`,
       }),
     }),
 
-    signUp: builder.mutation<User, RegistrationRequest>({
+    signUp: builder.mutation<GetUser, Registration>({
       invalidatesTags: ['Auth'],
       query: body => ({
         body,
@@ -81,7 +74,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    updateUser: builder.mutation<User, UpdateUserRequest>({
+    updateUser: builder.mutation<GetUser, UpdateUser>({
       invalidatesTags: ['Auth'],
       query: body => ({
         body,
@@ -90,7 +83,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    verifyEmail: builder.mutation<void, EmailVerificationRequest>({
+    verifyEmail: builder.mutation<void, EmailVerification>({
       invalidatesTags: ['Auth'],
       query: body => ({
         body,
@@ -106,7 +99,6 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useRecoverPasswordMutation,
-  useRefreshTokenMutation,
   useResendVerificationEmailMutation,
   useResetPasswordMutation,
   useSignUpMutation,
