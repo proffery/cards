@@ -3,11 +3,20 @@ import { router } from '@/router'
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, fetchBaseQuery } from '@reduxjs/toolkit/query'
 import { Mutex } from 'async-mutex'
 
-// create a new mutex
 const mutex = new Mutex()
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://api.flashcards.andrii.es',
-  credentials: 'include',
+  // credentials: 'include',
+  prepareHeaders: headers => {
+    const token = localStorage.getItem('accessToken')
+
+    if (headers.get('Authorization')) {
+      return headers
+    }
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`)
+    }
+  },
 })
 
 export const baseQueryWithReauth: BaseQueryFn<
@@ -15,37 +24,42 @@ export const baseQueryWithReauth: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  // wait until the mutex is available without locking it
   await mutex.waitForUnlock()
   let result = await baseQuery(args, api, extraOptions)
 
   if (result.error && result.error.status === 401) {
-    // checking whether the mutex is locked
     if (!mutex.isLocked()) {
       const release = await mutex.acquire()
-
-      try {
-        const refreshResult = await baseQuery(
-          {
-            method: 'POST',
-            url: '/v2/auth/refresh-token',
+      const refreshResult = await baseQuery(
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('refreshToken')}`,
           },
-          api,
-          extraOptions
-        )
+          method: 'POST',
+          url: '/v2/auth/refresh-token',
+        },
+        api,
+        extraOptions
+      )
 
-        if (refreshResult.meta?.response?.status === 204) {
-          // retry the initial query
+      if (refreshResult.meta?.response?.status === 200) {
+        if (
+          refreshResult.data &&
+          typeof refreshResult.data === 'object' &&
+          'accessToken' in refreshResult.data &&
+          'refreshToken' in refreshResult.data &&
+          typeof refreshResult.data.accessToken === 'string' &&
+          typeof refreshResult.data.refreshToken === 'string'
+        ) {
+          localStorage.setItem('accessToken', refreshResult.data.accessToken)
+          localStorage.setItem('refreshToken', refreshResult.data.refreshToken)
           result = await baseQuery(args, api, extraOptions)
-        } else {
-          await router.navigate(ROUTES.signIn)
         }
-      } finally {
-        // release must be called once the mutex should be released again.
-        release()
+      } else {
+        await router.navigate(ROUTES.signIn)
       }
+      release()
     } else {
-      // wait until the mutex is available without locking it
       await mutex.waitForUnlock()
       result = await baseQuery(args, api, extraOptions)
     }

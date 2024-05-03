@@ -22,6 +22,7 @@ import {
   SortDirection,
   TableDecks,
 } from '@/features/decks-cards/'
+import { useGetMeQuery } from '@/services/auth/auth.service'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
@@ -36,6 +37,9 @@ import s from './decks-page.module.scss'
 import { useDecksFilters } from './useDecksFilters'
 
 export const DecksPage = () => {
+  const { data: me } = useGetMeQuery()
+  const AUTH_ID = me?.id || ''
+
   const classNames = {
     filters: clsx(s.filters),
     root: clsx(s.root),
@@ -90,7 +94,6 @@ export const DecksPage = () => {
     }
   }, [minMaxData?.max])
 
-  const AUTH_ID = 'f2be95b9-4d07-4751-a775-bd612fc9553a'
   const authorId = tabValue === 'all' ? undefined : AUTH_ID
 
   const {

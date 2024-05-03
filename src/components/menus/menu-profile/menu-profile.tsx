@@ -54,7 +54,7 @@ export const MenuProfile = (props: MenuProfileProps) => {
       <DropdownItem asChild>
         <button onClick={onLogout}>
           <Logout />
-          Sing Out
+          Log Out
         </button>
       </DropdownItem>
     </DropdownMenu>

@@ -1,23 +1,33 @@
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 
 import logo from '@/assets/images/LogoITI.svg'
 import { ROUTES } from '@/common/consts/routes'
-import { MenuProfile, MenuProfileProps } from '@/components/menus'
-import { Avatar, Button, Typography } from '@/components/ui'
+import { MenuProfile } from '@/components/menus'
+import { Avatar, Button, Loader, Typography } from '@/components/ui'
+import { useGetMeQuery, useLogoutMutation } from '@/services/auth/auth.service'
 
 import s from './header.module.scss'
 
-type HeaderProps = {
-  isLoggedIn?: boolean
-} & MenuProfileProps
+export const Header = memo(() => {
+  const { data, isLoading: loading } = useGetMeQuery()
 
-export const Header = ({ avatarUrl, email, isLoggedIn, onLogout, userName }: HeaderProps) => {
+  const [logout] = useLogoutMutation()
+
+  const handleLogout = async () => {
+    await logout()
+  }
+
+  const name = data?.name || ''
+  const avatar = data?.avatar || ''
+  const userEmail = data?.email || ''
+
   const triggerHeader = (
     <div className={s.nameContainer}>
       <Typography.Subtitle1 as={Link} className={s.name} to={ROUTES.profile}>
-        {userName}
+        {name}
       </Typography.Subtitle1>
-      <Avatar name={userName} size={'s'} url={avatarUrl} />
+      <Avatar name={name} size={'s'} url={avatar} />
     </div>
   )
 
@@ -27,21 +37,22 @@ export const Header = ({ avatarUrl, email, isLoggedIn, onLogout, userName }: Hea
         <Link className={s.banner} to={ROUTES.base}>
           <img alt={'Logo'} height={36} src={logo} width={157} />
         </Link>
-        {isLoggedIn && (
+        {data && (
           <MenuProfile
-            avatarUrl={avatarUrl}
-            email={email}
-            onLogout={onLogout}
+            avatarUrl={avatar}
+            email={userEmail}
+            onLogout={handleLogout}
             triggerMenu={triggerHeader}
-            userName={userName}
+            userName={name}
           />
         )}
-        {!isLoggedIn && (
+        {!data && (
           <Button as={Link} to={ROUTES.signIn} variant={'secondary'}>
             Sign In
           </Button>
         )}
       </div>
+      {loading && <Loader />}
     </header>
   )
-}
+})
