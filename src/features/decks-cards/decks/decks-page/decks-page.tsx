@@ -111,9 +111,7 @@ export const DecksPage = () => {
   const decks = currentDecksData ?? decksData
 
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
-
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
-
   const [updateDeck, { isLoading: isDeckBeingUpdated }] = useUpdateDeckMutation()
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -161,7 +159,7 @@ export const DecksPage = () => {
   }
 
   const onDeckPlay = (deckId: string) => {
-    navigate(`${ROUTES.decks}/${deckId}/learn`)
+    navigate(`${ROUTES.decks}/${deckId}${ROUTES.learn}`)
   }
 
   const onDecksSort = (orderDirection: SortDirection, orderField: string) => {

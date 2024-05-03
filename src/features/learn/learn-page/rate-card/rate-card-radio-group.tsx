@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form'
 
 import { ControlledRadioGroup } from '@/components/controlled/controlled-radio-button/controlled-radio-button'
-import { Button, Option } from '@/components/ui'
+import { Button, Typography } from '@/components/ui'
+import clsx from 'clsx'
 
 import s from '../learn-page.module.scss'
 
-const options: Option[] = [
+const options = [
   { label: 'Did not know', value: '1' },
   { label: 'Forgot', value: '2' },
   { label: 'A lot of thought', value: '3' },
@@ -18,15 +19,19 @@ type RateCardRadioGroupType = {
   onSubmit: (data: RateType) => void
 }
 export const RateCardRadioGroup = ({ onSubmit }: RateCardRadioGroupType) => {
+  const classNames = {
+    submitButton: clsx(s.submitButton),
+  }
+
   const { control, handleSubmit } = useForm<RateType>({
     defaultValues: { grade: '2' },
   })
 
   return (
     <form className={s.rate} onSubmit={handleSubmit(onSubmit)}>
-      Rate yourself:
+      <Typography.Subtitle1>Rate yourself:</Typography.Subtitle1>
       <ControlledRadioGroup control={control} name={'grade'} options={options} />
-      <Button className={s.buttons} fullWidth>
+      <Button className={classNames.submitButton} fullWidth>
         Next Question
       </Button>
     </form>

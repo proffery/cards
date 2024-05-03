@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { ArrowBack } from '@/assets/icons'
 import { Typography } from '@/components/ui'
+import clsx from 'clsx'
 
 import s from './back-link.module.scss'
 
@@ -11,17 +12,20 @@ type Props = {
 }
 
 export const BackLink = (props: Props) => {
-  const { text } = props
+  const { className, text } = props
   const navigate = useNavigate()
+  const classNames = {
+    root: clsx(s.backLink, className),
+  }
 
   const handlerBackLink = () => {
     navigate(-1)
   }
 
   return (
-    <Typography.Link1 as={Link} className={s.backLink} onClick={handlerBackLink}>
+    <Typography.Body2 as={Link} className={classNames.root} onClick={handlerBackLink}>
       <ArrowBack />
       <Typography.Body1>{text}</Typography.Body1>
-    </Typography.Link1>
+    </Typography.Body2>
   )
 }
