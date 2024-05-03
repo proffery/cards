@@ -1,7 +1,9 @@
 import { baseApi } from '@/services/base-api'
+import { Card, GetRandomCardParams, SaveGradeParams } from '@/services/cards/cards.types'
 import {
   CreateDeckParams,
   Deck,
+  DeckParams,
   DecksParams,
   DecksResponse,
   DeleteDeckArgs,
@@ -36,6 +38,10 @@ const decksService = baseApi.injectEndpoints({
         url: `v1/decks/${deckId}`,
       }),
     }),
+    getDeck: builder.query<Deck, DeckParams>({
+      providesTags: ['Deck'],
+      query: ({ deckId }) => `/v1/decks/${deckId}`,
+    }),
     getDecks: builder.query<DecksResponse, DecksParams | void>({
       providesTags: ['Decks'],
       query: params => {
@@ -49,8 +55,20 @@ const decksService = baseApi.injectEndpoints({
       providesTags: ['Decks'],
       query: () => `/v2/decks/min-max-cards`,
     }),
+    getRandomCard: builder.query<Card, GetRandomCardParams>({
+      providesTags: ['Card'],
+      query: ({ deckId }) => `/v1/decks/${deckId}/learn`,
+    }),
+    saveCardGrade: builder.mutation<Card, SaveGradeParams>({
+      invalidatesTags: ['Card'],
+      query: args => ({
+        body: args,
+        method: 'POST',
+        url: `/v1/decks/${args.cardId}/learn`,
+      }),
+    }),
     updateDeck: builder.mutation<Deck, UpdateDeckParams>({
-      invalidatesTags: ['Decks'],
+      invalidatesTags: ['Card'],
       query: ({ deckId, ...args }) => {
         const formData = new FormData()
 
@@ -75,7 +93,10 @@ const decksService = baseApi.injectEndpoints({
 export const {
   useCreateDeckMutation,
   useDeleteDeckMutation,
+  useGetDeckQuery,
   useGetDecksQuery,
   useGetMinMaxQuery,
+  useGetRandomCardQuery,
+  useSaveCardGradeMutation,
   useUpdateDeckMutation,
 } = decksService

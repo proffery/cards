@@ -18,6 +18,7 @@ import {
 } from '@/components/pages'
 import { LogInPage } from '@/components/pages/log-in/log-in-page'
 import { DecksPage } from '@/features/decks-cards/decks/decks-page/decks-page'
+import { LearnPage } from '@/features/learn/learn-page/learn-page'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -52,7 +53,7 @@ const privateRoutes: RouteObject[] = [
     path: `${ROUTES.decks}/:deckId`,
   },
   {
-    element: <Page>Learn Deck page</Page>,
+    element: <LearnPage />,
     path: `${ROUTES.decks}/:deckId${ROUTES.learn}`,
   },
   {

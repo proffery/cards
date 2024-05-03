@@ -1,37 +1,14 @@
-.root {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.content {
+.card {
+  gap: 36px;
   margin-top: 36px;
-  text-align: center;
 }
-
-.cardWrapper {
-  display: flex;
-  justify-content: center
-}
-
-.question {
-  text-align: left;
-}
-
 
 .caption {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 171%;
   color: var(--color-dark-100);
 }
 
-.answer {
-  text-align: left;
-}
-
-.buttons {
-  margin-top: 20px;
+.backButton {
+  align-self: flex-start;
 }
 
 .rate {
@@ -41,14 +18,16 @@
   text-align: left;
 }
 
-.image {
-  width: 350px;
-  height: 120px;
+.imageContainer {
+  display: flex;
 }
 
-.image img{
-  display: block;
-  width: 350px;
-  height: 120px;
-  object-fit: cover;
+.image {
+  display: flex;
+  width: 100%;
+  object-fit: contain;
+}
+
+.submitButton {
+  margin-top: 12px;
 }
