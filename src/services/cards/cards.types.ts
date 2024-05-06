@@ -22,6 +22,10 @@ export type GetRandomCardParams = {
   deckId?: string
 }
 
+export type DeleteCardArgs = {
+  cardId?: string
+}
+
 export type CardsResponse = {
   items: Card[]
   pagination: Pagination
@@ -37,7 +41,7 @@ export type CreateCardParams = {
    * @minLength 0
    * @maxLength 0
    */
-  answerImg?: string
+  answerImg?: File
   /**
    * @minLength 3
    * @maxLength 500
@@ -53,13 +57,15 @@ export type CreateCardParams = {
    * @minLength 0
    * @maxLength 0
    */
-  questionImg?: string
+  questionImg?: File
   /**
    * @minLength 3
    * @maxLength 500
    */
   questionVideo?: string
 }
+
+export type UpdateCardParams = Omit<CreateCardParams, 'deckId'> & { cardId: string }
 
 export type SaveGradeParams = {
   cardId: string

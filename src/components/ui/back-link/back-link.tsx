@@ -1,6 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { ArrowBack } from '@/assets/icons'
+import { ROUTES } from '@/common/consts/routes'
 import { Typography } from '@/components/ui'
 import clsx from 'clsx'
 
@@ -14,12 +15,19 @@ type Props = {
 export const BackLink = (props: Props) => {
   const { className, text } = props
   const navigate = useNavigate()
+  const location = useLocation()
+  const isDeckRoute =
+    location.pathname.startsWith(ROUTES.decks) && !location.pathname.endsWith('/learn')
   const classNames = {
     root: clsx(s.backLink, className),
   }
 
   const handlerBackLink = () => {
-    navigate(-1)
+    if (isDeckRoute) {
+      navigate(ROUTES.decks)
+    } else {
+      navigate(-1)
+    }
   }
 
   return (

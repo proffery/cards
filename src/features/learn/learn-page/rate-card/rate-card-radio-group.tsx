@@ -16,9 +16,10 @@ const options = [
 
 export type RateType = { grade: string }
 type RateCardRadioGroupType = {
+  disabled?: boolean
   onSubmit: (data: RateType) => void
 }
-export const RateCardRadioGroup = ({ onSubmit }: RateCardRadioGroupType) => {
+export const RateCardRadioGroup = ({ disabled, onSubmit }: RateCardRadioGroupType) => {
   const classNames = {
     submitButton: clsx(s.submitButton),
   }
@@ -30,8 +31,13 @@ export const RateCardRadioGroup = ({ onSubmit }: RateCardRadioGroupType) => {
   return (
     <form className={s.rate} onSubmit={handleSubmit(onSubmit)}>
       <Typography.Subtitle1>Rate yourself:</Typography.Subtitle1>
-      <ControlledRadioGroup control={control} name={'grade'} options={options} />
-      <Button className={classNames.submitButton} fullWidth>
+      <ControlledRadioGroup
+        control={control}
+        disabled={disabled}
+        name={'grade'}
+        options={options}
+      />
+      <Button className={classNames.submitButton} disabled={disabled} fullWidth>
         Next Question
       </Button>
     </form>

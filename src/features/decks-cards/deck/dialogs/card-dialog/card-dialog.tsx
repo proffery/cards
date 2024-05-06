@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Image, Trash } from '@/assets/icons'
 import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { Button, Dialog, DialogProps } from '@/components/ui'
+import { EditCardDefaultValues } from '@/features/decks-cards'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -13,7 +14,7 @@ import { addCardSchema } from './schema'
 
 export type AddCardFormFields = z.infer<typeof addCardSchema>
 type Props = {
-  defaultValues?: AddCardFormFields
+  defaultValues?: EditCardDefaultValues
   onConfirm: (data: AddCardFormFields) => void
 } & Omit<DialogProps, 'onConfirm'>
 

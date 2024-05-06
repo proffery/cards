@@ -3,11 +3,8 @@ import { useParams } from 'react-router-dom'
 
 import { Page } from '@/components/layouts'
 import { BackLink, Button, Card, Loader, Typography } from '@/components/ui'
-import {
-  useGetDeckQuery,
-  useGetRandomCardQuery,
-  useSaveCardGradeMutation,
-} from '@/services/decks/decks.service'
+import { useGetRandomCardQuery } from '@/services/cards/cards.service'
+import { useGetDeckQuery, useSaveCardGradeMutation } from '@/services/decks/decks.service'
 import clsx from 'clsx'
 
 import s from './learn-page.module.scss'
@@ -49,15 +46,13 @@ export const LearnPage = () => {
     }
     setShowAnswer(false)
   }
+  const isDataGetting =
+    isCardFetching || isCardLoading || isDeckFetching || isDeckLoading || isGradeBeingSaved
 
   return (
     <Page marginTop={24}>
-      <BackLink className={classNames.backButton} text={'Back to Decks List'} />
-      {(isCardFetching ||
-        isCardLoading ||
-        isDeckFetching ||
-        isDeckLoading ||
-        isGradeBeingSaved) && <Loader />}
+      <BackLink className={classNames.backButton} text={`Back to "${deckData?.name}" Decks`} />
+      {isDataGetting && <Loader />}
       <Card className={classNames.card}>
         <Typography.H1>{`Learn "${deckData?.name ?? ''}"`}</Typography.H1>
         <div>
@@ -85,7 +80,7 @@ export const LearnPage = () => {
                 <img alt={'Answer Image'} className={classNames.image} src={cardData.answerImg} />
               </div>
             )}
-            <RateCardRadioGroup onSubmit={handleRateSubmit} />
+            <RateCardRadioGroup disabled={isDataGetting} onSubmit={handleRateSubmit} />
           </>
         ) : (
           <Button className={classNames.submitButton} fullWidth onClick={() => setShowAnswer(true)}>

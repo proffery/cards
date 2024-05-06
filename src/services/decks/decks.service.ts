@@ -1,5 +1,5 @@
 import { baseApi } from '@/services/base-api'
-import { Card, GetRandomCardParams, SaveGradeParams } from '@/services/cards/cards.types'
+import { Card, SaveGradeParams } from '@/services/cards/cards.types'
 import {
   CreateDeckParams,
   Deck,
@@ -55,10 +55,6 @@ const decksService = baseApi.injectEndpoints({
       providesTags: ['Decks'],
       query: () => `/v2/decks/min-max-cards`,
     }),
-    getRandomCard: builder.query<Card, GetRandomCardParams>({
-      providesTags: ['Card'],
-      query: ({ deckId }) => `/v1/decks/${deckId}/learn`,
-    }),
     saveCardGrade: builder.mutation<Card, SaveGradeParams>({
       invalidatesTags: ['Card'],
       query: args => ({
@@ -68,7 +64,7 @@ const decksService = baseApi.injectEndpoints({
       }),
     }),
     updateDeck: builder.mutation<Deck, UpdateDeckParams>({
-      invalidatesTags: ['Card'],
+      invalidatesTags: ['Decks'],
       query: ({ deckId, ...args }) => {
         const formData = new FormData()
 
@@ -96,7 +92,6 @@ export const {
   useGetDeckQuery,
   useGetDecksQuery,
   useGetMinMaxQuery,
-  useGetRandomCardQuery,
   useSaveCardGradeMutation,
   useUpdateDeckMutation,
 } = decksService

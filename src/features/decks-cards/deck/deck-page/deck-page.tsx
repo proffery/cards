@@ -9,10 +9,19 @@ import {
   AddDeckFormFields,
   CardDialog,
   DeckDialog,
+  DeleteCard,
   DeleteDeck,
+  EditCardDefaultValues,
+  SortDirection,
+  TableCards,
 } from '@/features/decks-cards'
 import { useCardsFilters } from '@/features/decks-cards/decks/dialogs/useCardsFilters'
-import { useCreateCardMutation, useGetCardsQuery } from '@/services/cards/cards.service'
+import {
+  useCreateCardMutation,
+  useDeleteCardMutation,
+  useGetCardsQuery,
+  useUpdateCardMutation,
+} from '@/services/cards/cards.service'
 import {
   useDeleteDeckMutation,
   useGetDeckQuery,
@@ -34,6 +43,9 @@ export const DeckPage = () => {
   }
 
   const [openedCardId, setOpenedCardId] = useState('')
+  const [openedCardName, setOpenedCardName] = useState('')
+  const [openedCardDefaultValues, setOpenedCardDefaultValues] =
+    useState<EditCardDefaultValues | null>(null)
 
   const [deleteDeckIsOpen, setDeleteDeckIsOpen] = useState(false)
   const [editDeckIsOpen, setEditDeckIsOpen] = useState(false)
@@ -45,13 +57,14 @@ export const DeckPage = () => {
   const params = useParams<{ deckId: string }>()
   const deckId = params.deckId
 
-  const AUTH_ID = 'f2be95b9-4d07-4751-a775-bd612fc9553a'
-
   const {
     currentData: deckData,
     isFetching: isDeckFetching,
     isLoading: isDeckLoading,
   } = useGetDeckQuery({ deckId })
+
+  const AUTH_ID = 'f2be95b9-4d07-4751-a775-bd612fc9553a'
+  const isDeckOwner = (deckData && AUTH_ID === deckData?.userId) ?? false
 
   const {
     currentPage,
@@ -86,38 +99,67 @@ export const DeckPage = () => {
   const [updateDeck, { isLoading: isDeckBeingUpdated }] = useUpdateDeckMutation()
 
   const [createCard, { isLoading: isCardBeingCreated }] = useCreateCardMutation()
+  const [deleteCard, { isLoading: isCardBeingDeleted }] = useDeleteCardMutation()
+  const [updateCard, { isLoading: isCardBeingUpdated }] = useUpdateCardMutation()
+
+  const isDataGetting =
+    isDeckFetching ||
+    isDeckLoading ||
+    isDeckBeingUpdated ||
+    isDeckBeingDeleted ||
+    isCardsFetching ||
+    isCardsLoading ||
+    isCardBeingCreated ||
+    isCardBeingDeleted ||
+    isCardBeingUpdated
 
   const onDeleteDeckConfirm = () => {
     deleteDeck({ deckId: deckData?.id ?? '' })
-    clearOpenedValues()
   }
-
   const onEditDeckConfirm = (data: AddDeckFormFields) => {
     updateDeck({ ...data, deckId: deckData?.id ?? '' })
-    clearOpenedValues()
   }
-
   const onNewCardConfirm = (data: AddCardFormFields) => {
     createCard({ ...data, deckId: deckData?.id ?? '' })
   }
-
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.currentTarget.value)
   }
-
   const onSearchClean = () => {
     setSearchValue('')
   }
-
-  const clearOpenedValues = () => {}
+  const onDeleteCardOpen = (cardId: string, cardName: string) => {
+    setOpenedCardId(cardId)
+    setOpenedCardName(cardName)
+    setDeleteCardIsOpen(true)
+  }
+  const onDeleteCardConfirm = () => {
+    deleteCard({ cardId: openedCardId })
+    clearOpenedValues()
+  }
+  const onEditCardOpen = (cardId: string, defaultValues: EditCardDefaultValues) => {
+    setOpenedCardId(cardId)
+    setOpenedCardDefaultValues({ ...defaultValues })
+    setEditCardIsOpen(true)
+  }
+  const onEditCardConfirm = (data: AddCardFormFields) => {
+    updateCard({ ...data, cardId: openedCardId })
+    clearOpenedValues()
+  }
+  const onCardsSort = (orderDirection: SortDirection, orderField: string) => {
+    setOrderDirection(orderDirection)
+    setOrderField(orderField)
+    setCurrentPage(1)
+  }
+  const clearOpenedValues = () => {
+    setOpenedCardId('')
+    setOpenedCardName('')
+    setOpenedCardDefaultValues(null)
+  }
 
   return (
     <Page className={classNames.root} marginTop={24}>
-      {(isDeckFetching ||
-        isDeckLoading ||
-        isDeckBeingUpdated ||
-        isDeckBeingDeleted ||
-        isCardBeingCreated) && <Loader />}
+      {isDataGetting && <Loader />}
       <DeleteDeck
         deckName={deckData?.name ?? ''}
         key={deckData?.id + 'deleteDeck'}
@@ -147,6 +189,24 @@ export const DeckPage = () => {
         onOpenChange={setNewCardIsOpen}
         open={newCardIsOpen}
       />
+      <CardDialog
+        confirmText={'Update Card'}
+        defaultValues={openedCardDefaultValues ?? undefined}
+        key={openedCardId + 'updateCard'}
+        onCancel={() => setEditCardIsOpen(false)}
+        onConfirm={onEditCardConfirm}
+        onOpenChange={setEditCardIsOpen}
+        open={editCardIsOpen}
+        title={`Edit Card "${openedCardDefaultValues?.question}"`}
+      />
+      <DeleteCard
+        cardName={openedCardName}
+        key={openedCardId + 'deleteCard'}
+        onCancel={() => setDeleteCardIsOpen(false)}
+        onConfirm={onDeleteCardConfirm}
+        onOpenChange={setDeleteCardIsOpen}
+        open={deleteCardIsOpen}
+      />
       <BackLink className={classNames.backButton} text={'Back to Decks List'} />
       <div className={classNames.topContainer}>
         <Typography.H1 className={classNames.deckName}>
@@ -154,13 +214,13 @@ export const DeckPage = () => {
           {cards && cards.items.length > 0 && (
             <MenuDeck
               deckId={deckId}
-              isOwner={AUTH_ID === deckData?.userId}
+              isOwner={isDeckOwner}
               onDelete={() => setDeleteDeckIsOpen(true)}
               onEdit={() => setEditDeckIsOpen(true)}
             />
           )}
         </Typography.H1>
-        {AUTH_ID === deckData?.userId && (
+        {isDeckOwner && (
           <Button disabled={isCardBeingCreated} onClick={() => setNewCardIsOpen(true)}>
             Add New Card
           </Button>
@@ -173,21 +233,26 @@ export const DeckPage = () => {
         <>
           <Input
             cleanSearch={onSearchClean}
+            disabled={isDataGetting}
             fullWidth
             onChange={onSearchChange}
             value={searchValue ?? ''}
             variant={'search'}
           />
+          <TableCards
+            cards={cards.items}
+            disabled={isDataGetting}
+            isOwner={isDeckOwner}
+            onCardDelete={onDeleteCardOpen}
+            onCardEdit={onEditCardOpen}
+            onCardsSort={onCardsSort}
+            orderDirection={orderDirection}
+            orderField={orderField}
+          />
           <Pagination
             className={classNames.pagination}
             currentPage={cards?.pagination.currentPage}
-            disabled={
-              isCardBeingCreated ||
-              isCardsFetching ||
-              isCardsLoading ||
-              isDeckBeingDeleted ||
-              isDeckBeingUpdated
-            }
+            disabled={isDataGetting}
             itemsPerPage={cards?.pagination.itemsPerPage}
             onItemsPerPageChange={setItemsPerPage}
             onPageChange={setCurrentPage}
@@ -198,11 +263,14 @@ export const DeckPage = () => {
       ) : (
         <>
           <Typography.Body1 className={classNames.emptyDeck}>
-            This pack is empty. Click add new card to fill this pack
+            This deck is empty.
+            {isDeckOwner ? ' Click add new card to fill this pack' : ''}
           </Typography.Body1>
-          <Button disabled={isCardBeingCreated} onClick={() => setNewCardIsOpen(true)}>
-            Add New Card
-          </Button>
+          {isDeckOwner && (
+            <Button disabled={isDataGetting} onClick={() => setNewCardIsOpen(true)}>
+              Add New Card
+            </Button>
+          )}
         </>
       )}
     </Page>

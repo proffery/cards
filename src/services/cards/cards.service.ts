@@ -1,5 +1,13 @@
 import { baseApi } from '@/services/base-api'
-import { Card, CardsParams, CardsResponse, CreateCardParams } from '@/services/cards/cards.types'
+import {
+  Card,
+  CardsParams,
+  CardsResponse,
+  CreateCardParams,
+  DeleteCardArgs,
+  GetRandomCardParams,
+  UpdateCardParams,
+} from '@/services/cards/cards.types'
 
 const cardsService = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -24,6 +32,13 @@ const cardsService = baseApi.injectEndpoints({
         }
       },
     }),
+    deleteCard: builder.mutation<void, DeleteCardArgs>({
+      invalidatesTags: ['Cards', 'Card', 'Deck', 'Decks'],
+      query: ({ cardId }) => ({
+        method: 'DELETE',
+        url: `/v1/cards/${cardId}`,
+      }),
+    }),
     getCards: builder.query<CardsResponse, CardsParams>({
       providesTags: ['Cards'],
       query: ({ deckId, ...params }) => {
@@ -33,7 +48,38 @@ const cardsService = baseApi.injectEndpoints({
         }
       },
     }),
+    getRandomCard: builder.query<Card, GetRandomCardParams>({
+      providesTags: ['Card'],
+      query: ({ deckId }) => `/v1/decks/${deckId}/learn`,
+    }),
+    updateCard: builder.mutation<Card, UpdateCardParams>({
+      invalidatesTags: ['Cards', 'Card', 'Deck', 'Decks'],
+      query: ({ cardId, ...args }) => {
+        const formData = new FormData()
+
+        formData.append('question', args.question)
+        formData.append('answer', args.answer)
+        if (args.questionImg) {
+          formData.append('questionImg', args.questionImg)
+        }
+        if (args.answerImg) {
+          formData.append('answerImg', args.answerImg)
+        }
+
+        return {
+          body: formData,
+          method: 'PATCH',
+          url: `/v1/cards/${cardId}`,
+        }
+      },
+    }),
   }),
 })
 
-export const { useCreateCardMutation, useGetCardsQuery } = cardsService
+export const {
+  useCreateCardMutation,
+  useDeleteCardMutation,
+  useGetCardsQuery,
+  useGetRandomCardQuery,
+  useUpdateCardMutation,
+} = cardsService
