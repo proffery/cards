@@ -37,6 +37,7 @@ import { useDecksFilters } from './useDecksFilters'
 
 export const DecksPage = () => {
   const classNames = {
+    emptySearch: clsx(s.emptySearch),
     filters: clsx(s.filters),
     pagination: clsx(s.pagination),
     root: clsx(s.root),
@@ -255,33 +256,41 @@ export const DecksPage = () => {
           Clear Filter
         </Button>
       </div>
-      <TableDecks
-        authId={AUTH_ID}
-        decks={decks?.items}
-        disabled={isDeckBeingCreated || isDeckBeingDeleted || isDeckBeingUpdated}
-        onDeckDelete={onDeleteOpen}
-        onDeckEdit={onEditOpen}
-        onDeckPlay={onDeckPlay}
-        onDecksSort={onDecksSort}
-        orderDirection={orderDirection}
-        orderField={orderField}
-      />
-      <Pagination
-        className={classNames.pagination}
-        currentPage={decks?.pagination.currentPage}
-        disabled={
-          isDeckBeingCreated ||
-          isDecksLoading ||
-          isDecksFetching ||
-          isDeckBeingDeleted ||
-          isDeckBeingUpdated
-        }
-        itemsPerPage={decks?.pagination.itemsPerPage}
-        onItemsPerPageChange={setItemsPerPage}
-        onPageChange={setCurrentPage}
-        totalItems={decks?.pagination.totalItems}
-        totalPages={decks?.pagination.totalPages}
-      />
+      {decks && decks?.items.length > 0 ? (
+        <>
+          <TableDecks
+            authId={AUTH_ID}
+            decks={decks?.items}
+            disabled={isDeckBeingCreated || isDeckBeingDeleted || isDeckBeingUpdated}
+            onDeckDelete={onDeleteOpen}
+            onDeckEdit={onEditOpen}
+            onDeckPlay={onDeckPlay}
+            onDecksSort={onDecksSort}
+            orderDirection={orderDirection}
+            orderField={orderField}
+          />
+          <Pagination
+            className={classNames.pagination}
+            currentPage={decks?.pagination.currentPage}
+            disabled={
+              isDeckBeingCreated ||
+              isDecksLoading ||
+              isDecksFetching ||
+              isDeckBeingDeleted ||
+              isDeckBeingUpdated
+            }
+            itemsPerPage={decks?.pagination.itemsPerPage}
+            onItemsPerPageChange={setItemsPerPage}
+            onPageChange={setCurrentPage}
+            totalItems={decks?.pagination.totalItems}
+            totalPages={decks?.pagination.totalPages}
+          />
+        </>
+      ) : (
+        <Typography.Body1 className={classNames.emptySearch}>
+          No results found with these parameters
+        </Typography.Body1>
+      )}
     </Page>
   )
 }

@@ -27,7 +27,7 @@ export const useCardsFilters = () => {
     1
   )
 
-  const [itemsPerPage, setItemsPerPage] = useState(5)
+  const [itemsPerPage, setItemsPerPage] = useState(10)
 
   const [searchValue, setSearchValue] = useQueryParam<string>(
     searchParams,

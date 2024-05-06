@@ -27,6 +27,7 @@ export const DeckPage = () => {
     backButton: clsx(s.backButton),
     deckCover: clsx(s.deckCover),
     deckName: clsx(s.deckName),
+    emptyDeck: clsx(s.emptyDeck),
     pagination: clsx(s.pagination),
     root: clsx(s.root),
     topContainer: clsx(s.topContainer),
@@ -150,10 +151,10 @@ export const DeckPage = () => {
       <div className={classNames.topContainer}>
         <Typography.H1 className={classNames.deckName}>
           {deckData?.name}
-
-          {AUTH_ID === deckData?.userId && (
+          {cards && cards.items.length > 0 && (
             <MenuDeck
               deckId={deckId}
+              isOwner={AUTH_ID === deckData?.userId}
               onDelete={() => setDeleteDeckIsOpen(true)}
               onEdit={() => setEditDeckIsOpen(true)}
             />
@@ -168,29 +169,42 @@ export const DeckPage = () => {
       {deckData?.cover && (
         <img alt={'Deck cover'} className={classNames.deckCover} src={deckData?.cover} />
       )}
-      <Input
-        cleanSearch={onSearchClean}
-        fullWidth
-        onChange={onSearchChange}
-        value={searchValue ?? ''}
-        variant={'search'}
-      />
-      <Pagination
-        className={classNames.pagination}
-        currentPage={cards?.pagination.currentPage}
-        disabled={
-          isCardBeingCreated ||
-          isCardsFetching ||
-          isCardsLoading ||
-          isDeckBeingDeleted ||
-          isDeckBeingUpdated
-        }
-        itemsPerPage={cards?.pagination.itemsPerPage}
-        onItemsPerPageChange={setItemsPerPage}
-        onPageChange={setCurrentPage}
-        totalItems={cards?.pagination.totalItems}
-        totalPages={cards?.pagination.totalPages}
-      />
+      {cards && cards.items.length > 0 ? (
+        <>
+          <Input
+            cleanSearch={onSearchClean}
+            fullWidth
+            onChange={onSearchChange}
+            value={searchValue ?? ''}
+            variant={'search'}
+          />
+          <Pagination
+            className={classNames.pagination}
+            currentPage={cards?.pagination.currentPage}
+            disabled={
+              isCardBeingCreated ||
+              isCardsFetching ||
+              isCardsLoading ||
+              isDeckBeingDeleted ||
+              isDeckBeingUpdated
+            }
+            itemsPerPage={cards?.pagination.itemsPerPage}
+            onItemsPerPageChange={setItemsPerPage}
+            onPageChange={setCurrentPage}
+            totalItems={cards?.pagination.totalItems}
+            totalPages={cards?.pagination.totalPages}
+          />
+        </>
+      ) : (
+        <>
+          <Typography.Body1 className={classNames.emptyDeck}>
+            This pack is empty. Click add new card to fill this pack
+          </Typography.Body1>
+          <Button disabled={isCardBeingCreated} onClick={() => setNewCardIsOpen(true)}>
+            Add New Card
+          </Button>
+        </>
+      )}
     </Page>
   )
 }

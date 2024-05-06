@@ -6,13 +6,14 @@ import { DropdownItem, DropdownMenu, DropdownSeparator } from '@/components/ui'
 
 type MenuDeckProps = {
   deckId?: string
+  isOwner?: boolean
   onDelete: () => void
   onEdit: () => void
   triangleRight?: string
 }
 
 export const MenuDeck = (props: MenuDeckProps) => {
-  const { deckId, onDelete, onEdit, triangleRight = '4px' } = props
+  const { deckId, isOwner = false, onDelete, onEdit, triangleRight = '4px' } = props
 
   return (
     <div>
@@ -27,20 +28,24 @@ export const MenuDeck = (props: MenuDeckProps) => {
             Learn
           </Link>
         </DropdownItem>
-        <DropdownSeparator />
-        <DropdownItem asChild>
-          <button onClick={onEdit}>
-            <Edit />
-            Edit
-          </button>
-        </DropdownItem>
-        <DropdownSeparator />
-        <DropdownItem asChild>
-          <button onClick={onDelete}>
-            <Trash />
-            Delete
-          </button>
-        </DropdownItem>
+        {isOwner && (
+          <>
+            <DropdownSeparator />
+            <DropdownItem asChild>
+              <button onClick={onEdit}>
+                <Edit />
+                Edit
+              </button>
+            </DropdownItem>
+            <DropdownSeparator />
+            <DropdownItem asChild>
+              <button onClick={onDelete}>
+                <Trash />
+                Delete
+              </button>
+            </DropdownItem>
+          </>
+        )}
       </DropdownMenu>
     </div>
   )

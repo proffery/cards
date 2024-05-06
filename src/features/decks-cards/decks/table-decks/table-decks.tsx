@@ -80,9 +80,7 @@ export const TableDecks = ({
     }
   }
 
-  return !decks || decks.length === 0 ? (
-    <Typography.Body1>No results found with these parameters.</Typography.Body1>
-  ) : (
+  return (
     <Table>
       <TableHead>
         <TableRow>
