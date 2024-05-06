@@ -23,7 +23,6 @@ export type Pagination = {
 }
 export type DecksResponse = {
   items: Deck[]
-  maxCardsCount: number
   pagination: Pagination
 }
 export type MinMaxCards = {

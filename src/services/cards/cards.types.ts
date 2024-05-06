@@ -7,6 +7,7 @@ export type Card = {
   /** @format date-time */
   created: string
   deckId: string
+  grade: number
   id: string
   question: string
   questionImg: string
@@ -42,6 +43,7 @@ export type CreateCardParams = {
    * @maxLength 500
    */
   answerVideo?: string
+  deckId: string
   /**
    * @minLength 3
    * @maxLength 500
@@ -67,3 +69,11 @@ export type SaveGradeParams = {
    */
   grade: number
 }
+
+export type CardsParams = {
+  answer?: string
+  currentPage?: number
+  itemsPerPage?: number
+  orderBy?: null | string
+  question?: string
+} & { deckId?: string }

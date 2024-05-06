@@ -1,0 +1,34 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.backButton {
+  align-self: flex-start;
+}
+
+.topContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.deckName {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.deckCover {
+  display: flex;
+  align-self: flex-start;
+  width: 100%;
+  max-width: 170px;
+}
+
+.pagination {
+  align-self: flex-start;
+}

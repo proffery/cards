@@ -38,6 +38,7 @@ import { useDecksFilters } from './useDecksFilters'
 export const DecksPage = () => {
   const classNames = {
     filters: clsx(s.filters),
+    pagination: clsx(s.pagination),
     root: clsx(s.root),
     slider: clsx(s.slider),
     tabSwitcher: clsx(s.tabSwitcher),
@@ -150,10 +151,6 @@ export const DecksPage = () => {
     clearOpenedValues()
   }
 
-  const onNewOpen = () => {
-    setNewIsOpen(true)
-  }
-
   const onNewConfirm = (data: AddDeckFormFields) => {
     createDeck(data)
   }
@@ -204,7 +201,7 @@ export const DecksPage = () => {
       <DeckDialog
         confirmText={'Update deck'}
         defaultValues={{ cover: openedCover, isPrivate: openedIsPrivate, name: openedName }}
-        key={openedId + 'edit'}
+        key={openedId + 'editDeck'}
         onCancel={() => setEditIsOpen(false)}
         onConfirm={onEditConfirm}
         onOpenChange={setEditIsOpen}
@@ -212,7 +209,7 @@ export const DecksPage = () => {
         title={`Edit deck ${openedName}`}
       />
       <DeckDialog
-        key={openedId + 'new'}
+        key={openedId + 'createNewDeck'}
         onCancel={() => setNewIsOpen(false)}
         onConfirm={onNewConfirm}
         onOpenChange={setNewIsOpen}
@@ -220,7 +217,7 @@ export const DecksPage = () => {
       />
       <div className={classNames.topContainer}>
         <Typography.H1>Decks list</Typography.H1>
-        <Button disabled={isDeckBeingCreated} onClick={onNewOpen}>
+        <Button disabled={isDeckBeingCreated} onClick={() => setNewIsOpen(true)}>
           Add New Deck
         </Button>
       </div>
@@ -270,6 +267,7 @@ export const DecksPage = () => {
         orderField={orderField}
       />
       <Pagination
+        className={classNames.pagination}
         currentPage={decks?.pagination.currentPage}
         disabled={
           isDeckBeingCreated ||
