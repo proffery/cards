@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { ROUTES } from '@/common/consts/routes'
-import { Layout, Page } from '@/components/layouts'
+import { Layout } from '@/components/layouts'
 import {
   CheckEmailPage,
   CreatePasswordPage,
@@ -17,6 +17,7 @@ import {
   SignUpPage,
 } from '@/components/pages'
 import { LogInPage } from '@/components/pages/log-in/log-in-page'
+import { DeckPage } from '@/features/decks-cards/deck/deck-page/deck-page'
 import { DecksPage } from '@/features/decks-cards/decks/decks-page/decks-page'
 import { LearnPage } from '@/features/learn/learn-page/learn-page'
 
@@ -49,7 +50,7 @@ const privateRoutes: RouteObject[] = [
     path: ROUTES.decks,
   },
   {
-    element: <Page>Deck page</Page>,
+    element: <DeckPage />,
     path: `${ROUTES.decks}/:deckId`,
   },
   {

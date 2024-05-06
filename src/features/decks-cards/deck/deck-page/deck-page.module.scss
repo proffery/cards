@@ -1,7 +1,12 @@
 .root {
   display: flex;
-  gap: 36px;
+  flex-direction: column;
+  gap: 24px;
   width: 100%;
+}
+
+.backButton {
+  align-self: flex-start;
 }
 
 .topContainer {
@@ -11,28 +16,23 @@
   width: 100%;
 }
 
-.filters {
+.deckName {
   display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  align-items: end;
-  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
 
+.deckCover {
+  display: flex;
+  align-self: flex-start;
   width: 100%;
-}
-
-.slider {
-  min-width: 25%;
-}
-
-.tabSwitcher {
-  min-width: 20%;
+  max-width: 170px;
 }
 
 .pagination {
   align-self: flex-start;
 }
 
-.emptySearch {
+.emptyDeck {
   color: var(--color-dark-100);
 }

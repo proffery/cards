@@ -1,10 +1,10 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Image, Trash } from '@/assets/icons'
 import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { Button, Dialog, DialogProps } from '@/components/ui'
-import { convertUrlToFile } from '@/utils'
+import { EditCardDefaultValues } from '@/features/decks-cards'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -12,15 +12,10 @@ import s from './card-dialog.module.scss'
 
 import { addCardSchema } from './schema'
 
-type FormFields = z.infer<typeof addCardSchema>
+export type AddCardFormFields = z.infer<typeof addCardSchema>
 type Props = {
-  defaultValues?: {
-    answer: string
-    answerImg: string
-    question: string
-    questionImg: string
-  }
-  onConfirm: (data: FormFields) => void
+  defaultValues?: EditCardDefaultValues
+  onConfirm: (data: AddCardFormFields) => void
 } & Omit<DialogProps, 'onConfirm'>
 
 export const CardDialog = ({
@@ -33,22 +28,13 @@ export const CardDialog = ({
   const [questionImage, setQuestionImage] = useState<File | null>(null)
   const [answerImage, setAnswerImage] = useState<File | null>(null)
 
-  const { control, handleSubmit, register, reset } = useForm<FormFields>({
+  const { control, handleSubmit, register, reset } = useForm<AddCardFormFields>({
     defaultValues: {
-      answer: defaultValues?.answer || '',
-      question: defaultValues?.question || '',
+      answer: defaultValues?.answer,
+      question: defaultValues?.question,
     },
     resolver: zodResolver(addCardSchema),
   })
-
-  useEffect(() => {
-    defaultValues?.answerImg &&
-      convertUrlToFile(defaultValues?.answerImg).then(answerImage => setAnswerImage(answerImage))
-    defaultValues?.questionImg &&
-      convertUrlToFile(defaultValues?.questionImg).then(questionImg =>
-        setQuestionImage(questionImg)
-      )
-  }, [defaultValues?.answerImg, defaultValues?.questionImg])
 
   const handleCancel = () => {
     reset()
@@ -58,7 +44,7 @@ export const CardDialog = ({
   }
 
   const handleConfirm = handleSubmit(data => {
-    onConfirm(data)
+    onConfirm({ ...data, answerImg: answerImage, questionImg: questionImage })
     setQuestionImage(null)
     setAnswerImage(null)
     onOpenChange?.(false)
@@ -77,6 +63,7 @@ export const CardDialog = ({
       cancelText={'Cancel'}
       confirmText={'Add New Card'}
       onConfirm={handleConfirm}
+      title={'Add New Card'}
       {...rest}
       onCancel={handleCancel}
     >
@@ -89,7 +76,13 @@ export const CardDialog = ({
             name={'question'}
             placeholder={'What is the capital of France?'}
           />
-          {questionImage && <img alt={'Question cover'} src={URL.createObjectURL(questionImage)} />}
+          {questionImage ? (
+            <img alt={'Question cover'} src={URL.createObjectURL(questionImage)} />
+          ) : (
+            defaultValues?.questionImg && (
+              <img alt={'Question cover'} src={defaultValues.questionImg} />
+            )
+          )}
           <div className={s.buttons}>
             {questionImage && (
               <Button
@@ -129,7 +122,11 @@ export const CardDialog = ({
             name={'answer'}
             placeholder={'Paris'}
           />
-          {answerImage && <img alt={'Answer cover'} src={URL.createObjectURL(answerImage)} />}
+          {answerImage ? (
+            <img alt={'Answer cover'} src={URL.createObjectURL(answerImage)} />
+          ) : (
+            defaultValues?.questionImg && <img alt={'Answer cover'} src={defaultValues.answerImg} />
+          )}
           <div className={s.buttons}>
             {answerImage && (
               <Button

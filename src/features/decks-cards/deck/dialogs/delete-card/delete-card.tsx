@@ -2,9 +2,10 @@ import { Dialog, DialogProps, Typography } from '@/components/ui'
 
 import s from './delete-card.module.scss'
 type Props = {
+  cardName: string
   onConfirm: () => void
 } & Omit<DialogProps, 'onConfirm'>
-export const DeleteCard = ({ onConfirm, onOpenChange, ...rest }: Props) => {
+export const DeleteCard = ({ cardName, onConfirm, onOpenChange, ...rest }: Props) => {
   const handleConfirm = () => {
     onConfirm()
     onOpenChange?.(false)
@@ -19,7 +20,8 @@ export const DeleteCard = ({ onConfirm, onOpenChange, ...rest }: Props) => {
       {...rest}
     >
       <Typography.Body1 className={s.content}>
-        Do you really want to remove this card?
+        Do you really want to remove{' '}
+        <Typography.Subtitle1 as={'span'}>{cardName}</Typography.Subtitle1>?
       </Typography.Body1>
     </Dialog>
   )
