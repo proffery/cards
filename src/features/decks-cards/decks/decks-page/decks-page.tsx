@@ -22,6 +22,7 @@ import {
   SortDirection,
   TableDecks,
 } from '@/features/decks-cards/'
+import { useGetMeQuery } from '@/services/auth/auth.service'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
@@ -92,8 +93,9 @@ export const DecksPage = () => {
     }
   }, [minMaxData?.max])
 
-  const AUTH_ID = 'f2be95b9-4d07-4751-a775-bd612fc9553a'
-  const authorId = tabValue === 'all' ? undefined : AUTH_ID
+  const { data: me } = useGetMeQuery()
+  const authId = me?.id
+  const authorId = tabValue === 'all' ? undefined : authId
 
   const {
     currentData: currentDecksData,
@@ -254,7 +256,7 @@ export const DecksPage = () => {
       {decks && decks?.items.length > 0 ? (
         <>
           <TableDecks
-            authId={AUTH_ID}
+            authId={authId}
             decks={decks?.items}
             disabled={isDataGetting}
             onDeckDelete={onDeleteOpen}

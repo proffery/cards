@@ -47,7 +47,7 @@ const columns: Columns[] = [
 ]
 
 type DecksTableProps = {
-  authId: string
+  authId?: string
   decks?: Deck[]
   disabled?: boolean
   onDeckDelete: (deckId: string, deckName: string) => void

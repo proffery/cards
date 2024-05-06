@@ -16,6 +16,7 @@ import {
   TableCards,
 } from '@/features/decks-cards'
 import { useCardsFilters } from '@/features/decks-cards/decks/dialogs/useCardsFilters'
+import { useGetMeQuery } from '@/services/auth/auth.service'
 import {
   useCreateCardMutation,
   useDeleteCardMutation,
@@ -63,8 +64,8 @@ export const DeckPage = () => {
     isLoading: isDeckLoading,
   } = useGetDeckQuery({ deckId })
 
-  const AUTH_ID = 'f2be95b9-4d07-4751-a775-bd612fc9553a'
-  const isDeckOwner = (deckData && AUTH_ID === deckData?.userId) ?? false
+  const { data: me } = useGetMeQuery()
+  const isDeckOwner = (deckData && deckData?.userId === me?.id) ?? false
 
   const {
     currentPage,
