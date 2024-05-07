@@ -222,7 +222,7 @@ export const DecksPage = () => {
           disabled={isDataGetting}
           onChange={onSearchChange}
           placeholder={useRandomPlaceholder().toLowerCase()}
-          value={searchValue ?? ''}
+          value={searchValue || ''}
           variant={'search'}
         />
         <TabGroup

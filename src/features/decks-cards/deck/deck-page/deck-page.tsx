@@ -237,7 +237,7 @@ export const DeckPage = () => {
         fullWidth
         onChange={onSearchChange}
         placeholder={useRandomPlaceholder().toLowerCase()}
-        value={searchValue ?? ''}
+        value={searchValue || ''}
         variant={'search'}
       />
       {cards && cards.items.length > 0 ? (

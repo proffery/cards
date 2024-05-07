@@ -48,7 +48,7 @@ export const useDecksFilters = () => {
     setSearchParams,
     'search'
   )
-  const debouncedSearch = useDebounce(searchValue, 1000)
+  const debouncedSearch = useDebounce(searchValue ?? '', 1000)
 
   const [tabValue, setTabValue] = useQueryParam<string>(
     searchParams,
