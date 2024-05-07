@@ -14,8 +14,8 @@ import {
   EditCardDefaultValues,
   SortDirection,
   TableCards,
+  useCardsFilters,
 } from '@/features/decks-cards'
-import { useCardsFilters } from '@/features/decks-cards/decks/dialogs/useCardsFilters'
 import { useGetMeQuery } from '@/services/auth/auth.service'
 import {
   useCreateCardMutation,
@@ -28,6 +28,7 @@ import {
   useGetDeckQuery,
   useUpdateDeckMutation,
 } from '@/services/decks/decks.service'
+import { useRandomPlaceholder } from '@/utils'
 import clsx from 'clsx'
 
 import s from './deck-page.module.scss'
@@ -235,6 +236,7 @@ export const DeckPage = () => {
         disabled={isDataGetting}
         fullWidth
         onChange={onSearchChange}
+        placeholder={useRandomPlaceholder().toLowerCase()}
         value={searchValue ?? ''}
         variant={'search'}
       />

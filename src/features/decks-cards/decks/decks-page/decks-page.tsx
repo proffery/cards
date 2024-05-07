@@ -21,6 +21,7 @@ import {
   DeleteDeck,
   SortDirection,
   TableDecks,
+  useDecksFilters,
 } from '@/features/decks-cards/'
 import { useGetMeQuery } from '@/services/auth/auth.service'
 import {
@@ -30,11 +31,10 @@ import {
   useGetMinMaxQuery,
   useUpdateDeckMutation,
 } from '@/services/decks/decks.service'
+import { useRandomPlaceholder } from '@/utils'
 import clsx from 'clsx'
 
 import s from './decks-page.module.scss'
-
-import { useDecksFilters } from './useDecksFilters'
 
 export const DecksPage = () => {
   const classNames = {
@@ -221,6 +221,7 @@ export const DecksPage = () => {
           cleanSearch={onSearchClean}
           disabled={isDataGetting}
           onChange={onSearchChange}
+          placeholder={useRandomPlaceholder().toLowerCase()}
           value={searchValue ?? ''}
           variant={'search'}
         />

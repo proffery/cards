@@ -57,6 +57,7 @@ const cardsService = baseApi.injectEndpoints({
       }),
     }),
     saveCardGrade: builder.mutation<Card, SaveGradeParams>({
+      invalidatesTags: ['Cards'],
       query: args => ({
         body: args,
         method: 'POST',
