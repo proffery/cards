@@ -125,7 +125,7 @@ export const CardDialog = ({
           {answerImage ? (
             <img alt={'Answer cover'} src={URL.createObjectURL(answerImage)} />
           ) : (
-            defaultValues?.questionImg && <img alt={'Answer cover'} src={defaultValues.answerImg} />
+            defaultValues?.answerImg && <img alt={'Answer cover'} src={defaultValues.answerImg} />
           )}
           <div className={s.buttons}>
             {answerImage && (
