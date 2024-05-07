@@ -36,7 +36,7 @@ const publicRoutes: RouteObject[] = [
   },
   {
     element: <CheckEmailPage />,
-    path: `${ROUTES.checkEmail}/:email`,
+    path: ROUTES.checkEmail,
   },
 ]
 

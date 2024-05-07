@@ -23,6 +23,13 @@ export const authService = baseApi.injectEndpoints({
 
     login: builder.mutation<LoginRes, LoginReq>({
       invalidatesTags: ['Auth'],
+      async onQueryStarted(_, { queryFulfilled }) {
+        const result = await queryFulfilled
+
+        localStorage.setItem('accessToken', result.data.accessToken.trim())
+        localStorage.setItem('refreshToken', result.data.refreshToken.trim())
+      },
+
       query: body => ({
         body,
         method: 'POST',
@@ -32,7 +39,17 @@ export const authService = baseApi.injectEndpoints({
 
     logout: builder.mutation<void, void>({
       invalidatesTags: ['Auth'],
+
+      onQueryStarted: (_, { dispatch }) => {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        dispatch(baseApi.util.resetApiState())
+      },
+
       query: () => ({
+        // header: {
+        //   Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        // },
         method: 'POST',
         url: '/v1/auth/logout',
       }),
@@ -56,10 +73,10 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    resetPassword: builder.mutation<void, { data: ResetPassword; params: ResetPasswordArgs }>({
+    resetPassword: builder.mutation<void, { body: ResetPassword; params: ResetPasswordArgs }>({
       invalidatesTags: ['Auth'],
-      query: ({ data, params }) => ({
-        body: data,
+      query: ({ body, params }) => ({
+        body,
         method: 'POST',
         url: `/v1/auth/reset-password/${params.token}`,
       }),
@@ -78,6 +95,9 @@ export const authService = baseApi.injectEndpoints({
       invalidatesTags: ['Auth'],
       query: body => ({
         body,
+        headers: {
+          ContentType: 'multipart/form-data',
+        },
         method: 'PATCH',
         url: '/v1/auth/me',
       }),

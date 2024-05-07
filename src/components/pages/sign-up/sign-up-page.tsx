@@ -36,10 +36,12 @@ export const SignUpPage = () => {
   }
 
   useEffect(() => {
-    if (success) {
-      navigate(`${ROUTES.checkEmail}/${encodeURIComponent(signUpData?.email)}`)
+    if (success && signUpData?.email) {
+      sessionStorage.setItem('email', signUpData.email)
+
+      navigate(ROUTES.checkEmail)
     }
-  }, [success, signUpData?.email, navigate])
+  }, [success, navigate, signUpData?.email])
 
   return (
     <Page>

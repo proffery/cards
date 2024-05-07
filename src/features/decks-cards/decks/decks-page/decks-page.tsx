@@ -94,7 +94,7 @@ export const DecksPage = () => {
   }, [minMaxData?.max])
 
   const { data: me } = useGetMeQuery()
-  const authId = me?.id
+  const authId = me?.id || ''
   const authorId = tabValue === 'all' ? undefined : authId
 
   const {

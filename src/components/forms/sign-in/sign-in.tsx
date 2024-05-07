@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
@@ -21,9 +22,10 @@ const classNames = {
 
 type Props = {
   onSubmit: (data: FormValues) => void
+  serverError?: string
 }
-export const SignIn = ({ onSubmit }: Props) => {
-  const { control, handleSubmit } = useForm<FormValues>({
+export const SignIn = ({ onSubmit, serverError }: Props) => {
+  const { clearErrors, control, handleSubmit, setError } = useForm<FormValues>({
     defaultValues: {
       email: '',
       password: '',
@@ -31,6 +33,16 @@ export const SignIn = ({ onSubmit }: Props) => {
     },
     resolver: zodResolver(signInSchema),
   })
+
+  useEffect(() => {
+    if (serverError) {
+      setError('email', { message: serverError, type: 'server' })
+      setError('password', { message: serverError, type: 'server' })
+    } else {
+      clearErrors(['email', 'password'])
+    }
+  }, [serverError, setError, clearErrors])
+
   const onFormSubmit = (data: FormValues) => {
     onSubmit(data)
   }

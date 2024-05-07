@@ -1,47 +1,15 @@
-import { Link } from 'react-router-dom'
+import { memo } from 'react'
 
-import logo from '@/assets/images/LogoITI.svg'
-import { ROUTES } from '@/common/consts/routes'
-import { MenuProfile, MenuProfileProps } from '@/components/menus'
-import { Avatar, Button, Typography } from '@/components/ui'
+import { useNoAuthRoutes } from '@/common/hooks/no-auth-routes'
+import { PrivateHeader } from '@/components/layouts/header/privatHeader'
+import { PublicHeader } from '@/components/layouts/header/publicHeader'
 
-import s from './header.module.scss'
+export const Header = memo(() => {
+  const needsAuth = useNoAuthRoutes()
 
-type HeaderProps = {
-  isLoggedIn?: boolean
-} & MenuProfileProps
+  if (needsAuth) {
+    return <PublicHeader />
+  }
 
-export const Header = ({ avatarUrl, email, isLoggedIn, onLogout, userName }: HeaderProps) => {
-  const triggerHeader = (
-    <div className={s.nameContainer}>
-      <Typography.Subtitle1 as={Link} className={s.name} to={ROUTES.profile}>
-        {userName}
-      </Typography.Subtitle1>
-      <Avatar name={userName} size={'s'} url={avatarUrl} />
-    </div>
-  )
-
-  return (
-    <header className={s.root}>
-      <div className={s.content}>
-        <Link className={s.banner} to={ROUTES.base}>
-          <img alt={'Logo'} height={36} src={logo} width={157} />
-        </Link>
-        {isLoggedIn && (
-          <MenuProfile
-            avatarUrl={avatarUrl}
-            email={email}
-            onLogout={onLogout}
-            triggerMenu={triggerHeader}
-            userName={userName}
-          />
-        )}
-        {!isLoggedIn && (
-          <Button as={Link} to={ROUTES.signIn} variant={'secondary'}>
-            Sign In
-          </Button>
-        )}
-      </div>
-    </header>
-  )
-}
+  return <PrivateHeader />
+})
