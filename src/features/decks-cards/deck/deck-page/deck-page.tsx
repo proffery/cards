@@ -230,16 +230,16 @@ export const DeckPage = () => {
       {deckData?.cover && (
         <img alt={'Deck cover'} className={classNames.deckCover} src={deckData?.cover} />
       )}
+      <Input
+        cleanSearch={onSearchClean}
+        disabled={isDataGetting}
+        fullWidth
+        onChange={onSearchChange}
+        value={searchValue ?? ''}
+        variant={'search'}
+      />
       {cards && cards.items.length > 0 ? (
         <>
-          <Input
-            cleanSearch={onSearchClean}
-            disabled={isDataGetting}
-            fullWidth
-            onChange={onSearchChange}
-            value={searchValue ?? ''}
-            variant={'search'}
-          />
           <TableCards
             cards={cards.items}
             disabled={isDataGetting}
@@ -264,7 +264,7 @@ export const DeckPage = () => {
       ) : (
         <>
           <Typography.Body1 className={classNames.emptyDeck}>
-            This deck is empty.
+            {searchValue ? 'No search results' : 'This deck is empty.'}
             {isDeckOwner ? ' Click add new card to fill this pack' : ''}
           </Typography.Body1>
           {isDeckOwner && (

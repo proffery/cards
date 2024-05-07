@@ -87,9 +87,6 @@ export const DecksPage = () => {
   useEffect(() => {
     if (minMaxData) {
       setMinMaxCardsCount([minMaxData.min, minMaxData.max])
-      setMaxCardsCount(minMaxData.max)
-      setMinCardsCount(minMaxData.min)
-      setRequestedCardsRange([minMaxData.min, minMaxData.max])
     }
   }, [minMaxData?.max])
 
@@ -177,10 +174,12 @@ export const DecksPage = () => {
   const resetFilters = () => {
     setSearchValue('')
     setRequestedCardsRange(minMaxCardsCount)
-    setMaxCardsCount(minMaxCardsCount[1])
-    setMinCardsCount(minMaxCardsCount[0])
+    setMaxCardsCount(null)
+    setMinCardsCount(null)
     setOrderDirection(null)
     setOrderField(null)
+    setTabValue(null)
+    setCurrentPage(null)
   }
 
   return (

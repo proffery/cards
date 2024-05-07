@@ -7,7 +7,7 @@ import { useDebounce, useQueryParam } from '@/utils'
 export const useDecksFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const [requestedCardsRange, setRequestedCardsRange] = useState<number[]>([0, 99])
+  const [requestedCardsRange, setRequestedCardsRange] = useState<number[]>([0, 30])
   const [minCardsCount, setMinCardsCount] = useQueryParam<number>(
     searchParams,
     setSearchParams,
@@ -17,7 +17,8 @@ export const useDecksFilters = () => {
   const [maxCardsCount, setMaxCardsCount] = useQueryParam<number>(
     searchParams,
     setSearchParams,
-    'maxCards'
+    'maxCards',
+    30
   )
 
   const [orderDirection, setOrderDirection] = useQueryParam<SortDirection>(
