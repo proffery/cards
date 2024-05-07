@@ -8,16 +8,16 @@
   display: flex;
   gap: 15px;
   align-items: center;
-  justify-content: left;
+  justify-content: right;
 }
 
 .cover {
-  width: 118px;
-  height: 48px;
+  max-width: 118px;
+  max-height: 48px;
 
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   border-radius: 2px;
 }
 

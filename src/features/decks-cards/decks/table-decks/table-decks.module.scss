@@ -8,12 +8,12 @@
   display: flex;
   gap: 15px;
   align-items: center;
-  justify-content: right;
+  justify-content: left;
 }
 
 .cover {
-  width: 118px;
-  height: 48px;
+  max-width: 118px;
+  max-height: 48px;
 
   background-repeat: no-repeat;
   background-position: center;

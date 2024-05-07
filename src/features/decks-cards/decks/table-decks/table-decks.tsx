@@ -16,7 +16,7 @@ import {
 import { Deck } from '@/services/decks/decks.types'
 import { localDate } from '@/utils'
 
-import s from './tables.module.scss'
+import s from './table-decks.module.scss'
 
 const columns: Columns[] = [
   {
