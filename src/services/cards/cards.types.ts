@@ -20,6 +20,7 @@ export type Card = {
 
 export type GetRandomCardParams = {
   deckId?: string
+  previousCardId?: string
 }
 
 export type DeleteCardArgs = {

@@ -6,6 +6,7 @@ import {
   CreateCardParams,
   DeleteCardArgs,
   GetRandomCardParams,
+  SaveGradeParams,
   UpdateCardParams,
 } from '@/services/cards/cards.types'
 
@@ -50,7 +51,17 @@ const cardsService = baseApi.injectEndpoints({
     }),
     getRandomCard: builder.query<Card, GetRandomCardParams>({
       providesTags: ['Card'],
-      query: ({ deckId }) => `/v1/decks/${deckId}/learn`,
+      query: ({ deckId, previousCardId }) => ({
+        params: { previousCardId },
+        url: `/v1/decks/${deckId}/learn`,
+      }),
+    }),
+    saveCardGrade: builder.mutation<Card, SaveGradeParams>({
+      query: args => ({
+        body: args,
+        method: 'POST',
+        url: `/v1/decks/${args.cardId}/learn`,
+      }),
     }),
     updateCard: builder.mutation<Card, UpdateCardParams>({
       invalidatesTags: ['Cards', 'Card', 'Deck', 'Decks'],
@@ -81,5 +92,6 @@ export const {
   useDeleteCardMutation,
   useGetCardsQuery,
   useGetRandomCardQuery,
+  useSaveCardGradeMutation,
   useUpdateCardMutation,
 } = cardsService

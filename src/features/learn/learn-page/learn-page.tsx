@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom'
 
 import { Page } from '@/components/layouts'
 import { BackLink, Button, Card, Loader, Typography } from '@/components/ui'
-import { useGetRandomCardQuery } from '@/services/cards/cards.service'
-import { useGetDeckQuery, useSaveCardGradeMutation } from '@/services/decks/decks.service'
+import { useGetRandomCardQuery, useSaveCardGradeMutation } from '@/services/cards/cards.service'
+import { useGetDeckQuery } from '@/services/decks/decks.service'
 import clsx from 'clsx'
 
 import s from './learn-page.module.scss'
@@ -26,19 +26,20 @@ export const LearnPage = () => {
   const params = useParams<{ deckId: string }>()
   const deckId = params.deckId
 
+  const [saveGrade, { data: prevCardData, isLoading: isGradeBeingSaved }] =
+    useSaveCardGradeMutation()
+
   const {
     currentData: cardData,
     isFetching: isCardFetching,
     isLoading: isCardLoading,
-  } = useGetRandomCardQuery({ deckId })
+  } = useGetRandomCardQuery({ deckId, previousCardId: prevCardData?.id })
 
   const {
     currentData: deckData,
     isFetching: isDeckFetching,
     isLoading: isDeckLoading,
   } = useGetDeckQuery({ deckId })
-
-  const [saveGrade, { isLoading: isGradeBeingSaved }] = useSaveCardGradeMutation()
 
   const handleRateSubmit = (data: RateType) => {
     if (data && cardData) {
