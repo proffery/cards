@@ -5,6 +5,7 @@ import { Image, Trash } from '@/assets/icons'
 import { ControlledCheckbox } from '@/components/controlled/controlled-checkbox/controlled-checkbox'
 import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { Button, Dialog, DialogProps } from '@/components/ui'
+import { useRandomPlaceholder } from '@/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -61,7 +62,13 @@ export const DeckDialog = ({
       onCancel={handleCancel}
     >
       <form className={s.form} onSubmit={handleConfirm}>
-        <ControlledInput control={control} fullWidth label={'Deck Name'} name={'name'} />
+        <ControlledInput
+          control={control}
+          fullWidth
+          label={'Deck Name'}
+          name={'name'}
+          placeholder={useRandomPlaceholder()}
+        />
         {coverImage ? (
           <img alt={'Deck cover'} src={URL.createObjectURL(coverImage)} />
         ) : (

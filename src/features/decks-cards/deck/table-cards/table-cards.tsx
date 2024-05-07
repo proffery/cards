@@ -13,7 +13,7 @@ import {
 import { SortDirection } from '@/features/decks-cards'
 import { localDate } from '@/utils'
 
-import s from './tables.module.scss'
+import s from './table-cards.module.scss'
 
 const columns: Columns[] = [
   {

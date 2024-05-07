@@ -21,6 +21,7 @@ import {
   DeleteDeck,
   SortDirection,
   TableDecks,
+  useDecksFilters,
 } from '@/features/decks-cards/'
 import { useGetMeQuery } from '@/services/auth/auth.service'
 import {
@@ -30,11 +31,10 @@ import {
   useGetMinMaxQuery,
   useUpdateDeckMutation,
 } from '@/services/decks/decks.service'
+import { useRandomPlaceholder } from '@/utils'
 import clsx from 'clsx'
 
 import s from './decks-page.module.scss'
-
-import { useDecksFilters } from './useDecksFilters'
 
 export const DecksPage = () => {
   const classNames = {
@@ -87,9 +87,6 @@ export const DecksPage = () => {
   useEffect(() => {
     if (minMaxData) {
       setMinMaxCardsCount([minMaxData.min, minMaxData.max])
-      setMaxCardsCount(minMaxData.max)
-      setMinCardsCount(minMaxData.min)
-      setRequestedCardsRange([minMaxData.min, minMaxData.max])
     }
   }, [minMaxData?.max])
 
@@ -177,10 +174,12 @@ export const DecksPage = () => {
   const resetFilters = () => {
     setSearchValue('')
     setRequestedCardsRange(minMaxCardsCount)
-    setMaxCardsCount(minMaxCardsCount[1])
-    setMinCardsCount(minMaxCardsCount[0])
+    setMaxCardsCount(null)
+    setMinCardsCount(null)
     setOrderDirection(null)
     setOrderField(null)
+    setTabValue(null)
+    setCurrentPage(null)
   }
 
   return (
@@ -222,7 +221,8 @@ export const DecksPage = () => {
           cleanSearch={onSearchClean}
           disabled={isDataGetting}
           onChange={onSearchChange}
-          value={searchValue ?? ''}
+          placeholder={useRandomPlaceholder().toLowerCase()}
+          value={searchValue || ''}
           variant={'search'}
         />
         <TabGroup
