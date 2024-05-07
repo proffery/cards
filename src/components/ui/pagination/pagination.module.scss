@@ -62,7 +62,7 @@
   background-color: var(--color-light-100);
 
   &:hover {
-    background-color: var(--color-light-100);
+    background-color: var(--color-light-100) !important;
   }
 
   &:disabled {

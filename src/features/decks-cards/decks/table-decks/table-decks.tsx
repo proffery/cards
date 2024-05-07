@@ -47,7 +47,7 @@ const columns: Columns[] = [
 ]
 
 type DecksTableProps = {
-  authId: string
+  authId?: string
   decks?: Deck[]
   disabled?: boolean
   onDeckDelete: (deckId: string, deckName: string) => void
@@ -80,9 +80,7 @@ export const TableDecks = ({
     }
   }
 
-  return !decks || decks.length === 0 ? (
-    <Typography.Body1>No results found with these parameters.</Typography.Body1>
-  ) : (
+  return (
     <Table>
       <TableHead>
         <TableRow>

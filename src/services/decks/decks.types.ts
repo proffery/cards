@@ -1,5 +1,3 @@
-import { Card } from '@/services/cards/cards.types'
-
 export type DeckAuthor = {
   id: string
   name: string
@@ -25,7 +23,6 @@ export type Pagination = {
 }
 export type DecksResponse = {
   items: Deck[]
-  maxCardsCount: number
   pagination: Pagination
 }
 export type MinMaxCards = {
@@ -40,6 +37,9 @@ export type DecksParams = {
   minCardsCount?: number
   name?: string
   orderBy?: null | string
+}
+export type DeckParams = {
+  deckId?: string
 }
 
 export type DeleteDeckArgs = { deckId: string }
@@ -66,50 +66,3 @@ export type UpdateDeckParams = {
   isPrivate?: boolean
   name?: string
 } & { deckId: string }
-
-export type CardsResponse = {
-  items: Card[]
-  pagination: Pagination
-}
-
-export type CreateCardParams = {
-  /**
-   * @minLength 3
-   * @maxLength 500
-   */
-  answer: string
-  /**
-   * @minLength 0
-   * @maxLength 0
-   */
-  answerImg?: string
-  /**
-   * @minLength 3
-   * @maxLength 500
-   */
-  answerVideo?: string
-  /**
-   * @minLength 3
-   * @maxLength 500
-   */
-  question: string
-  /**
-   * @minLength 0
-   * @maxLength 0
-   */
-  questionImg?: string
-  /**
-   * @minLength 3
-   * @maxLength 500
-   */
-  questionVideo?: string
-}
-
-export type SaveGradeParams = {
-  cardId: string
-  /**
-   * @min 1
-   * @max 5
-   */
-  grade: number
-}

@@ -37,11 +37,10 @@ import s from './decks-page.module.scss'
 import { useDecksFilters } from './useDecksFilters'
 
 export const DecksPage = () => {
-  const { data: me } = useGetMeQuery()
-  const AUTH_ID = me?.id || ''
-
   const classNames = {
+    emptySearch: clsx(s.emptySearch),
     filters: clsx(s.filters),
+    pagination: clsx(s.pagination),
     root: clsx(s.root),
     slider: clsx(s.slider),
     tabSwitcher: clsx(s.tabSwitcher),
@@ -94,7 +93,9 @@ export const DecksPage = () => {
     }
   }, [minMaxData?.max])
 
-  const authorId = tabValue === 'all' ? undefined : AUTH_ID
+  const { data: me } = useGetMeQuery()
+  const authId = me?.id || ''
+  const authorId = tabValue === 'all' ? undefined : authId
 
   const {
     currentData: currentDecksData,
@@ -114,34 +115,34 @@ export const DecksPage = () => {
   const decks = currentDecksData ?? decksData
 
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
-
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
-
   const [updateDeck, { isLoading: isDeckBeingUpdated }] = useUpdateDeckMutation()
+
+  const isDataGetting =
+    isDeckBeingCreated ||
+    isDecksLoading ||
+    isDecksFetching ||
+    isDeckBeingDeleted ||
+    isDeckBeingUpdated
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.currentTarget.value)
   }
-
   const onSearchClean = () => {
     setSearchValue('')
   }
-
   const onTabChange = (value: string) => {
     setTabValue(value)
   }
-
   const onDeleteOpen = (deckId: string, deckName: string) => {
     setDeleteIsOpen(true)
     setOpenedName(deckName)
     setOpenedId(deckId)
   }
-
   const onDeleteConfirm = () => {
     deleteDeck({ deckId: openedId })
     clearOpenedValues()
   }
-
   const onEditOpen = (deckId: string, cover: null | string, name: string, isPrivate: boolean) => {
     setOpenedName(name)
     setOpenedCover(cover)
@@ -149,41 +150,30 @@ export const DecksPage = () => {
     setOpenedId(deckId)
     setEditIsOpen(true)
   }
-
   const onEditConfirm = (data: AddDeckFormFields) => {
     updateDeck({ ...data, deckId: openedId })
     clearOpenedValues()
   }
-
-  const onNewOpen = () => {
-    setNewIsOpen(true)
-  }
-
   const onNewConfirm = (data: AddDeckFormFields) => {
     createDeck(data)
   }
-
   const onDeckPlay = (deckId: string) => {
-    navigate(`${ROUTES.decks}/${deckId}/learn`)
+    navigate(`${ROUTES.decks}/${deckId}${ROUTES.learn}`)
   }
-
   const onDecksSort = (orderDirection: SortDirection, orderField: string) => {
     setOrderDirection(orderDirection)
     setOrderField(orderField)
     setCurrentPage(1)
   }
-
   const onRangeChange = (value: number[]) => {
     setMaxCardsCount(value[1])
     setMinCardsCount(value[0])
   }
-
   const clearOpenedValues = () => {
     setOpenedName('')
     setOpenedCover(null)
     setOpenedIsPrivate(false)
   }
-
   const resetFilters = () => {
     setSearchValue('')
     setRequestedCardsRange(minMaxCardsCount)
@@ -195,9 +185,7 @@ export const DecksPage = () => {
 
   return (
     <Page className={classNames.root}>
-      {(isDecksFetching || isDecksLoading || isDeckBeingCreated || isDeckBeingDeleted) && (
-        <Loader />
-      )}
+      {isDataGetting && <Loader />}
       <DeleteDeck
         deckName={openedName}
         key={openedId + 'delete'}
@@ -209,7 +197,7 @@ export const DecksPage = () => {
       <DeckDialog
         confirmText={'Update deck'}
         defaultValues={{ cover: openedCover, isPrivate: openedIsPrivate, name: openedName }}
-        key={openedId + 'edit'}
+        key={openedId + 'editDeck'}
         onCancel={() => setEditIsOpen(false)}
         onConfirm={onEditConfirm}
         onOpenChange={setEditIsOpen}
@@ -217,7 +205,7 @@ export const DecksPage = () => {
         title={`Edit deck ${openedName}`}
       />
       <DeckDialog
-        key={openedId + 'new'}
+        key={openedId + 'createNewDeck'}
         onCancel={() => setNewIsOpen(false)}
         onConfirm={onNewConfirm}
         onOpenChange={setNewIsOpen}
@@ -225,13 +213,14 @@ export const DecksPage = () => {
       />
       <div className={classNames.topContainer}>
         <Typography.H1>Decks list</Typography.H1>
-        <Button disabled={isDeckBeingCreated} onClick={onNewOpen}>
+        <Button disabled={isDataGetting} onClick={() => setNewIsOpen(true)}>
           Add New Deck
         </Button>
       </div>
       <div className={classNames.filters}>
         <Input
           cleanSearch={onSearchClean}
+          disabled={isDataGetting}
           onChange={onSearchChange}
           value={searchValue ?? ''}
           variant={'search'}
@@ -242,53 +231,57 @@ export const DecksPage = () => {
           onValueChange={onTabChange}
         >
           <TabList>
-            <TabItem selected={tabValue === 'my'} value={'my'}>
+            <TabItem disabled={isDataGetting} selected={tabValue === 'my'} value={'my'}>
               My Decks
             </TabItem>
-            <TabItem selected={tabValue === 'all'} value={'all'}>
+            <TabItem disabled={isDataGetting} selected={tabValue === 'all'} value={'all'}>
               All Decks
             </TabItem>
           </TabList>
         </TabGroup>
         <Slider
           className={classNames.slider}
+          disabled={isDataGetting}
           max={minMaxCardsCount[1]}
           min={minMaxCardsCount[0]}
           onValueChange={setRequestedCardsRange}
           onValueCommit={onRangeChange}
           value={requestedCardsRange}
         />
-        <Button onClick={resetFilters} variant={'secondary'}>
+        <Button disabled={isDataGetting} onClick={resetFilters} variant={'secondary'}>
           <Trash size={16} />
           Clear Filter
         </Button>
       </div>
-      <TableDecks
-        authId={AUTH_ID}
-        decks={decks?.items}
-        disabled={isDeckBeingCreated || isDeckBeingDeleted || isDeckBeingUpdated}
-        onDeckDelete={onDeleteOpen}
-        onDeckEdit={onEditOpen}
-        onDeckPlay={onDeckPlay}
-        onDecksSort={onDecksSort}
-        orderDirection={orderDirection}
-        orderField={orderField}
-      />
-      <Pagination
-        currentPage={decks?.pagination.currentPage}
-        disabled={
-          isDeckBeingCreated ||
-          isDecksLoading ||
-          isDecksFetching ||
-          isDeckBeingDeleted ||
-          isDeckBeingUpdated
-        }
-        itemsPerPage={decks?.pagination.itemsPerPage}
-        onItemsPerPageChange={setItemsPerPage}
-        onPageChange={setCurrentPage}
-        totalItems={decks?.pagination.totalItems}
-        totalPages={decks?.pagination.totalPages}
-      />
+      {decks && decks?.items.length > 0 ? (
+        <>
+          <TableDecks
+            authId={authId}
+            decks={decks?.items}
+            disabled={isDataGetting}
+            onDeckDelete={onDeleteOpen}
+            onDeckEdit={onEditOpen}
+            onDeckPlay={onDeckPlay}
+            onDecksSort={onDecksSort}
+            orderDirection={orderDirection}
+            orderField={orderField}
+          />
+          <Pagination
+            className={classNames.pagination}
+            currentPage={decks?.pagination.currentPage}
+            disabled={isDataGetting}
+            itemsPerPage={decks?.pagination.itemsPerPage}
+            onItemsPerPageChange={setItemsPerPage}
+            onPageChange={setCurrentPage}
+            totalItems={decks?.pagination.totalItems}
+            totalPages={decks?.pagination.totalPages}
+          />
+        </>
+      ) : (
+        <Typography.Body1 className={classNames.emptySearch}>
+          No results found with these parameters
+        </Typography.Body1>
+      )}
     </Page>
   )
 }

@@ -1,3 +1,5 @@
+import { Pagination } from '@/services/decks/decks.types'
+
 export type Card = {
   answer: string
   answerImg: string
@@ -5,6 +7,7 @@ export type Card = {
   /** @format date-time */
   created: string
   deckId: string
+  grade: number
   id: string
   question: string
   questionImg: string
@@ -14,3 +17,69 @@ export type Card = {
   updated: string
   userId: string
 }
+
+export type GetRandomCardParams = {
+  deckId?: string
+}
+
+export type DeleteCardArgs = {
+  cardId?: string
+}
+
+export type CardsResponse = {
+  items: Card[]
+  pagination: Pagination
+}
+
+export type CreateCardParams = {
+  /**
+   * @minLength 3
+   * @maxLength 500
+   */
+  answer: string
+  /**
+   * @minLength 0
+   * @maxLength 0
+   */
+  answerImg?: File
+  /**
+   * @minLength 3
+   * @maxLength 500
+   */
+  answerVideo?: string
+  deckId: string
+  /**
+   * @minLength 3
+   * @maxLength 500
+   */
+  question: string
+  /**
+   * @minLength 0
+   * @maxLength 0
+   */
+  questionImg?: File
+  /**
+   * @minLength 3
+   * @maxLength 500
+   */
+  questionVideo?: string
+}
+
+export type UpdateCardParams = Omit<CreateCardParams, 'deckId'> & { cardId: string }
+
+export type SaveGradeParams = {
+  cardId: string
+  /**
+   * @min 1
+   * @max 5
+   */
+  grade: number
+}
+
+export type CardsParams = {
+  answer?: string
+  currentPage?: number
+  itemsPerPage?: number
+  orderBy?: null | string
+  question?: string
+} & { deckId?: string }

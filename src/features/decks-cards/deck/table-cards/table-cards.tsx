@@ -43,14 +43,22 @@ const columns: Columns[] = [
   },
 ]
 
+export type EditCardDefaultValues = {
+  answer: string
+  answerImg: string
+  question: string
+  questionImg: string
+}
+
 type CardsTableProps = {
   cards: CardType[]
+  disabled?: boolean
   isOwner: boolean
-  onCardDelete: (itemId: string) => void
-  onCardEdit: (itemId: string) => void
+  onCardDelete: (cardId: string, cardName: string) => void
+  onCardEdit: (cardId: string, defaultValues: EditCardDefaultValues) => void
   onCardsSort: (orderDirection: SortDirection, orderField: string) => void
-  orderDirection: SortDirection
-  orderField: string
+  orderDirection: SortDirection | null
+  orderField: null | string
 }
 
 export type CardType = {
@@ -71,6 +79,7 @@ export type CardType = {
 
 export const TableCards = ({
   cards,
+  disabled = false,
   isOwner,
   onCardDelete,
   onCardEdit,
@@ -95,7 +104,7 @@ export const TableCards = ({
           {columns.map(column => (
             <TableHeadCell className={s.columnButton} key={column.key}>
               <TableSortButton
-                disabled={!column.isClickable}
+                disabled={!column.isClickable || disabled}
                 fieldKey={column.key}
                 onClick={() => onSortHandler(column.key)}
                 orderDirection={orderDirection}
@@ -108,36 +117,51 @@ export const TableCards = ({
         </TableRow>
       </TableHead>
       <TableBody>
-        {cards?.map(item => (
-          <TableRow key={item.id}>
+        {cards?.map(card => (
+          <TableRow key={card.id}>
             <TableBodyCell>
               <div className={s.contentContainer}>
-                {item.questionImg && (
-                  <img alt={'Question image'} className={s.cover} src={item.questionImg} />
+                {card.questionImg && (
+                  <img alt={'Question image'} className={s.cover} src={card.questionImg} />
                 )}
-                {item.question}
+                {card.question}
               </div>
             </TableBodyCell>
             <TableBodyCell>
               <div className={s.contentContainer}>
-                {item.answerImg && (
-                  <img alt={'Answer image'} className={s.cover} src={item.answerImg} />
+                {card.answerImg && (
+                  <img alt={'Answer image'} className={s.cover} src={card.answerImg} />
                 )}
-                {item.answer}
+                {card.answer}
               </div>
             </TableBodyCell>
-            <TableBodyCell>{localDate(item.updated)}</TableBodyCell>
+            <TableBodyCell>{localDate(card.updated)}</TableBodyCell>
             <TableBodyCell>
-              <GradeIcons from={5} grade={item.grade} />
+              <GradeIcons from={5} grade={card.grade} />
             </TableBodyCell>
             {isOwner && (
               <TableBodyCell>
                 <div className={s.buttonsContainer}>
-                  <button className={s.actionButton} onClick={() => onCardEdit(item.id)}>
+                  <button
+                    className={s.actionButton}
+                    disabled={disabled}
+                    onClick={() =>
+                      onCardEdit(card.id, {
+                        answer: card.answer,
+                        answerImg: card.answerImg,
+                        question: card.question,
+                        questionImg: card.questionImg,
+                      })
+                    }
+                  >
                     <Edit size={16} />
                   </button>
 
-                  <button className={s.actionButton} onClick={() => onCardDelete(item.id)}>
+                  <button
+                    className={s.actionButton}
+                    disabled={disabled}
+                    onClick={() => onCardDelete(card.id, card.question)}
+                  >
                     <Trash size={16} />
                   </button>
                 </div>
