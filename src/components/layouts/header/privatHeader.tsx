@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 import logo from '@/assets/images/LogoITI.svg'
 import { ROUTES } from '@/common/consts/routes'
@@ -9,8 +10,9 @@ import { useGetMeQuery, useLogoutMutation } from '@/services/auth/auth.service'
 import s from './header.module.scss'
 
 export const PrivateHeader = () => {
+  const navigate = useNavigate()
   const { data, isLoading: loading } = useGetMeQuery()
-  const [logout] = useLogoutMutation()
+  const [logout, { isSuccess: success }] = useLogoutMutation()
 
   const handleLogout = async () => {
     await logout()
@@ -21,6 +23,12 @@ export const PrivateHeader = () => {
     email: data?.email || '',
     name: data?.name || '',
   }
+
+  useEffect(() => {
+    if (success) {
+      navigate(ROUTES.signIn)
+    }
+  }, [success, navigate])
 
   const triggerHeader = (
     <div className={s.nameContainer}>

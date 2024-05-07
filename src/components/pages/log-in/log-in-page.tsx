@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '@/common/consts/routes'
@@ -9,11 +10,10 @@ import { LoginReq } from '@/services/auth/auth.types'
 
 export const LogInPage = () => {
   const navigate = useNavigate()
-  const [login, { error, isLoading: loading }] = useLoginMutation()
+  const [login, { error, isLoading: loading, isSuccess: success }] = useLoginMutation()
 
   const onSubmit = async (data: LoginReq) => {
     await login(data).unwrap()
-    navigate(ROUTES.base)
   }
 
   let errorMessage = ''
@@ -23,6 +23,12 @@ export const LogInPage = () => {
       ? (error.data as any).message
       : 'An unknown error occurred'
   }
+
+  useEffect(() => {
+    if (success) {
+      navigate(ROUTES.base)
+    }
+  }, [success, navigate])
 
   return (
     <Page>

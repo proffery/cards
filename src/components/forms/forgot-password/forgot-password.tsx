@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
@@ -22,15 +23,24 @@ type FormFields = {
 }
 type Props = {
   onSubmit: (data: FormFields) => void
+  serverError?: string
 }
 
-export const ForgotPassword = ({ onSubmit }: Props) => {
-  const { control, handleSubmit } = useForm<FormFields>({
+export const ForgotPassword = ({ onSubmit, serverError }: Props) => {
+  const { clearErrors, control, handleSubmit, setError } = useForm<FormFields>({
     defaultValues: {
       email: '',
     },
     resolver: zodResolver(forgotPasswordSchema),
   })
+
+  useEffect(() => {
+    if (serverError) {
+      setError('email', { message: serverError, type: 'server' })
+    } else {
+      clearErrors('email')
+    }
+  }, [serverError, setError, clearErrors])
 
   return (
     <Card className={classNames.root}>
