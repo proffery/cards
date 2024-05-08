@@ -39,7 +39,6 @@ export const authService = baseApi.injectEndpoints({
 
     logout: builder.mutation<void, void>({
       invalidatesTags: ['Auth'],
-
       onQueryStarted: (_, { dispatch }) => {
         localStorage.removeItem('accessToken')
         localStorage.removeItem('refreshToken')
@@ -56,7 +55,6 @@ export const authService = baseApi.injectEndpoints({
     }),
 
     recoverPassword: builder.mutation<void, RecoverPassword>({
-      invalidatesTags: ['Auth'],
       query: body => ({
         body,
         method: 'POST',
@@ -65,7 +63,6 @@ export const authService = baseApi.injectEndpoints({
     }),
 
     resendVerificationEmail: builder.mutation<void, ResendVerificationEmail>({
-      invalidatesTags: ['Auth'],
       query: body => ({
         body,
         method: 'POST',
@@ -74,7 +71,6 @@ export const authService = baseApi.injectEndpoints({
     }),
 
     resetPassword: builder.mutation<void, { body: ResetPassword; params: ResetPasswordArgs }>({
-      invalidatesTags: ['Auth'],
       query: ({ body, params }) => ({
         body,
         method: 'POST',
@@ -83,7 +79,6 @@ export const authService = baseApi.injectEndpoints({
     }),
 
     signUp: builder.mutation<GetUser, Registration>({
-      invalidatesTags: ['Auth'],
       query: body => ({
         body,
         method: 'POST',
@@ -112,7 +107,6 @@ export const authService = baseApi.injectEndpoints({
     }),
 
     verifyEmail: builder.mutation<void, EmailVerification>({
-      invalidatesTags: ['Auth'],
       query: body => ({
         body,
         method: 'POST',

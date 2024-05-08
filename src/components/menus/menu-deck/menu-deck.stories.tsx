@@ -18,6 +18,5 @@ export const Default: MenuDeckStory = {
   args: {
     onDelete: fn(),
     onEdit: fn(),
-    onLearn: fn(),
   },
 }

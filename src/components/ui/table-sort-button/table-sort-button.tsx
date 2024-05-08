@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react'
 
 import { ArrowDropDown, ArrowDropUp } from '@/assets/icons'
-import { SortDirection } from '@/features/decks/'
+import { SortDirection } from '@/features/decks-cards'
 
 import s from './table-sort-button.module.scss'
 

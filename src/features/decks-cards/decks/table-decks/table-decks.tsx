@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 
 import { Edit, Play, Trash } from '@/assets/icons'
 import { ROUTES } from '@/common/consts/routes'
+import { localDate } from '@/common/utils'
 import {
   Columns,
   Table,
@@ -14,7 +15,6 @@ import {
   Typography,
 } from '@/components/ui'
 import { Deck } from '@/services/decks/decks.types'
-import { localDate } from '@/utils'
 
 import s from './table-decks.module.scss'
 

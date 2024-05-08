@@ -1,3 +1,5 @@
+import { useErrorsNotification } from '@/common/hooks/use-errors-notification'
+import { useSuccessNotification } from '@/common/hooks/use-success-notification'
 import { EditProfile, EditProfileFormFields } from '@/components/forms/edit-profile/edit-profile'
 import { Page } from '@/components/layouts'
 import { BackLink } from '@/components/ui'
@@ -15,19 +17,24 @@ export const EditProfilePage = () => {
     root: clsx(s.root),
   }
   const { data: userData } = useGetMeQuery()
-  const [logout] = useLogoutMutation()
-  const [updateUser] = useUpdateUserMutation()
+  const [logout, { isSuccess: logoutSuccess }] = useLogoutMutation()
+  const [updateUser, { error: updateUserError, isSuccess: updateUserSuccess }] =
+    useUpdateUserMutation()
 
-  const onAvatarChange = (avatar: File) => {
-    updateUser({ avatar: avatar })
+  useErrorsNotification(updateUserError)
+  useSuccessNotification(updateUserSuccess, 'Profile updated!')
+  useSuccessNotification(logoutSuccess, 'You are successfully logged out!')
+
+  const onAvatarChange = async (avatar: File) => {
+    await updateUser({ avatar: avatar })
   }
 
   const onLogout = () => {
     logout()
   }
 
-  const onSubmit = (data: EditProfileFormFields) => {
-    updateUser(data)
+  const onSubmit = async (data: EditProfileFormFields) => {
+    await updateUser(data)
   }
 
   return (

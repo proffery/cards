@@ -2,10 +2,10 @@ import { ChangeEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Image, Trash } from '@/assets/icons'
+import { useRandomPlaceholder } from '@/common/hooks'
 import { ControlledCheckbox } from '@/components/controlled/controlled-checkbox/controlled-checkbox'
 import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { Button, Dialog, DialogProps } from '@/components/ui'
-import { useRandomPlaceholder } from '@/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 

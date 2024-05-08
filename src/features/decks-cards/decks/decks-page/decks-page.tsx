@@ -1,13 +1,15 @@
 import { ChangeEvent, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { Trash } from '@/assets/icons'
 import { ROUTES } from '@/common/consts/routes'
+import { useRandomPlaceholder } from '@/common/hooks'
+import { useErrorsNotification } from '@/common/hooks/use-errors-notification'
 import { Page } from '@/components/layouts'
 import {
   Button,
   Input,
-  Loader,
   Pagination,
   Slider,
   TabGroup,
@@ -23,6 +25,7 @@ import {
   TableDecks,
   useDecksFilters,
 } from '@/features/decks-cards/'
+import { selectAppIsLoading } from '@/services/app/app.selectors'
 import { useGetMeQuery } from '@/services/auth/auth.service'
 import {
   useCreateDeckMutation,
@@ -31,7 +34,6 @@ import {
   useGetMinMaxQuery,
   useUpdateDeckMutation,
 } from '@/services/decks/decks.service'
-import { useRandomPlaceholder } from '@/utils'
 import clsx from 'clsx'
 
 import s from './decks-page.module.scss'
@@ -82,7 +84,7 @@ export const DecksPage = () => {
     tabValue,
   } = useDecksFilters()
 
-  const { data: minMaxData } = useGetMinMaxQuery()
+  const { data: minMaxData, error: getMinMaxError } = useGetMinMaxQuery()
 
   useEffect(() => {
     if (minMaxData) {
@@ -97,8 +99,7 @@ export const DecksPage = () => {
   const {
     currentData: currentDecksData,
     data: decksData,
-    isFetching: isDecksFetching,
-    isLoading: isDecksLoading,
+    error: getDecksError,
   } = useGetDecksQuery({
     authorId: authorId,
     currentPage: currentPage ?? undefined,
@@ -111,16 +112,15 @@ export const DecksPage = () => {
 
   const decks = currentDecksData ?? decksData
 
-  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
-  const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
-  const [updateDeck, { isLoading: isDeckBeingUpdated }] = useUpdateDeckMutation()
+  const [createDeck, { error: createDeckError }] = useCreateDeckMutation()
+  const [deleteDeck, { error: deleteDeckError }] = useDeleteDeckMutation()
+  const [updateDeck, { error: updateDeckError }] = useUpdateDeckMutation()
 
-  const isDataGetting =
-    isDeckBeingCreated ||
-    isDecksLoading ||
-    isDecksFetching ||
-    isDeckBeingDeleted ||
-    isDeckBeingUpdated
+  useErrorsNotification(
+    deleteDeckError || createDeckError || updateDeckError || getDecksError || getMinMaxError
+  )
+
+  const isLoading = useSelector(selectAppIsLoading)
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.currentTarget.value)
@@ -184,7 +184,6 @@ export const DecksPage = () => {
 
   return (
     <Page className={classNames.root}>
-      {isDataGetting && <Loader />}
       <DeleteDeck
         deckName={openedName}
         key={openedId + 'delete'}
@@ -212,14 +211,14 @@ export const DecksPage = () => {
       />
       <div className={classNames.topContainer}>
         <Typography.H1>Decks list</Typography.H1>
-        <Button disabled={isDataGetting} onClick={() => setNewIsOpen(true)}>
+        <Button disabled={isLoading} onClick={() => setNewIsOpen(true)}>
           Add New Deck
         </Button>
       </div>
       <div className={classNames.filters}>
         <Input
           cleanSearch={onSearchClean}
-          disabled={isDataGetting}
+          disabled={isLoading}
           onChange={onSearchChange}
           placeholder={useRandomPlaceholder().toLowerCase()}
           value={searchValue || ''}
@@ -231,24 +230,24 @@ export const DecksPage = () => {
           onValueChange={onTabChange}
         >
           <TabList>
-            <TabItem disabled={isDataGetting} selected={tabValue === 'my'} value={'my'}>
+            <TabItem disabled={isLoading} selected={tabValue === 'my'} value={'my'}>
               My Decks
             </TabItem>
-            <TabItem disabled={isDataGetting} selected={tabValue === 'all'} value={'all'}>
+            <TabItem disabled={isLoading} selected={tabValue === 'all'} value={'all'}>
               All Decks
             </TabItem>
           </TabList>
         </TabGroup>
         <Slider
           className={classNames.slider}
-          disabled={isDataGetting}
+          disabled={isLoading}
           max={minMaxCardsCount[1]}
           min={minMaxCardsCount[0]}
           onValueChange={setRequestedCardsRange}
           onValueCommit={onRangeChange}
           value={requestedCardsRange}
         />
-        <Button disabled={isDataGetting} onClick={resetFilters} variant={'secondary'}>
+        <Button disabled={isLoading} onClick={resetFilters} variant={'secondary'}>
           <Trash size={16} />
           Clear Filter
         </Button>
@@ -258,7 +257,7 @@ export const DecksPage = () => {
           <TableDecks
             authId={authId}
             decks={decks?.items}
-            disabled={isDataGetting}
+            disabled={isLoading}
             onDeckDelete={onDeleteOpen}
             onDeckEdit={onEditOpen}
             onDeckPlay={onDeckPlay}
@@ -269,7 +268,7 @@ export const DecksPage = () => {
           <Pagination
             className={classNames.pagination}
             currentPage={decks?.pagination.currentPage}
-            disabled={isDataGetting}
+            disabled={isLoading}
             itemsPerPage={decks?.pagination.itemsPerPage}
             onItemsPerPageChange={setItemsPerPage}
             onPageChange={setCurrentPage}

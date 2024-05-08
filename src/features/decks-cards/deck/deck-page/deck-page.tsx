@@ -1,9 +1,12 @@
 import { ChangeEvent, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
+import { useRandomPlaceholder } from '@/common/hooks'
+import { useErrorsNotification } from '@/common/hooks/use-errors-notification'
 import { Page } from '@/components/layouts'
 import { MenuDeck } from '@/components/menus'
-import { BackLink, Button, Input, Loader, Pagination, Typography } from '@/components/ui'
+import { BackLink, Button, Input, Pagination, Typography } from '@/components/ui'
 import {
   AddCardFormFields,
   AddDeckFormFields,
@@ -16,6 +19,7 @@ import {
   TableCards,
   useCardsFilters,
 } from '@/features/decks-cards'
+import { selectAppIsLoading } from '@/services/app/app.selectors'
 import { useGetMeQuery } from '@/services/auth/auth.service'
 import {
   useCreateCardMutation,
@@ -28,7 +32,6 @@ import {
   useGetDeckQuery,
   useUpdateDeckMutation,
 } from '@/services/decks/decks.service'
-import { useRandomPlaceholder } from '@/utils'
 import clsx from 'clsx'
 
 import s from './deck-page.module.scss'
@@ -59,13 +62,12 @@ export const DeckPage = () => {
   const params = useParams<{ deckId: string }>()
   const deckId = params.deckId
 
-  const {
-    currentData: deckData,
-    isFetching: isDeckFetching,
-    isLoading: isDeckLoading,
-  } = useGetDeckQuery({ deckId })
+  const { currentData: deckData, error: getDeckError } = useGetDeckQuery({ deckId })
 
   const { data: me } = useGetMeQuery()
+
+  useErrorsNotification(getDeckError)
+
   const isDeckOwner = (deckData && deckData?.userId === me?.id) ?? false
 
   const {
@@ -82,12 +84,7 @@ export const DeckPage = () => {
     setSearchValue,
   } = useCardsFilters()
 
-  const {
-    currentData: currentCardsData,
-    data: cardsData,
-    isFetching: isCardsFetching,
-    isLoading: isCardsLoading,
-  } = useGetCardsQuery({
+  const { currentData: currentCardsData, data: cardsData } = useGetCardsQuery({
     currentPage: currentPage ?? undefined,
     deckId,
     itemsPerPage: itemsPerPage,
@@ -97,23 +94,14 @@ export const DeckPage = () => {
 
   const cards = currentCardsData ?? cardsData
 
-  const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
-  const [updateDeck, { isLoading: isDeckBeingUpdated }] = useUpdateDeckMutation()
+  const [deleteDeck] = useDeleteDeckMutation()
+  const [updateDeck] = useUpdateDeckMutation()
 
-  const [createCard, { isLoading: isCardBeingCreated }] = useCreateCardMutation()
-  const [deleteCard, { isLoading: isCardBeingDeleted }] = useDeleteCardMutation()
-  const [updateCard, { isLoading: isCardBeingUpdated }] = useUpdateCardMutation()
+  const [createCard] = useCreateCardMutation()
+  const [deleteCard] = useDeleteCardMutation()
+  const [updateCard] = useUpdateCardMutation()
 
-  const isDataGetting =
-    isDeckFetching ||
-    isDeckLoading ||
-    isDeckBeingUpdated ||
-    isDeckBeingDeleted ||
-    isCardsFetching ||
-    isCardsLoading ||
-    isCardBeingCreated ||
-    isCardBeingDeleted ||
-    isCardBeingUpdated
+  const isLoading = useSelector(selectAppIsLoading)
 
   const onDeleteDeckConfirm = () => {
     deleteDeck({ deckId: deckData?.id ?? '' })
@@ -161,7 +149,6 @@ export const DeckPage = () => {
 
   return (
     <Page className={classNames.root} marginTop={24}>
-      {isDataGetting && <Loader />}
       <DeleteDeck
         deckName={deckData?.name ?? ''}
         key={deckData?.id + 'deleteDeck'}
@@ -223,7 +210,7 @@ export const DeckPage = () => {
           )}
         </Typography.H1>
         {isDeckOwner && (
-          <Button disabled={isCardBeingCreated} onClick={() => setNewCardIsOpen(true)}>
+          <Button disabled={isLoading} onClick={() => setNewCardIsOpen(true)}>
             Add New Card
           </Button>
         )}
@@ -233,7 +220,7 @@ export const DeckPage = () => {
       )}
       <Input
         cleanSearch={onSearchClean}
-        disabled={isDataGetting}
+        disabled={isLoading}
         fullWidth
         onChange={onSearchChange}
         placeholder={useRandomPlaceholder().toLowerCase()}
@@ -244,7 +231,7 @@ export const DeckPage = () => {
         <>
           <TableCards
             cards={cards.items}
-            disabled={isDataGetting}
+            disabled={isLoading}
             isOwner={isDeckOwner}
             onCardDelete={onDeleteCardOpen}
             onCardEdit={onEditCardOpen}
@@ -255,7 +242,7 @@ export const DeckPage = () => {
           <Pagination
             className={classNames.pagination}
             currentPage={cards?.pagination.currentPage}
-            disabled={isDataGetting}
+            disabled={isLoading}
             itemsPerPage={cards?.pagination.itemsPerPage}
             onItemsPerPageChange={setItemsPerPage}
             onPageChange={setCurrentPage}
@@ -270,7 +257,7 @@ export const DeckPage = () => {
             {isDeckOwner ? ' Click add new card to fill this pack' : ''}
           </Typography.Body1>
           {isDeckOwner && (
-            <Button disabled={isDataGetting} onClick={() => setNewCardIsOpen(true)}>
+            <Button disabled={isLoading} onClick={() => setNewCardIsOpen(true)}>
               Add New Card
             </Button>
           )}

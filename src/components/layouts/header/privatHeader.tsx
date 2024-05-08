@@ -3,15 +3,16 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import logo from '@/assets/images/LogoITI.svg'
 import { ROUTES } from '@/common/consts/routes'
+import { useSuccessNotification } from '@/common/hooks/use-success-notification'
 import { MenuProfile } from '@/components/menus'
-import { Avatar, Loader, Typography } from '@/components/ui'
+import { Avatar, Typography } from '@/components/ui'
 import { useGetMeQuery, useLogoutMutation } from '@/services/auth/auth.service'
 
 import s from './header.module.scss'
 
 export const PrivateHeader = () => {
   const navigate = useNavigate()
-  const { data, isLoading: loading } = useGetMeQuery()
+  const { data } = useGetMeQuery()
   const [logout, { isSuccess: success }] = useLogoutMutation()
 
   const handleLogout = async () => {
@@ -23,6 +24,8 @@ export const PrivateHeader = () => {
     email: data?.email || '',
     name: data?.name || '',
   }
+
+  useSuccessNotification(success, 'You are successfully logged out')
 
   useEffect(() => {
     if (success) {
@@ -53,7 +56,6 @@ export const PrivateHeader = () => {
           userName={user.name}
         />
       </div>
-      {loading && <Loader />}
     </header>
   )
 }

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
+import { useDebounce, useQueryParam } from '@/common/hooks'
 import { SortDirection } from '@/features/decks-cards'
-import { useDebounce, useQueryParam } from '@/utils'
 
 export const useDecksFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -41,7 +41,7 @@ export const useDecksFilters = () => {
     1
   )
 
-  const [itemsPerPage, setItemsPerPage] = useState(5)
+  const [itemsPerPage, setItemsPerPage] = useState(10)
 
   const [searchValue, setSearchValue] = useQueryParam<string>(
     searchParams,

@@ -17,6 +17,7 @@ type Story = StoryObj<typeof meta>
 
 export const DeleteCardDialog: Story = {
   args: {
+    cardName: 'DeleteCard',
     onConfirm: fn(),
     onOpenChange: fn(),
   },
