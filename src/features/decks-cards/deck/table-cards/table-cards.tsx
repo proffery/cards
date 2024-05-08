@@ -1,4 +1,5 @@
 import { Edit, Trash } from '@/assets/icons'
+import { localDate } from '@/common/utils'
 import {
   Columns,
   GradeIcons,
@@ -11,7 +12,6 @@ import {
   TableSortButton,
 } from '@/components/ui'
 import { SortDirection } from '@/features/decks-cards'
-import { localDate } from '@/utils'
 
 import s from './table-cards.module.scss'
 

@@ -1,8 +1,11 @@
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
+import { useErrorsNotification } from '@/common/hooks/use-errors-notification'
 import { Page } from '@/components/layouts'
-import { BackLink, Button, Card, Loader, Modal, ModalTrigger, Typography } from '@/components/ui'
+import { BackLink, Button, Card, Modal, ModalTrigger, Typography } from '@/components/ui'
+import { selectAppIsLoading } from '@/services/app/app.selectors'
 import { useGetRandomCardQuery, useSaveCardGradeMutation } from '@/services/cards/cards.service'
 import { useGetDeckQuery } from '@/services/decks/decks.service'
 import clsx from 'clsx'
@@ -28,20 +31,16 @@ export const LearnPage = () => {
   const params = useParams<{ deckId: string }>()
   const deckId = params.deckId
 
-  const [saveGrade, { data: prevCardData, isLoading: isGradeBeingSaved }] =
-    useSaveCardGradeMutation()
+  const [saveGrade, { data: prevCardData, error: saveCardGradeError }] = useSaveCardGradeMutation()
 
-  const {
-    currentData: cardData,
-    isFetching: isCardFetching,
-    isLoading: isCardLoading,
-  } = useGetRandomCardQuery({ deckId, previousCardId: prevCardData?.id })
+  const { currentData: cardData, error: getRandomCardError } = useGetRandomCardQuery({
+    deckId,
+    previousCardId: prevCardData?.id,
+  })
 
-  const {
-    currentData: deckData,
-    isFetching: isDeckFetching,
-    isLoading: isDeckLoading,
-  } = useGetDeckQuery({ deckId })
+  const { currentData: deckData, error: getDeckError } = useGetDeckQuery({ deckId })
+
+  useErrorsNotification(getDeckError || getRandomCardError || saveCardGradeError)
 
   const handleRateSubmit = (data: RateType) => {
     if (data && cardData) {
@@ -49,13 +48,11 @@ export const LearnPage = () => {
     }
     setShowAnswer(false)
   }
-  const isDataGetting =
-    isCardFetching || isCardLoading || isDeckFetching || isDeckLoading || isGradeBeingSaved
+  const isLoading = useSelector(selectAppIsLoading)
 
   return (
     <Page marginTop={24}>
-      <BackLink className={classNames.backButton} text={`Back to "${deckData?.name}" deck`} />
-      {isDataGetting && <Loader />}
+      <BackLink className={classNames.backButton} text={'Go back'} />
       <Card className={classNames.card}>
         <Typography.H1>{`Learn "${deckData?.name ?? ''}"`}</Typography.H1>
         <div>
@@ -113,7 +110,7 @@ export const LearnPage = () => {
                 <img alt={'Answer Image'} className={classNames.image} src={cardData?.answerImg} />
               </Modal>
             )}
-            <RateCardRadioGroup disabled={isDataGetting} onSubmit={handleRateSubmit} />
+            <RateCardRadioGroup disabled={isLoading} onSubmit={handleRateSubmit} />
           </>
         ) : (
           <Button className={classNames.submitButton} fullWidth onClick={() => setShowAnswer(true)}>

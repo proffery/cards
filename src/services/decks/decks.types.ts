@@ -66,3 +66,15 @@ export type UpdateDeckParams = {
   isPrivate?: boolean
   name?: string
 } & { deckId: string }
+
+export type ErrorMessage = {
+  field: string
+  message: string
+}
+
+export type ErrorResponse = {
+  data: ErrorResponseData
+}
+export type ErrorResponseData = {
+  errorMessages: ErrorMessage[]
+}

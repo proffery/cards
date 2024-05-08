@@ -14,13 +14,13 @@ import s2 from './edit-profile.module.scss'
 
 type Props = {
   avatarUrl?: string
-  email: string
-  name: string
+  email?: string
+  name?: string
   onAvatarChange: (data: File) => void
   onLogout: () => void
-  onSubmit: (data: FormFields) => void
+  onSubmit: (data: EditProfileFormFields) => void
 }
-type FormFields = z.infer<typeof editProfileSchema>
+export type EditProfileFormFields = z.infer<typeof editProfileSchema>
 export const EditProfile = ({
   avatarUrl,
   email,
@@ -29,8 +29,8 @@ export const EditProfile = ({
   onLogout,
   onSubmit,
 }: Props) => {
-  const { control, handleSubmit } = useForm<FormFields>({
-    defaultValues: { name: '' },
+  const { control, handleSubmit } = useForm<EditProfileFormFields>({
+    defaultValues: { name: name },
     resolver: zodResolver(editProfileSchema),
   })
 
@@ -59,10 +59,17 @@ export const EditProfile = ({
       {editMode ? (
         <>
           <Avatar className={classNames.avatar} name={name} size={'l'} url={avatarUrl} />
-          <form className={classNames.form} onSubmit={handleSubmit(data => onSubmit(data))}>
+          <form
+            className={classNames.form}
+            onSubmit={handleSubmit(data => {
+              onSubmit(data)
+              setEditMode(false)
+            })}
+          >
             <ControlledInput
               autoFocus
               control={control}
+              defaultValue={name}
               fullWidth
               label={'Nickname'}
               name={'name'}

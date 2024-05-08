@@ -39,7 +39,6 @@ export const authService = baseApi.injectEndpoints({
 
     logout: builder.mutation<void, void>({
       invalidatesTags: ['Auth'],
-
       onQueryStarted: (_, { dispatch }) => {
         localStorage.removeItem('accessToken')
         localStorage.removeItem('refreshToken')
@@ -56,7 +55,6 @@ export const authService = baseApi.injectEndpoints({
     }),
 
     recoverPassword: builder.mutation<void, RecoverPassword>({
-      invalidatesTags: ['Auth'],
       query: body => ({
         body,
         method: 'POST',
@@ -65,7 +63,6 @@ export const authService = baseApi.injectEndpoints({
     }),
 
     resendVerificationEmail: builder.mutation<void, ResendVerificationEmail>({
-      invalidatesTags: ['Auth'],
       query: body => ({
         body,
         method: 'POST',
@@ -74,7 +71,6 @@ export const authService = baseApi.injectEndpoints({
     }),
 
     resetPassword: builder.mutation<void, { body: ResetPassword; params: ResetPasswordArgs }>({
-      invalidatesTags: ['Auth'],
       query: ({ body, params }) => ({
         body,
         method: 'POST',
@@ -83,7 +79,6 @@ export const authService = baseApi.injectEndpoints({
     }),
 
     signUp: builder.mutation<GetUser, Registration>({
-      invalidatesTags: ['Auth'],
       query: body => ({
         body,
         method: 'POST',
@@ -93,18 +88,25 @@ export const authService = baseApi.injectEndpoints({
 
     updateUser: builder.mutation<GetUser, UpdateUser>({
       invalidatesTags: ['Auth'],
-      query: body => ({
-        body,
-        headers: {
-          ContentType: 'multipart/form-data',
-        },
-        method: 'PATCH',
-        url: '/v1/auth/me',
-      }),
+      query: args => {
+        const formData = new FormData()
+
+        if (args.name) {
+          formData.append('name', args.name)
+        }
+        if (args.avatar) {
+          formData.append('avatar', args.avatar)
+        }
+
+        return {
+          body: formData,
+          method: 'PATCH',
+          url: '/v1/auth/me',
+        }
+      },
     }),
 
     verifyEmail: builder.mutation<void, EmailVerification>({
-      invalidatesTags: ['Auth'],
       query: body => ({
         body,
         method: 'POST',
