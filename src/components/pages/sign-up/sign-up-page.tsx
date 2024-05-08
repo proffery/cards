@@ -41,7 +41,7 @@ export const SignUpPage = () => {
 
       navigate(ROUTES.checkEmail)
     }
-  }, [success, navigate, signUpData?.email])
+  }, [success, signUpData, navigate])
 
   return (
     <Page>

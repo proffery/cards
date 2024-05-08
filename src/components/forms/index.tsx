@@ -1,4 +1,5 @@
 export { CheckEmail } from '../forms/check-email/check-email'
 export { CreatePassword } from '../forms/create-password/create-password'
 export { EditProfile } from '../forms/edit-profile/edit-profile'
+export { ForgotPassword } from '../forms/forgot-password/forgot-password'
 export { SignUp } from '../forms/sign-up/sign-up'
