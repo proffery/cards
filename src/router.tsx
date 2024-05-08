@@ -58,7 +58,7 @@ const privateRoutes: RouteObject[] = [
     path: `${ROUTES.decks}/:deckId${ROUTES.learn}`,
   },
   {
-    element: <EditProfilePage avatarUrl={''} email={'bob@bob.bob'} name={'Bob'} />,
+    element: <EditProfilePage />,
     path: ROUTES.profile,
   },
   {

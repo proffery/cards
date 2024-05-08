@@ -1,35 +1,42 @@
-import { useState } from 'react'
-
-import { EditProfile } from '@/components/forms/edit-profile/edit-profile'
+import { EditProfile, EditProfileFormFields } from '@/components/forms/edit-profile/edit-profile'
 import { Page } from '@/components/layouts'
+import { BackLink } from '@/components/ui'
+import {
+  useGetMeQuery,
+  useLogoutMutation,
+  useUpdateUserMutation,
+} from '@/services/auth/auth.service'
+import clsx from 'clsx'
 
-type Props = {
-  avatarUrl: string
-  email: string
-  name: string
-}
+import s from './edit-profile-page.module.scss'
 
-export const EditProfilePage = (props: Props) => {
-  const [userData] = useState<Props>(props)
+export const EditProfilePage = () => {
+  const classNames = {
+    root: clsx(s.root),
+  }
+  const { data: userData } = useGetMeQuery()
+  const [logout] = useLogoutMutation()
+  const [updateUser] = useUpdateUserMutation()
 
-  const onAvatarChange = (file: File) => {
-    alert(`Avatar changed: ${file.name}`)
+  const onAvatarChange = (avatar: File) => {
+    updateUser({ avatar: avatar })
   }
 
   const onLogout = () => {
-    alert('User logged out')
+    logout()
   }
 
-  const onSubmit = (data: {}) => {
-    alert(`Form data submitted: ${JSON.stringify(data)}`)
+  const onSubmit = (data: EditProfileFormFields) => {
+    updateUser(data)
   }
 
   return (
-    <Page>
+    <Page className={classNames.root} marginTop={24}>
+      <BackLink text={'Go back'} />
       <EditProfile
-        avatarUrl={userData.avatarUrl}
-        email={userData.email}
-        name={userData.name}
+        avatarUrl={userData?.avatar}
+        email={userData?.email}
+        name={userData?.name}
         onAvatarChange={onAvatarChange}
         onLogout={onLogout}
         onSubmit={onSubmit}

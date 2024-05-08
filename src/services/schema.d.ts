@@ -379,7 +379,7 @@ export interface components {
     };
     UpdateUserRequest: {
       /** Format: binary */
-      avatar?: string;
+      avatar?: File;
       name?: string;
     };
     User: {

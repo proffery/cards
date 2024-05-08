@@ -54,7 +54,7 @@ export const LearnPage = () => {
 
   return (
     <Page marginTop={24}>
-      <BackLink className={classNames.backButton} text={`Back to "${deckData?.name}" deck`} />
+      <BackLink className={classNames.backButton} text={'Go back'} />
       {isDataGetting && <Loader />}
       <Card className={classNames.card}>
         <Typography.H1>{`Learn "${deckData?.name ?? ''}"`}</Typography.H1>
