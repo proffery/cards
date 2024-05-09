@@ -40,6 +40,10 @@ const publicRoutes: RouteObject[] = [
     element: <CheckEmailPage />,
     path: ROUTES.checkEmail,
   },
+  {
+    element: <CreatePasswordPage />,
+    path: `${ROUTES.createPassword}/:token`,
+  },
 ]
 
 const privateRoutes: RouteObject[] = [
@@ -63,10 +67,6 @@ const privateRoutes: RouteObject[] = [
     element: <EditProfilePage />,
     path: ROUTES.profile,
   },
-  {
-    element: <CreatePasswordPage />,
-    path: `${ROUTES.createPassword}/:token`,
-  },
 ]
 
 export const router = createBrowserRouter([
@@ -83,11 +83,7 @@ export const router = createBrowserRouter([
         <Outlet />
       </Layout>
     ),
-    errorElement: (
-      <Layout>
-        <ErrorPage />
-      </Layout>
-    ),
+    errorElement: <ErrorPage />,
   },
 ])
 
