@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import { ROUTES } from '@/common/consts/routes'
 import { useErrorsNotification } from '@/common/hooks/use-errors-notification'
@@ -10,7 +9,6 @@ import { useLoginMutation } from '@/services/auth/auth.service'
 import { LoginReq } from '@/services/auth/auth.types'
 
 export const LogInPage = () => {
-  const navigate = useNavigate()
   const [login, { error, isSuccess: success }] = useLoginMutation()
   const onSubmit = async (data: LoginReq) => {
     await login(data).unwrap()
@@ -27,11 +25,9 @@ export const LogInPage = () => {
   useErrorsNotification(error)
   useSuccessNotification(success, 'You are successfully logged in!')
 
-  useEffect(() => {
-    if (success) {
-      navigate(ROUTES.base)
-    }
-  }, [success, navigate])
+  if (success) {
+    return <Navigate replace to={ROUTES.base} />
+  }
 
   return (
     <Page>

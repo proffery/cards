@@ -6,6 +6,7 @@ export const ROUTES = {
   forgotPassword: '/forgot-password',
   learn: '/learn',
   profile: '/profile',
+  rest: '/*',
   signIn: '/sign-in',
   signUp: '/sign-up',
 } as const

@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import { ROUTES } from '@/common/consts/routes'
 import { useErrorsNotification } from '@/common/hooks/use-errors-notification'
@@ -10,8 +9,6 @@ import { useRecoverPasswordMutation } from '@/services/auth/auth.service'
 import { RecoverPassword } from '@/services/auth/auth.types'
 
 export const ForgotPasswordPage = () => {
-  const navigate = useNavigate()
-
   const [recoverPassword, { error, isSuccess: success }] = useRecoverPasswordMutation()
 
   const onSubmit = async (data: RecoverPassword) => {
@@ -31,11 +28,9 @@ export const ForgotPasswordPage = () => {
   useErrorsNotification(error)
   useSuccessNotification(success, 'Email has been sent')
 
-  useEffect(() => {
-    if (success) {
-      navigate(ROUTES.signIn)
-    }
-  }, [success, navigate])
+  if (success) {
+    return <Navigate replace to={ROUTES.signIn} />
+  }
 
   return (
     <Page>
