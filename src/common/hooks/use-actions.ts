@@ -1,10 +1,11 @@
 import { useMemo } from 'react'
+import { useDispatch } from 'react-redux'
 
+import { AppDispatch } from '@/services/store'
 import { ActionCreatorsMapObject, bindActionCreators } from '@reduxjs/toolkit'
 
-import { useAppDispatch } from '../../../../todolist/src/common/hooks/useAppDispatch'
-
 export const useActions = <T extends ActionCreatorsMapObject>(actions: T) => {
+  const useAppDispatch: () => AppDispatch = useDispatch
   const dispatch = useAppDispatch()
 
   return useMemo(
