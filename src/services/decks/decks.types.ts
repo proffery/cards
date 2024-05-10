@@ -44,28 +44,19 @@ export type DeckParams = {
 
 export type DeleteDeckArgs = { deckId: string }
 export type CreateDeckParams = {
-  /**
-   * Cover image (has to be sent inside FormData, does NOT accept base64)
-   * @format binary
-   */
   cover?: File
-  /** Private decks are not visible to other users */
   isPrivate?: boolean
-  /**
-   * @minLength 3
-   * @maxLength 30
-   */
   name: string
 }
 export type UpdateDeckParams = {
-  /**
-   * Cover image (has to be sent inside FormData, does NOT accept base64)
-   * @format binary
-   */
-  cover?: File
-  isPrivate?: boolean
-  name?: string
-} & { deckId: string }
+  getDecksParams: DecksParams
+  updateDeckParams: {
+    cover?: File
+    deckId?: string
+    isPrivate: boolean
+    name: string
+  }
+}
 
 export type ErrorMessage = {
   field: string
