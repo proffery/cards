@@ -25,7 +25,7 @@ export type GetRandomCardParams = {
 
 export type DeleteCardArgs = {
   cardId?: string
-}
+} & CardsParams
 
 export type CardsResponse = {
   items: Card[]
@@ -48,7 +48,7 @@ export type CreateCardParams = {
    * @maxLength 500
    */
   answerVideo?: string
-  deckId: string
+  deckId?: string
   /**
    * @minLength 3
    * @maxLength 500
@@ -66,7 +66,11 @@ export type CreateCardParams = {
   questionVideo?: string
 }
 
-export type UpdateCardParams = Omit<CreateCardParams, 'deckId'> & { cardId: string }
+export type UpdateCardParams = {
+  cardId?: string
+  cardsParams: CardsParams
+  updateCardsParams: CreateCardParams
+}
 
 export type SaveGradeParams = {
   cardId: string

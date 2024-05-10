@@ -124,7 +124,14 @@ export const DeckPage = () => {
     setDeleteCardIsOpen(true)
   }
   const onDeleteCardConfirm = () => {
-    deleteCard({ cardId: openedCardId })
+    deleteCard({
+      cardId: openedCardId,
+      currentPage: currentPage ?? undefined,
+      deckId,
+      itemsPerPage: itemsPerPage,
+      orderBy: `${orderField}-${orderDirection}`,
+      question: debouncedSearch ?? '',
+    })
     clearOpenedValues()
   }
   const onEditCardOpen = (cardId: string, defaultValues: EditCardDefaultValues) => {
@@ -133,7 +140,17 @@ export const DeckPage = () => {
     setEditCardIsOpen(true)
   }
   const onEditCardConfirm = (data: AddCardFormFields) => {
-    updateCard({ ...data, cardId: openedCardId })
+    updateCard({
+      cardId: openedCardId,
+      cardsParams: {
+        currentPage: currentPage ?? undefined,
+        deckId: deckId,
+        itemsPerPage: itemsPerPage,
+        orderBy: `${orderField}-${orderDirection}`,
+        question: debouncedSearch ?? '',
+      },
+      updateCardsParams: { ...data },
+    })
     clearOpenedValues()
   }
   const onCardsSort = (orderDirection: SortDirection, orderField: string) => {

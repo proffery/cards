@@ -5,8 +5,7 @@ import { AppDispatch } from '@/services/store'
 import { ActionCreatorsMapObject, bindActionCreators } from '@reduxjs/toolkit'
 
 export const useActions = <T extends ActionCreatorsMapObject>(actions: T) => {
-  const useAppDispatch: () => AppDispatch = useDispatch
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   return useMemo(
     () => bindActionCreators<T, RemapActionCreators<T>>(actions, dispatch),
