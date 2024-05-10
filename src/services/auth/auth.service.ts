@@ -46,9 +46,6 @@ export const authService = baseApi.injectEndpoints({
       },
 
       query: () => ({
-        // header: {
-        //   Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        // },
         method: 'POST',
         url: '/v1/auth/logout',
       }),

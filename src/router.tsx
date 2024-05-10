@@ -17,9 +17,11 @@ import {
   SignUpPage,
 } from '@/components/pages'
 import { LogInPage } from '@/components/pages/log-in/log-in-page'
+import { Loader } from '@/components/ui'
 import { DeckPage } from '@/features/decks-cards/deck/deck-page/deck-page'
 import { DecksPage } from '@/features/decks-cards/decks/decks-page/decks-page'
 import { LearnPage } from '@/features/learn/learn-page/learn-page'
+import { useGetMeQuery } from '@/services/auth/auth.service'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -94,7 +96,13 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = true
+  const { data, isLoading: loading } = useGetMeQuery()
+
+  const isAuthenticated = !!data && !('success' in data)
+
+  if (loading) {
+    return <Loader />
+  }
 
   return isAuthenticated ? <Outlet /> : <Navigate to={ROUTES.signIn} />
 }

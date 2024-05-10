@@ -4,8 +4,9 @@ import { ROUTES } from '@/common/consts/routes'
 
 export type NoAuthRoute =
   | typeof ROUTES.checkEmail
-  | typeof ROUTES.forgotPassword
+  | typeof ROUTES.createPassword
   // | typeof ROUTES.resetPassword
+  | typeof ROUTES.forgotPassword
   | typeof ROUTES.signIn
   | typeof ROUTES.signUp
 
@@ -17,6 +18,7 @@ export const useNoAuthRoutes = (): boolean => {
     ROUTES.signIn,
     ROUTES.forgotPassword,
     // ROUTES.resetPassword,
+    ROUTES.createPassword,
   ]
 
   return noAuthNeededRoutes.includes(location.pathname as NoAuthRoute)

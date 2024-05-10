@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import { ROUTES } from '@/common/consts/routes'
 import { useErrorsNotification } from '@/common/hooks/use-errors-notification'
@@ -9,7 +9,6 @@ import { useSignUpMutation } from '@/services/auth/auth.service'
 import { Registration } from '@/services/auth/auth.types'
 
 export const SignUpPage = () => {
-  const navigate = useNavigate()
   const [signUp, { data: signUpData, error, isSuccess: success }] = useSignUpMutation()
 
   const onSubmit = async (data: Registration) => {
@@ -38,10 +37,12 @@ export const SignUpPage = () => {
   useEffect(() => {
     if (success && signUpData?.email) {
       sessionStorage.setItem('email', signUpData.email)
-
-      navigate(ROUTES.checkEmail)
     }
-  }, [success, signUpData, navigate])
+  }, [success, signUpData])
+
+  if (success) {
+    return <Navigate replace to={ROUTES.checkEmail} />
+  }
 
   return (
     <Page>

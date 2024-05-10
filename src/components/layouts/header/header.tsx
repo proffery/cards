@@ -5,11 +5,7 @@ import { PrivateHeader } from '@/components/layouts/header/privatHeader'
 import { PublicHeader } from '@/components/layouts/header/publicHeader'
 
 export const Header = memo(() => {
-  const needsAuth = useNoAuthRoutes()
+  const isNoAuthRoute = useNoAuthRoutes()
 
-  if (needsAuth) {
-    return <PublicHeader />
-  }
-
-  return <PrivateHeader />
+  return isNoAuthRoute ? <PublicHeader /> : <PrivateHeader />
 })
