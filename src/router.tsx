@@ -69,28 +69,6 @@ const privateRoutes: RouteObject[] = [
   },
 ]
 
-export const router = createBrowserRouter([
-  {
-    children: [
-      {
-        children: privateRoutes,
-        element: <PrivateRoutes />,
-      },
-      ...publicRoutes,
-    ],
-    element: (
-      <Layout>
-        <Outlet />
-      </Layout>
-    ),
-    errorElement: <ErrorPage />,
-  },
-])
-
-export const Router = () => {
-  return <RouterProvider router={router} />
-}
-
 function PrivateRoutes() {
   const { data, isLoading: loading } = useGetMeQuery()
 
@@ -101,4 +79,28 @@ function PrivateRoutes() {
   }
 
   return isAuthenticated ? <Outlet /> : <Navigate to={ROUTES.signIn} />
+}
+
+export const router = createBrowserRouter([
+  {
+    children: [
+      ...publicRoutes,
+      {
+        children: privateRoutes,
+        element: <PrivateRoutes />,
+      },
+    ],
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+
+    errorElement: <ErrorPage />,
+    path: ROUTES.base,
+  },
+])
+
+export const Router = () => {
+  return <RouterProvider router={router} />
 }
