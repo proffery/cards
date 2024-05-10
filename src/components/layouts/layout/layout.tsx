@@ -2,10 +2,10 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 import { useSelector } from 'react-redux'
 import { Outlet } from 'react-router-dom'
 
+import { useAuthData } from '@/common/hooks/use-auth-layout'
 import { Header } from '@/components/layouts/header/header'
 import { Loader } from '@/components/ui'
 import { selectAppIsLoading } from '@/services/app/app.selectors'
-import { useGetMeQuery, useLogoutMutation } from '@/services/auth/auth.service'
 import clsx from 'clsx'
 
 import s from './layout.module.scss'
@@ -14,17 +14,8 @@ type Props = ComponentPropsWithoutRef<'div'>
 
 export const Layout = forwardRef<ElementRef<'div'>, Props>(
   ({ children, className, ...rest }, ref) => {
-    const { data } = useGetMeQuery()
-
-    const [logout] = useLogoutMutation()
-
-    const headerData =
-      data && !('success' in data)
-        ? {
-            ...data,
-          }
-        : null
-
+    const token = localStorage.getItem('accessToken') // Get token as per your application's strategy
+    const { headerData, logout } = useAuthData(token)
     const isLoading = useSelector(selectAppIsLoading)
 
     const classNames = {

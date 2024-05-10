@@ -1,4 +1,3 @@
-// Import necessary modules and types
 import { baseApi } from '@/services/base-api'
 
 import {
