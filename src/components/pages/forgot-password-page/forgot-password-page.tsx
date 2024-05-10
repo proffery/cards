@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { ROUTES } from '@/common/consts/routes'
@@ -10,11 +11,11 @@ import { RecoverPassword } from '@/services/auth/auth.types'
 
 export const ForgotPasswordPage = () => {
   const [recoverPassword, { error, isSuccess: success }] = useRecoverPasswordMutation()
+  const [email, setEmail] = useState<null | string>(null)
 
   const onSubmit = async (data: RecoverPassword) => {
-    const { email } = data
-
-    await recoverPassword({ email }).unwrap()
+    setEmail(data.email)
+    await recoverPassword({ email: data.email }).unwrap()
   }
 
   let errorMessage = ''
@@ -28,8 +29,14 @@ export const ForgotPasswordPage = () => {
   useErrorsNotification(error)
   useSuccessNotification(success, 'Email has been sent')
 
+  useEffect(() => {
+    if (success && email) {
+      sessionStorage.setItem('email', email)
+    }
+  }, [success, email])
+
   if (success) {
-    return <Navigate replace to={ROUTES.signIn} />
+    return <Navigate replace to={ROUTES.checkEmail} />
   }
 
   return (
