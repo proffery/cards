@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
@@ -12,15 +13,24 @@ import { createPasswordSchema } from './schema'
 
 type Props = {
   onSubmit: (data: FormFields) => void
+  serverError?: string
 }
 type FormFields = z.infer<typeof createPasswordSchema>
-export const CreatePassword = ({ onSubmit }: Props) => {
-  const { control, handleSubmit } = useForm<FormFields>({
+export const CreatePassword = ({ onSubmit, serverError }: Props) => {
+  const { clearErrors, control, handleSubmit, setError } = useForm<FormFields>({
     defaultValues: {
       password: '',
     },
     resolver: zodResolver(createPasswordSchema),
   })
+
+  useEffect(() => {
+    if (serverError) {
+      setError('password', { message: serverError, type: 'server' })
+    } else {
+      clearErrors(['password'])
+    }
+  }, [serverError, setError, clearErrors])
 
   const classNames = {
     description: clsx(s.description),
