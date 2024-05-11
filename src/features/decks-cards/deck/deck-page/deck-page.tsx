@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
+import { ROUTES } from '@/common/consts/routes'
 import { useRandomPlaceholder } from '@/common/hooks'
 import { useErrorsNotification } from '@/common/hooks/use-errors-notification'
 import { Page } from '@/components/layouts'
@@ -19,6 +20,7 @@ import {
   TableCards,
   useCardsFilters,
 } from '@/features/decks-cards'
+import { router } from '@/router'
 import { selectAppIsLoading } from '@/services/app/app.selectors'
 import { useGetMeQuery } from '@/services/auth/auth.service'
 import {
@@ -104,10 +106,10 @@ export const DeckPage = () => {
   const isLoading = useSelector(selectAppIsLoading)
 
   const onDeleteDeckConfirm = () => {
-    deleteDeck({ deckId: deckData?.id ?? '' })
+    deleteDeck({ deckId: deckData?.id ?? '' }).then(() => router.navigate(ROUTES.base))
   }
   const onEditDeckConfirm = (data: AddDeckFormFields) => {
-    updateDeck({ ...data, deckId: deckData?.id ?? '' })
+    updateDeck({ updateDeckParams: { ...data, deckId: deckData?.id } })
   }
   const onNewCardConfirm = (data: AddCardFormFields) => {
     createCard({ ...data, deckId: deckData?.id ?? '' })
@@ -124,7 +126,14 @@ export const DeckPage = () => {
     setDeleteCardIsOpen(true)
   }
   const onDeleteCardConfirm = () => {
-    deleteCard({ cardId: openedCardId })
+    deleteCard({
+      cardId: openedCardId,
+      currentPage: currentPage ?? undefined,
+      deckId,
+      itemsPerPage: itemsPerPage,
+      orderBy: `${orderField}-${orderDirection}`,
+      question: debouncedSearch ?? '',
+    })
     clearOpenedValues()
   }
   const onEditCardOpen = (cardId: string, defaultValues: EditCardDefaultValues) => {
@@ -133,7 +142,17 @@ export const DeckPage = () => {
     setEditCardIsOpen(true)
   }
   const onEditCardConfirm = (data: AddCardFormFields) => {
-    updateCard({ ...data, cardId: openedCardId })
+    updateCard({
+      cardId: openedCardId,
+      cardsParams: {
+        currentPage: currentPage ?? undefined,
+        deckId: deckId,
+        itemsPerPage: itemsPerPage,
+        orderBy: `${orderField}-${orderDirection}`,
+        question: debouncedSearch ?? '',
+      },
+      updateCardsParams: { ...data },
+    })
     clearOpenedValues()
   }
   const onCardsSort = (orderDirection: SortDirection, orderField: string) => {
@@ -200,14 +219,15 @@ export const DeckPage = () => {
       <div className={classNames.topContainer}>
         <Typography.H1 className={classNames.deckName}>
           {deckData?.name}
-          {cards && cards.items.length > 0 && (
+          {cards && cards?.items?.length > 0 ? (
             <MenuDeck
+              cardsNumber={cards?.items?.length}
               deckId={deckId}
               isOwner={isDeckOwner}
               onDelete={() => setDeleteDeckIsOpen(true)}
               onEdit={() => setEditDeckIsOpen(true)}
             />
-          )}
+          ) : null}
         </Typography.H1>
         {isDeckOwner && (
           <Button disabled={isLoading} onClick={() => setNewCardIsOpen(true)}>

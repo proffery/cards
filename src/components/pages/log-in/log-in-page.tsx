@@ -5,11 +5,13 @@ import { useErrorsNotification } from '@/common/hooks/use-errors-notification'
 import { useSuccessNotification } from '@/common/hooks/use-success-notification'
 import { SignIn } from '@/components/forms/sign-in/sign-in'
 import { Page } from '@/components/layouts'
-import { useLoginMutation } from '@/services/auth/auth.service'
+import { useGetMeQuery, useLoginMutation } from '@/services/auth/auth.service'
 import { LoginReq } from '@/services/auth/auth.types'
 
 export const LogInPage = () => {
   const [login, { error, isSuccess: success }] = useLoginMutation()
+  const { data: me } = useGetMeQuery()
+
   const onSubmit = async (data: LoginReq) => {
     await login(data).unwrap()
   }
@@ -25,7 +27,7 @@ export const LogInPage = () => {
   useErrorsNotification(error)
   useSuccessNotification(success, 'You are successfully logged in!')
 
-  if (success) {
+  if (me && !('success' in me)) {
     return <Navigate replace to={ROUTES.base} />
   }
 

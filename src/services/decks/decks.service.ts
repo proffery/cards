@@ -1,3 +1,5 @@
+import { errorNotification } from '@/common/utils/errors-notification'
+import { successNotification } from '@/common/utils/success-notification'
 import { baseApi } from '@/services/base-api'
 import {
   CreateDeckParams,
@@ -30,8 +32,27 @@ const decksService = baseApi.injectEndpoints({
         }
       },
     }),
-    deleteDeck: builder.mutation<Deck, DeleteDeckArgs>({
-      invalidatesTags: ['Decks'],
+    deleteDeck: builder.mutation<Deck, DeleteDeckArgs & DecksParams>({
+      invalidatesTags: ['Deck'],
+      async onQueryStarted({ deckId, ...args }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          decksService.util.updateQueryData('getDecks', args, draft => {
+            const index = draft.items.findIndex(deck => deck.id === deckId)
+
+            if (index !== -1) {
+              draft.items.splice(index, 1)
+            }
+          })
+        )
+
+        try {
+          await queryFulfilled
+          successNotification('Deck successfully deleted!')
+        } catch (error) {
+          errorNotification(error)
+          patchResult?.undo()
+        }
+      },
       query: ({ deckId }) => ({
         method: 'DELETE',
         url: `v1/decks/${deckId}`,
@@ -55,22 +76,45 @@ const decksService = baseApi.injectEndpoints({
       query: () => `/v2/decks/min-max-cards`,
     }),
     updateDeck: builder.mutation<Deck, UpdateDeckParams>({
-      invalidatesTags: ['Decks'],
-      query: ({ deckId, ...args }) => {
+      invalidatesTags: ['Deck'],
+      async onQueryStarted({ getDecksParams, updateDeckParams }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          decksService.util.updateQueryData('getDecks', getDecksParams, draft => {
+            const deckIndex = draft?.items?.findIndex(deck => deck?.id === updateDeckParams?.deckId)
+
+            if (deckIndex !== -1) {
+              draft.items[deckIndex].cover = updateDeckParams.cover
+                ? URL.createObjectURL(updateDeckParams.cover)
+                : draft.items[deckIndex].cover
+              draft.items[deckIndex].isPrivate = updateDeckParams.isPrivate
+              draft.items[deckIndex].name = updateDeckParams.name
+            }
+          })
+        )
+
+        try {
+          await queryFulfilled
+          successNotification('Deck successfully updated!')
+        } catch (error) {
+          errorNotification(error)
+          patchResult?.undo()
+        }
+      },
+      query: ({ updateDeckParams }) => {
         const formData = new FormData()
 
-        if (args.name) {
-          formData.append('name', args.name)
+        if (updateDeckParams.name) {
+          formData.append('name', updateDeckParams.name)
         }
-        formData.append('isPrivate', String(args.isPrivate))
-        if (args.cover) {
-          formData.append('cover', args.cover)
+        formData.append('isPrivate', String(updateDeckParams.isPrivate))
+        if (updateDeckParams.cover) {
+          formData.append('cover', updateDeckParams.cover)
         }
 
         return {
           body: formData,
           method: 'PATCH',
-          url: `/v1/decks/${deckId}`,
+          url: `/v1/decks/${updateDeckParams.deckId}`,
         }
       },
     }),

@@ -103,6 +103,7 @@ export const authService = baseApi.injectEndpoints({
     }),
 
     verifyEmail: builder.mutation<void, EmailVerification>({
+      invalidatesTags: ['Auth'],
       query: body => ({
         body,
         method: 'POST',

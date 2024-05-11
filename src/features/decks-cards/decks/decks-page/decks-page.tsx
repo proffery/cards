@@ -48,9 +48,7 @@ export const DecksPage = () => {
     tabSwitcher: clsx(s.tabSwitcher),
     topContainer: clsx(s.topContainer),
   }
-
   const navigate = useNavigate()
-
   const [openedName, setOpenedName] = useState('')
   const [openedId, setOpenedId] = useState('')
   const [openedCover, setOpenedCover] = useState<null | string>(null)
@@ -59,7 +57,6 @@ export const DecksPage = () => {
   const [deleteIsOpen, setDeleteIsOpen] = useState(false)
   const [editIsOpen, setEditIsOpen] = useState(false)
   const [newIsOpen, setNewIsOpen] = useState(false)
-
   const [minMaxCardsCount, setMinMaxCardsCount] = useState<number[]>([0, 99])
 
   const {
@@ -109,16 +106,12 @@ export const DecksPage = () => {
     name: debouncedSearch ?? '',
     orderBy: `${orderField}-${orderDirection}`,
   })
-
   const decks = currentDecksData ?? decksData
-
   const [createDeck, { error: createDeckError }] = useCreateDeckMutation()
-  const [deleteDeck, { error: deleteDeckError }] = useDeleteDeckMutation()
-  const [updateDeck, { error: updateDeckError }] = useUpdateDeckMutation()
+  const [deleteDeck] = useDeleteDeckMutation()
+  const [updateDeck] = useUpdateDeckMutation()
 
-  useErrorsNotification(
-    deleteDeckError || createDeckError || updateDeckError || getDecksError || getMinMaxError
-  )
+  useErrorsNotification(createDeckError || getDecksError || getMinMaxError)
 
   const isLoading = useSelector(selectAppIsLoading)
 
@@ -137,7 +130,16 @@ export const DecksPage = () => {
     setOpenedId(deckId)
   }
   const onDeleteConfirm = () => {
-    deleteDeck({ deckId: openedId })
+    deleteDeck({
+      authorId: authorId,
+      currentPage: currentPage ?? undefined,
+      deckId: openedId,
+      itemsPerPage: +itemsPerPage,
+      maxCardsCount: maxCardsCount ?? undefined,
+      minCardsCount: minCardsCount ?? undefined,
+      name: debouncedSearch ?? '',
+      orderBy: `${orderField}-${orderDirection}`,
+    })
     clearOpenedValues()
   }
   const onEditOpen = (deckId: string, cover: null | string, name: string, isPrivate: boolean) => {
@@ -148,7 +150,18 @@ export const DecksPage = () => {
     setEditIsOpen(true)
   }
   const onEditConfirm = (data: AddDeckFormFields) => {
-    updateDeck({ ...data, deckId: openedId })
+    updateDeck({
+      getDecksParams: {
+        authorId: authorId,
+        currentPage: currentPage ?? undefined,
+        itemsPerPage: +itemsPerPage,
+        maxCardsCount: maxCardsCount ?? undefined,
+        minCardsCount: minCardsCount ?? undefined,
+        name: debouncedSearch ?? '',
+        orderBy: `${orderField}-${orderDirection}`,
+      },
+      updateDeckParams: { ...data, deckId: openedId },
+    })
     clearOpenedValues()
   }
   const onNewConfirm = (data: AddDeckFormFields) => {

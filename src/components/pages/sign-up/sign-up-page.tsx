@@ -1,15 +1,19 @@
 import { useEffect } from 'react'
-import { Navigate } from 'react-router-dom'
 
 import { ROUTES } from '@/common/consts/routes'
 import { useErrorsNotification } from '@/common/hooks/use-errors-notification'
+import { useSuccessNotification } from '@/common/hooks/use-success-notification'
 import { SignUp } from '@/components/forms'
 import { Page } from '@/components/layouts'
+import { router } from '@/router'
 import { useSignUpMutation } from '@/services/auth/auth.service'
 import { Registration } from '@/services/auth/auth.types'
 
 export const SignUpPage = () => {
   const [signUp, { data: signUpData, error, isSuccess: success }] = useSignUpMutation()
+
+  useErrorsNotification(error)
+  useSuccessNotification(success, 'Account successfully created!')
 
   const onSubmit = async (data: Registration) => {
     const { email, password, sendConfirmationEmail, ...rest } = data
@@ -22,6 +26,7 @@ export const SignUpPage = () => {
     }
 
     await signUp(registrationData).unwrap()
+    await router.navigate(ROUTES.checkEmail)
   }
 
   let errorMessage = ''
@@ -32,17 +37,11 @@ export const SignUpPage = () => {
       : 'An unknown error occurred'
   }
 
-  useErrorsNotification(error)
-
   useEffect(() => {
     if (success && signUpData?.email) {
       sessionStorage.setItem('email', signUpData.email)
     }
   }, [success, signUpData])
-
-  if (success) {
-    return <Navigate replace to={ROUTES.checkEmail} />
-  }
 
   return (
     <Page>

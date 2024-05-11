@@ -13,11 +13,18 @@ type Story = StoryObj<typeof meta>
 
 export const EditProfileForm: Story = {
   args: {
-    avatarUrl: '',
-    email: 'john@doe.com',
-    name: 'John Doe',
     onAvatarChange: fn(),
     onLogout: fn(),
+    onSendVerification: fn(),
     onSubmit: fn(),
+    userData: {
+      avatar: '',
+      created: new Date().toISOString(),
+      email: 'john@doe.com',
+      id: '1',
+      isEmailVerified: false,
+      name: 'John Doe',
+      updated: new Date().toISOString(),
+    },
   },
 }

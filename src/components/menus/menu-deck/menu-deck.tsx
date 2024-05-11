@@ -5,6 +5,7 @@ import { ROUTES } from '@/common/consts/routes'
 import { DropdownItem, DropdownMenu, DropdownSeparator } from '@/components/ui'
 
 type MenuDeckProps = {
+  cardsNumber?: number
   deckId?: string
   isOwner?: boolean
   onDelete: () => void
@@ -22,22 +23,28 @@ export const MenuDeck = (props: MenuDeckProps) => {
         triangleRight={triangleRight}
         trigger={<MoreVertical />}
       >
-        <DropdownItem asChild>
-          <Link to={`${ROUTES.decks}/${deckId}${ROUTES.learn}`}>
-            <Play />
-            Learn
-          </Link>
-        </DropdownItem>
+        {props.cardsNumber && props.cardsNumber > 0 ? (
+          <DropdownItem asChild>
+            <Link to={`${ROUTES.decks}/${deckId}${ROUTES.learn}`}>
+              <Play />
+              Learn
+            </Link>
+          </DropdownItem>
+        ) : null}
         {isOwner && (
           <>
-            <DropdownSeparator />
-            <DropdownItem asChild>
-              <button onClick={onEdit}>
-                <Edit />
-                Edit
-              </button>
-            </DropdownItem>
-            <DropdownSeparator />
+            {props.cardsNumber && props.cardsNumber > 0 ? (
+              <>
+                <DropdownSeparator />
+                <DropdownItem asChild>
+                  <button onClick={onEdit}>
+                    <Edit />
+                    Edit
+                  </button>
+                </DropdownItem>
+                <DropdownSeparator />
+              </>
+            ) : null}
             <DropdownItem asChild>
               <button onClick={onDelete}>
                 <Trash />

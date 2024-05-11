@@ -5,28 +5,23 @@ import { fn } from '@storybook/test'
 const meta = {
   component: Header,
   tags: ['autodocs'],
-  title: 'Layouts/Header',
+  title: 'Components/Header',
 } satisfies Meta<typeof Header>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const HeaderLogged: Story = {
+export const HeaderDefault: Story = {
   args: {
-    avatarUrl: '',
-    email: 'john@doe.com',
-    isLoggedIn: true,
-    onLogout: fn(),
-    userName: 'John Doe',
-  },
-}
-
-export const HeaderNotLogged: Story = {
-  args: {
-    avatarUrl: '',
-    email: 'john@doe.com',
-    isLoggedIn: false,
-    onLogout: fn(),
-    userName: 'John Doe',
+    data: {
+      avatar: '',
+      created: new Date().toDateString(),
+      email: 'john@doe.com',
+      id: '1',
+      isEmailVerified: true,
+      name: 'John Doe',
+      updated: new Date().toISOString(),
+    },
+    logout: fn(),
   },
 }
