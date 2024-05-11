@@ -4,6 +4,7 @@ import {
   ElementType,
   ForwardedRef,
   ReactNode,
+  Ref,
   forwardRef,
 } from 'react'
 
@@ -16,18 +17,20 @@ type ButtonProps<T extends ElementType = 'button'> = {
   children: ReactNode
   className?: string
   fullWidth?: boolean
+  type?: T extends 'button' ? 'button' | 'reset' | 'submit' : never
   variant?: 'primary' | 'secondary'
 } & ComponentPropsWithoutRef<T>
 
 const ButtonComponent = <T extends ElementType = 'button'>(
   props: ButtonProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>,
-  ref: ElementRef<T>
+  ref: Ref<HTMLButtonElement>
 ) => {
   const {
     as: Component = 'button',
     className,
-    disabled,
+    disabled = false,
     fullWidth,
+    type,
     variant = 'primary',
     ...rest
   } = props
@@ -41,8 +44,15 @@ const ButtonComponent = <T extends ElementType = 'button'>(
     ),
   }
 
-  // @ts-ignore
-  return <Component className={classNames.component} {...rest} ref={ref} />
+  return (
+    <Component
+      className={classNames.component}
+      {...rest}
+      disabled={disabled}
+      ref={ref}
+      type={type}
+    />
+  )
 }
 
 export const Button = forwardRef(ButtonComponent) as <T extends ElementType = 'button'>(

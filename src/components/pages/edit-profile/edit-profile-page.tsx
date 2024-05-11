@@ -34,15 +34,15 @@ export const EditProfilePage = () => {
   useSuccessNotification(verificationEmailSent, 'Verification email has been sent.')
 
   const onAvatarChange = async (avatar: File) => {
-    await updateUser({ avatar: avatar })
+    await updateUser({ avatar: avatar }).unwrap()
   }
 
-  const onLogout = () => {
-    logout()
+  const onLogout = async () => {
+    await logout().unwrap()
   }
 
   const onSubmit = async (data: EditProfileFormFields) => {
-    await updateUser(data)
+    await updateUser(data).unwrap()
   }
 
   return (

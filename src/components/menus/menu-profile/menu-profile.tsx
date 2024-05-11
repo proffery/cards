@@ -52,7 +52,7 @@ export const MenuProfile = (props: MenuProfileProps) => {
       </DropdownItem>
       <DropdownSeparator />
       <DropdownItem asChild>
-        <button onClick={onLogout}>
+        <button onClick={onLogout} type={'submit'}>
           <Logout />
           Log Out
         </button>

@@ -50,7 +50,7 @@ export const ForgotPassword = ({ onSubmit, serverError }: Props) => {
         <Typography.Subtitle2 className={s.enterEmail}>
           Enter your email address and we will send you further instructions
         </Typography.Subtitle2>
-        <Button className={classNames.submitButton} fullWidth>
+        <Button className={classNames.submitButton} fullWidth type={'submit'}>
           Send Instructions
         </Button>
       </form>

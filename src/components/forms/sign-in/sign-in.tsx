@@ -67,11 +67,11 @@ export const SignIn = ({ onSubmit, serverError }: Props) => {
             Forgot Password?
           </Typography.Body2>
         </div>
-        <Button className={classNames.submitButton} fullWidth>
+        <Button className={classNames.submitButton} fullWidth type={'submit'}>
           Sign In
         </Button>
       </form>
-      <Typography.Body2 className={s.text}>Don't have an account?</Typography.Body2>
+      <Typography.Body2 className={s.text}>Don&apos;t have an account?</Typography.Body2>
       <Typography.Link3 as={Link} className={classNames.signInButton} to={ROUTES.signUp}>
         Sign Up
       </Typography.Link3>
