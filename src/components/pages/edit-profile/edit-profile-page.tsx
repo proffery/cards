@@ -6,6 +6,7 @@ import { BackLink } from '@/components/ui'
 import {
   useGetMeQuery,
   useLogoutMutation,
+  useResendVerificationEmailMutation,
   useUpdateUserMutation,
 } from '@/services/auth/auth.service'
 import clsx from 'clsx'
@@ -21,9 +22,16 @@ export const EditProfilePage = () => {
   const [updateUser, { error: updateUserError, isSuccess: updateUserSuccess }] =
     useUpdateUserMutation()
 
+  const [
+    resendVerificationEmail,
+    { error: verificationEmailError, isSuccess: verificationEmailSent },
+  ] = useResendVerificationEmailMutation()
+
+  useErrorsNotification(verificationEmailError)
   useErrorsNotification(updateUserError)
   useSuccessNotification(updateUserSuccess, 'Profile updated!')
   useSuccessNotification(logoutSuccess, 'You are successfully logged out!')
+  useSuccessNotification(verificationEmailSent, 'Verification email has been sent.')
 
   const onAvatarChange = async (avatar: File) => {
     await updateUser({ avatar: avatar })
@@ -41,12 +49,11 @@ export const EditProfilePage = () => {
     <Page className={classNames.root} marginTop={24}>
       <BackLink text={'Go back'} />
       <EditProfile
-        avatarUrl={userData?.avatar}
-        email={userData?.email}
-        name={userData?.name}
         onAvatarChange={onAvatarChange}
         onLogout={onLogout}
+        onSendVerification={resendVerificationEmail}
         onSubmit={onSubmit}
+        userData={userData}
       />
     </Page>
   )

@@ -1,5 +1,3 @@
-import { ROUTES } from '@/common/consts/routes'
-import { router } from '@/router'
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, fetchBaseQuery } from '@reduxjs/toolkit/query'
 import { Mutex } from 'async-mutex'
 
@@ -55,7 +53,7 @@ export const baseQueryWithReauth: BaseQueryFn<
           result = await baseQuery(args, api, extraOptions)
         }
       } else {
-        await router.navigate(ROUTES.signIn)
+        //await router.navigate(ROUTES.signIn)
       }
       release()
     } else {

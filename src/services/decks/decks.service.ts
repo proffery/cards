@@ -33,6 +33,7 @@ const decksService = baseApi.injectEndpoints({
       },
     }),
     deleteDeck: builder.mutation<Deck, DeleteDeckArgs & DecksParams>({
+      invalidatesTags: ['Deck'],
       async onQueryStarted({ deckId, ...args }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           decksService.util.updateQueryData('getDecks', args, draft => {

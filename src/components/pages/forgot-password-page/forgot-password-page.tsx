@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Navigate } from 'react-router-dom'
 
 import { ROUTES } from '@/common/consts/routes'
 import { useErrorsNotification } from '@/common/hooks/use-errors-notification'
 import { useSuccessNotification } from '@/common/hooks/use-success-notification'
 import { ForgotPassword } from '@/components/forms'
 import { Page } from '@/components/layouts'
+import { router } from '@/router'
 import { useRecoverPasswordMutation } from '@/services/auth/auth.service'
 import { RecoverPassword } from '@/services/auth/auth.types'
 
@@ -16,6 +16,7 @@ export const ForgotPasswordPage = () => {
   const onSubmit = async (data: RecoverPassword) => {
     setEmail(data.email)
     await recoverPassword({ email: data.email }).unwrap()
+    await router.navigate(ROUTES.checkEmail)
   }
 
   let errorMessage = ''
@@ -34,10 +35,6 @@ export const ForgotPasswordPage = () => {
       sessionStorage.setItem('email', email)
     }
   }, [success, email])
-
-  if (success) {
-    return <Navigate replace to={ROUTES.checkEmail} />
-  }
 
   return (
     <Page>

@@ -5,6 +5,7 @@ import { Edit, Logout } from '@/assets/icons'
 import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { editProfileSchema } from '@/components/forms/edit-profile/schema'
 import { Avatar, Button, Card, Typography } from '@/components/ui'
+import { GetUser, ResendVerificationEmail } from '@/services/auth/auth.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import { z } from 'zod'
@@ -13,24 +14,22 @@ import s from '../forms.module.scss'
 import s2 from './edit-profile.module.scss'
 
 type Props = {
-  avatarUrl?: string
-  email?: string
-  name?: string
   onAvatarChange: (data: File) => void
   onLogout: () => void
+  onSendVerification: (data: ResendVerificationEmail) => void
   onSubmit: (data: EditProfileFormFields) => void
+  userData?: GetUser
 }
 export type EditProfileFormFields = z.infer<typeof editProfileSchema>
 export const EditProfile = ({
-  avatarUrl,
-  email,
-  name,
   onAvatarChange,
   onLogout,
+  onSendVerification,
   onSubmit,
+  userData,
 }: Props) => {
   const { control, handleSubmit } = useForm<EditProfileFormFields>({
-    defaultValues: { name: name },
+    defaultValues: { name: userData?.name },
     resolver: zodResolver(editProfileSchema),
   })
 
@@ -53,12 +52,21 @@ export const EditProfile = ({
     e.currentTarget?.files && onAvatarChange(e.currentTarget?.files[0])
   }
 
+  const verificationEmailHandler = () => {
+    userData && onSendVerification({ userId: userData?.id })
+  }
+
   return (
     <Card className={classNames.root}>
       <Typography.H1>Personal Information</Typography.H1>
       {editMode ? (
         <>
-          <Avatar className={classNames.avatar} name={name} size={'l'} url={avatarUrl} />
+          <Avatar
+            className={classNames.avatar}
+            name={userData?.name}
+            size={'l'}
+            url={userData?.avatar}
+          />
           <form
             className={classNames.form}
             onSubmit={handleSubmit(data => {
@@ -69,7 +77,7 @@ export const EditProfile = ({
             <ControlledInput
               autoFocus
               control={control}
-              defaultValue={name}
+              defaultValue={userData?.name}
               fullWidth
               label={'Nickname'}
               name={'name'}
@@ -90,7 +98,12 @@ export const EditProfile = ({
         <>
           <form className={classNames.form}>
             <div className={classNames.editAvatarContainer}>
-              <Avatar className={classNames.avatar} name={name} size={'l'} url={avatarUrl} />
+              <Avatar
+                className={classNames.avatar}
+                name={userData?.name}
+                size={'l'}
+                url={userData?.avatar}
+              />
               <label className={classNames.editLabel} htmlFor={'avatar'} title={'Upload photo'}>
                 <input
                   accept={'image/*'}
@@ -103,7 +116,7 @@ export const EditProfile = ({
               </label>
             </div>
             <Typography.H2 as={'span'} className={classNames.nameContainer}>
-              {name}
+              {userData?.name}
               <button
                 className={classNames.editButton}
                 onClick={() => setEditMode(true)}
@@ -112,11 +125,23 @@ export const EditProfile = ({
                 <Edit size={16} />
               </button>
             </Typography.H2>
-            <Typography.Body2 className={classNames.description}>{email}</Typography.Body2>
+            <Typography.Body2 className={classNames.description}>
+              {`${userData?.email} ${!userData?.isEmailVerified ? '(not verified)' : ''}`}
+            </Typography.Body2>
+            {!userData?.isEmailVerified && (
+              <Button
+                className={classNames.logoutButton}
+                onClick={verificationEmailHandler}
+                type={'button'}
+              >
+                Send verification email
+              </Button>
+            )}
             <Button
               className={classNames.logoutButton}
               onClick={onLogout}
               title={'Logout'}
+              type={'submit'}
               variant={'secondary'}
             >
               <Logout /> Logout

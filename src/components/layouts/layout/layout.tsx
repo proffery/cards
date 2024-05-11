@@ -14,14 +14,16 @@ type Props = ComponentPropsWithoutRef<'div'>
 
 export const Layout = forwardRef<ElementRef<'div'>, Props>(
   ({ children, className, ...rest }, ref) => {
-    const token = localStorage.getItem('accessToken') // Get token as per your application's strategy
-    const { headerData, logout } = useAuthData(token)
-    const isLoading = useSelector(selectAppIsLoading)
-
     const classNames = {
       main: clsx(s.main),
       root: clsx(s.layout),
     }
+
+    const token = localStorage.getItem('accessToken') // Get token as per your application's strategy
+
+    const { headerData, logout } = useAuthData(token)
+
+    const isLoading = useSelector(selectAppIsLoading)
 
     return (
       <div ref={ref} {...rest} className={classNames.root}>

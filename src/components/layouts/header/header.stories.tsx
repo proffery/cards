@@ -5,7 +5,7 @@ import { fn } from '@storybook/test'
 const meta = {
   component: Header,
   tags: ['autodocs'],
-  title: 'Layouts/Header',
+  title: 'Components/Header',
 } satisfies Meta<typeof Header>
 
 export default meta

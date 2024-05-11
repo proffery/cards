@@ -16,8 +16,8 @@ import {
   ForgotPasswordPage,
   SignUpPage,
 } from '@/components/pages'
+import { ConfirmEmailPage } from '@/components/pages/confirm-email/confirm-email-page'
 import { LogInPage } from '@/components/pages/log-in/log-in-page'
-import { Loader } from '@/components/ui'
 import { DeckPage } from '@/features/decks-cards/deck/deck-page/deck-page'
 import { DecksPage } from '@/features/decks-cards/decks/decks-page/decks-page'
 import { LearnPage } from '@/features/learn/learn-page/learn-page'
@@ -43,6 +43,14 @@ const publicRoutes: RouteObject[] = [
   {
     element: <CreatePasswordPage />,
     path: `${ROUTES.createPassword}/:token`,
+  },
+  {
+    element: <ConfirmEmailPage />,
+    path: `${ROUTES.confirmEmail}/:token`,
+  },
+  {
+    element: <ErrorPage />,
+    path: ROUTES.rest,
   },
 ]
 
@@ -70,13 +78,8 @@ const privateRoutes: RouteObject[] = [
 ]
 
 function PrivateRoutes() {
-  const { data, isLoading: loading } = useGetMeQuery()
-
+  const { data } = useGetMeQuery()
   const isAuthenticated = !!data && !('success' in data)
-
-  if (loading) {
-    return <Loader />
-  }
 
   return isAuthenticated ? <Outlet /> : <Navigate to={ROUTES.signIn} />
 }
@@ -84,19 +87,13 @@ function PrivateRoutes() {
 export const router = createBrowserRouter([
   {
     children: [
-      ...publicRoutes,
       {
         children: privateRoutes,
         element: <PrivateRoutes />,
       },
+      ...publicRoutes,
     ],
-    element: (
-      <Layout>
-        <Outlet />
-      </Layout>
-    ),
-
-    errorElement: <ErrorPage />,
+    element: <Layout />,
     path: ROUTES.base,
   },
 ])
