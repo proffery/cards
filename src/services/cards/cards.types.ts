@@ -73,12 +73,11 @@ export type UpdateCardParams = {
 }
 
 export type SaveGradeParams = {
-  cardId: string
-  /**
-   * @min 1
-   * @max 5
-   */
-  grade: number
+  getRandomCardParams: GetRandomCardParams
+  saveGradeParams: {
+    cardId?: string
+    grade: number
+  }
 }
 
 export type CardsParams = {

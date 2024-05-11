@@ -49,7 +49,7 @@ export type CreateDeckParams = {
   name: string
 }
 export type UpdateDeckParams = {
-  getDecksParams: DecksParams
+  getDecksParams?: DecksParams
   updateDeckParams: {
     cover?: File
     deckId?: string

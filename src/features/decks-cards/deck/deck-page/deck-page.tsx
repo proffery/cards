@@ -107,7 +107,7 @@ export const DeckPage = () => {
     deleteDeck({ deckId: deckData?.id ?? '' })
   }
   const onEditDeckConfirm = (data: AddDeckFormFields) => {
-    updateDeck({ ...data, deckId: deckData?.id ?? '' })
+    updateDeck({ updateDeckParams: { ...data, deckId: deckData?.id } })
   }
   const onNewCardConfirm = (data: AddCardFormFields) => {
     createCard({ ...data, deckId: deckData?.id ?? '' })

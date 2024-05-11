@@ -1,15 +1,18 @@
 import { Navigate, useParams } from 'react-router-dom'
 
 import { ROUTES } from '@/common/consts/routes'
+import { useErrorsNotification } from '@/common/hooks/use-errors-notification'
+import { useSuccessNotification } from '@/common/hooks/use-success-notification'
 import { CreatePassword } from '@/components/forms'
 import { Page } from '@/components/layouts'
-import { Loader } from '@/components/ui'
 import { useResetPasswordMutation } from '@/services/auth/auth.service'
 import { ResetPassword } from '@/services/auth/auth.types'
 
 export const CreatePasswordPage = () => {
-  const [resetPassword, { error, isLoading: loading, isSuccess: success }] =
-    useResetPasswordMutation()
+  const [resetPassword, { error, isSuccess: success }] = useResetPasswordMutation()
+
+  useErrorsNotification(error)
+  useSuccessNotification(success, 'Password successfully changed!')
 
   const { token } = useParams<{ token: string }>()
 
@@ -37,7 +40,6 @@ export const CreatePasswordPage = () => {
 
   return (
     <Page>
-      {loading && <Loader />}
       <CreatePassword onSubmit={onSubmit} serverError={errorMessage} />
     </Page>
   )

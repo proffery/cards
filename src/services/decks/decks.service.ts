@@ -75,6 +75,7 @@ const decksService = baseApi.injectEndpoints({
       query: () => `/v2/decks/min-max-cards`,
     }),
     updateDeck: builder.mutation<Deck, UpdateDeckParams>({
+      invalidatesTags: ['Deck'],
       async onQueryStarted({ getDecksParams, updateDeckParams }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           decksService.util.updateQueryData('getDecks', getDecksParams, draft => {
@@ -83,7 +84,7 @@ const decksService = baseApi.injectEndpoints({
             if (deckIndex !== -1) {
               draft.items[deckIndex].cover = updateDeckParams.cover
                 ? URL.createObjectURL(updateDeckParams.cover)
-                : ''
+                : draft.items[deckIndex].cover
               draft.items[deckIndex].isPrivate = updateDeckParams.isPrivate
               draft.items[deckIndex].name = updateDeckParams.name
             }

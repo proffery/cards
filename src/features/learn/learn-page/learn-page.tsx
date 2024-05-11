@@ -31,21 +31,21 @@ export const LearnPage = () => {
   const params = useParams<{ deckId: string }>()
   const deckId = params.deckId
 
-  const [saveGrade, { data: prevCardData, error: saveCardGradeError }] = useSaveCardGradeMutation()
+  const [saveGrade] = useSaveCardGradeMutation()
 
   const { currentData: cardData, error: getRandomCardError } = useGetRandomCardQuery({
     deckId,
-    previousCardId: prevCardData?.id,
   })
 
   const { currentData: deckData, error: getDeckError } = useGetDeckQuery({ deckId })
 
-  useErrorsNotification(getDeckError || getRandomCardError || saveCardGradeError)
+  useErrorsNotification(getDeckError || getRandomCardError)
 
   const handleRateSubmit = (data: RateType) => {
-    if (data && cardData) {
-      saveGrade({ cardId: cardData.id, grade: +data.grade })
-    }
+    saveGrade({
+      getRandomCardParams: { deckId: deckId },
+      saveGradeParams: { cardId: cardData?.id, grade: +data.grade },
+    })
     setShowAnswer(false)
   }
   const isLoading = useSelector(selectAppIsLoading)
