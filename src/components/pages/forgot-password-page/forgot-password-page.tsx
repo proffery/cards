@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { emailRecoveringPasswordTemplate } from '@/common/consts/email-recovering-template'
 import { ROUTES } from '@/common/consts/routes'
 import { useErrorsNotification } from '@/common/hooks/use-errors-notification'
 import { useSuccessNotification } from '@/common/hooks/use-success-notification'
@@ -15,7 +16,7 @@ export const ForgotPasswordPage = () => {
 
   const onSubmit = async (data: RecoverPassword) => {
     setEmail(data.email)
-    await recoverPassword({ email: data.email }).unwrap()
+    await recoverPassword({ email: data.email, html: emailRecoveringPasswordTemplate }).unwrap()
     await router.navigate(ROUTES.checkEmail)
   }
 
