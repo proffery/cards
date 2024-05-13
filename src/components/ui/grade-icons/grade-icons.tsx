@@ -13,9 +13,9 @@ export const GradeIcons = ({ from, grade }: GradeProps) => {
     <div className={s.iconContainer}>
       {icons.map(icon =>
         icon < grade ? (
-          <Star className={s.icon} key={icon} size={16} />
+          <Star className={s.icon} key={icon} size={18} />
         ) : (
-          <StarOutline className={s.iconContainer} key={icon} size={16} />
+          <StarOutline className={s.icon} key={icon} size={18} />
         )
       )}
     </div>

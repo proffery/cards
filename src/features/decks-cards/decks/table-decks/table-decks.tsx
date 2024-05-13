@@ -122,7 +122,7 @@ export const TableDecks = ({
                   disabled={deck.cardsCount === 0 || disabled}
                   onClick={() => onDeckPlay(deck.id)}
                 >
-                  <Play size={16} />
+                  <Play size={18} />
                 </button>
                 {deck.author.id === authId && (
                   <button
@@ -130,7 +130,7 @@ export const TableDecks = ({
                     disabled={disabled}
                     onClick={() => onDeckEdit(deck.id, deck.cover, deck.name, deck.isPrivate)}
                   >
-                    <Edit size={16} />
+                    <Edit size={18} />
                   </button>
                 )}
                 {deck.author.id === authId && (
@@ -139,7 +139,7 @@ export const TableDecks = ({
                     disabled={disabled}
                     onClick={() => onDeckDelete(deck.id, deck.name)}
                   >
-                    <Trash size={16} />
+                    <Trash size={18} />
                   </button>
                 )}
               </div>
