@@ -1,13 +1,11 @@
 .icon {
-  svg {
-    width: 16px;
-    height: 16px;
-  }
+  display: flex;
+  align-items: center;
 }
 
 .iconContainer {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
   justify-content: left;
 
