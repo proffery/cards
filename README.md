@@ -29,7 +29,7 @@ This educational collective React TypeScript project is designed to enhance lear
 
 ### Creators
 - Front-end:
-    - [Dmitry Shamko](https://github.com/proffery/cards)
+    - [Dmitry Shamko](https://github.com/proffery)
     - [Oleksii Rozhko](https://github.com/r0leksii)
     - [Konstantin Vysochin](https://github.com/xaosland)
 - Back-end:
