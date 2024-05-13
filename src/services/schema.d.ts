@@ -325,7 +325,7 @@ export interface components {
        * @description HTML template to be sent in the email;
        *  ##name## will be replaced with the user's name;
        *  ##token## will be replaced with the password recovery token
-       * @example <b>Hello, ##name##!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="https://flashcards-proffery.vercel.app/confirm-email/##token##">Confirm email</a>. If it doesn't work, copy and paste the following link in your browser:<br/>http://localhost:3000/confirm-email/##token##
+       * @example <b>Hello, ##name##!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="https://flashcards-proffery.vercel.app/confirm-email/##token##">Confirm email</a>. If it doesn't work, copy and paste the following link in your browser:<br/>https://flashcards-proffery.vercel.app/confirm-email/##token##
        */
       html?: string;
       name?: string;
@@ -344,7 +344,7 @@ export interface components {
        * @description HTML template to be sent in the email;
        *  ##name## will be replaced with the user's name;
        *  ##token## will be replaced with the password recovery token
-       * @example <b>Hello, ##name##!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="http://flashcards-proffery.vercel.app/confirm-email/##token##">Confirm email</a>. If it doesn't work, copy and paste the following link in your browser:<br/>http://localhost:3000/confirm-email/##token##
+       * @example <b>Hello, ##name##!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="http://flashcards-proffery.vercel.app/confirm-email/##token##">Confirm email</a>. If it doesn't work, copy and paste the following link in your browser:<br/>https://flashcards-proffery.vercel.app/confirm-email/##token##
        */
       html?: string;
       /** @description Email subject */
