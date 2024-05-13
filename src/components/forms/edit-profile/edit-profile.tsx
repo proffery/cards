@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Edit, Logout } from '@/assets/icons'
+import { emailConfirmTemplate } from '@/common/consts/email-confirm-template'
 import { ControlledInput } from '@/components/controlled/controlled-input/controlled-input'
 import { editProfileSchema } from '@/components/forms/edit-profile/schema'
 import { Avatar, Button, Card, Typography } from '@/components/ui'
@@ -53,7 +54,7 @@ export const EditProfile = ({
   }
 
   const verificationEmailHandler = () => {
-    userData && onSendVerification({ userId: userData?.id })
+    userData && onSendVerification({ html: emailConfirmTemplate, userId: userData?.id })
   }
 
   return (

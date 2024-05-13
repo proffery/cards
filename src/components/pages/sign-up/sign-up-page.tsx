@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 
+import { emailConfirmTemplate } from '@/common/consts/email-confirm-template'
 import { ROUTES } from '@/common/consts/routes'
 import { useErrorsNotification } from '@/common/hooks/use-errors-notification'
 import { useSuccessNotification } from '@/common/hooks/use-success-notification'
@@ -20,6 +21,7 @@ export const SignUpPage = () => {
 
     const registrationData = {
       email,
+      html: emailConfirmTemplate,
       password,
       sendConfirmationEmail: true,
       ...rest,
