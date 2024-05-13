@@ -38,7 +38,7 @@ const columns: Columns[] = [
   },
   {
     isClickable: false,
-    key: '',
+    key: 'icons',
     title: '',
   },
 ]
@@ -154,7 +154,7 @@ export const TableCards = ({
                       })
                     }
                   >
-                    <Edit size={16} />
+                    <Edit size={18} />
                   </button>
 
                   <button
@@ -162,7 +162,7 @@ export const TableCards = ({
                     disabled={disabled}
                     onClick={() => onCardDelete(card.id, card.question)}
                   >
-                    <Trash size={16} />
+                    <Trash size={18} />
                   </button>
                 </div>
               </TableBodyCell>
