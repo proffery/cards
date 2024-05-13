@@ -28,7 +28,7 @@ export const LogInPage = () => {
   useSuccessNotification(success, 'You are successfully logged in!')
 
   if (me && !('success' in me)) {
-    return <Navigate replace to={ROUTES.base} />
+    return <Navigate replace to={ROUTES.decks} />
   }
 
   return (

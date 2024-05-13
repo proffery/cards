@@ -106,7 +106,7 @@ export const DeckPage = () => {
   const isLoading = useSelector(selectAppIsLoading)
 
   const onDeleteDeckConfirm = () => {
-    deleteDeck({ deckId: deckData?.id ?? '' }).then(() => router.navigate(ROUTES.base))
+    deleteDeck({ deckId: deckData?.id ?? '' }).then(data => data && router.navigate(ROUTES.decks))
   }
   const onEditDeckConfirm = (data: AddDeckFormFields) => {
     updateDeck({ updateDeckParams: { ...data, deckId: deckData?.id } })
